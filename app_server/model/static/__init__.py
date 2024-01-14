@@ -1,1 +1,1 @@
-from .path_list import LottiePathList, TablePathList
+from .path_list import ENV_PATH, LottiePathList, TablePathList

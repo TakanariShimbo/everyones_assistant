@@ -1,7 +1,11 @@
 import os
 
 from dotenv import load_dotenv
-load_dotenv()
+
+from .static import ENV_PATH
+
+
+load_dotenv(dotenv_path=ENV_PATH)
 
 
 class LoadedEnv:

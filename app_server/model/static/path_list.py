@@ -6,6 +6,9 @@ LOTTIE_DIR = os.path.join(BASE_DIR, "lotties")
 TABLE_DIR = os.path.join(BASE_DIR, "tables")
 
 
+ENV_PATH = os.path.join(BASE_DIR, "env/.env")
+
+
 class LottiePathList:
     loading = os.path.join(LOTTIE_DIR, "loading.json")
     wake_up_logo = os.path.join(LOTTIE_DIR, "wake_up_logo_streamlit.json")
