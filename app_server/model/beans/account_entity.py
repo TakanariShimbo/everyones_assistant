@@ -3,7 +3,7 @@ from datetime import datetime
 
 from sqlalchemy import Engine
 
-from ..handler import DateHandler
+from ..handler import DateHandler, HashHandler
 from ..base import BaseBean
 from ..configs import AccountConfig
 
@@ -28,6 +28,32 @@ class AccountEntity(BaseBean[AccountConfig]):
         self._given_name_jp = given_name_jp
         self._hashed_password = hashed_password
         self._registered_at = DateHandler.to_str_or_none(date=registered_at)
+
+    @classmethod
+    def init_with_hashing_password(
+        cls,
+        account_id: str,
+        mail_address: str,
+        family_name_en: str,
+        given_name_en: str,
+        family_name_jp: str,
+        given_name_jp: str,
+        raw_password: str,
+        registered_at: Optional[Union[str, datetime]] = None
+    ) -> "AccountEntity":
+        
+        hashed_password = HashHandler.hash(raw_contents=raw_password)
+        
+        return cls(
+            account_id=account_id,
+            mail_address=mail_address,
+            family_name_en=family_name_en,
+            given_name_en=given_name_en,
+            family_name_jp=family_name_jp,
+            given_name_jp=given_name_jp,
+            hashed_password=hashed_password,
+            registered_at=registered_at
+        )
 
     @property
     def account_id(self) -> str:
@@ -78,3 +104,6 @@ class AccountEntity(BaseBean[AccountConfig]):
     @classmethod
     def load_specified_id_from_database(cls, database_engine: Engine, account_id: str) -> "AccountEntity":
         return cls.load_from_database(database_engine=database_engine, column_name=AccountConfig.get_key_column_name(), value=account_id)
+
+    def verify_password(self, raw_password: str) -> bool:
+        return HashHandler.verify(raw_contents=raw_password, hashed_contents=self.hashed_password)
