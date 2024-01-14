@@ -46,5 +46,6 @@ streamlit run main_server.py --server.port 50000
 
 ## Get restarted
 ```
-execute step 2, 3, 6, 7 of get started.  
+execute step 2, 3, (4), 6, 7 of get started.  
+activate only at step 4
 ```
