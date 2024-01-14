@@ -1,23 +1,37 @@
 import os
 
 
-BASE_DIR = os.path.dirname(__file__)
-LOTTIE_DIR = os.path.join(BASE_DIR, "lotties")
-TABLE_DIR = os.path.join(BASE_DIR, "tables")
+class PathBuilder:
+    def __init__(self, base_dir: str):
+        self.base_dir = base_dir
+
+    def generate_path(self, *segments: str) -> str:
+        return os.path.join(self.base_dir, *segments)
+
+    def generate_child_builder(self, *segments: str) -> "PathBuilder":
+        new_base_dir = self.generate_path(*segments)
+        return PathBuilder(base_dir=new_base_dir)
 
 
-ENV_PATH = os.path.join(BASE_DIR, "env/.env")
+base_dir = os.path.dirname(__file__)
+base_builder = PathBuilder(base_dir=base_dir)
+
+lottie_builder = base_builder.generate_child_builder("lotties")
+table_builder = base_builder.generate_child_builder("tables")
+
+
+ENV_PATH = base_builder.generate_path("env", ".env")
 
 
 class LottiePathList:
-    loading = os.path.join(LOTTIE_DIR, "loading.json")
-    wake_up_logo = os.path.join(LOTTIE_DIR, "wake_up_logo_streamlit.json")
+    loading = lottie_builder.generate_path("loading.json")
+    wake_up_logo = lottie_builder.generate_path("wake_up_logo_streamlit.json")
 
 
 class TablePathList:
-    assistant = os.path.join(TABLE_DIR, "assistant.csv")
-    main_component = os.path.join(TABLE_DIR, "main_component.csv")
-    management_component = os.path.join(TABLE_DIR, "management_component.csv")
-    provider = os.path.join(TABLE_DIR, "provider.csv")
-    release = os.path.join(TABLE_DIR, "release.csv")
-    role = os.path.join(TABLE_DIR, "role.csv")
+    assistant = table_builder.generate_path("assistant.csv")
+    main_component = table_builder.generate_path("main_component.csv")
+    management_component = table_builder.generate_path("management_component.csv")
+    provider = table_builder.generate_path("provider.csv")
+    release = table_builder.generate_path("release.csv")
+    role = table_builder.generate_path("role.csv")
