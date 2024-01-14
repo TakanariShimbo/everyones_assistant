@@ -42,8 +42,7 @@ class AccountManager:
             target_account_entity = AccountEntity.load_specified_id_from_database(database_engine=DATABASE_ENGINE, account_id=account_id)
         except ValueError:
             return SignInResponse(is_success=False, message=f"Account ID '{account_id}' hasn't signed up yet.")
-        is_success =  HashHandler.verify(raw_contents=raw_password, hashed_contents=target_account_entity.hashed_password)
-        if not is_success:
+        if not HashHandler.verify(raw_contents=raw_password, hashed_contents=target_account_entity.hashed_password):
             return SignInResponse(is_success=False, message=f"Please input password correctly.")
         
         return SignInResponse(is_success=True, contents=target_account_entity)
