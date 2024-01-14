@@ -1,5 +1,5 @@
-from .handler import JsonHandler
-from .static import LottiePathList
+from ..handler import JsonHandler
+from .path_list import LottiePathList
 
 class LoadedLottie:
     wake_up_logo = JsonHandler.load(LottiePathList.wake_up_logo)

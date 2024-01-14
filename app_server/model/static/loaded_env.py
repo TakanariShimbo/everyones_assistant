@@ -2,7 +2,7 @@ import os
 
 from dotenv import load_dotenv
 
-from .static import ENV_PATH
+from .path_list import ENV_PATH
 
 
 load_dotenv(dotenv_path=ENV_PATH)

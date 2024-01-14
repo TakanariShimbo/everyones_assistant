@@ -4,7 +4,7 @@ from streamlit_lottie import st_lottie_spinner
 from .sign_up_action_results import ActionResults
 from ..base import BaseComponent
 from ..management_s_states import ManagementComponentSState, SignUpProcesserSState
-from model import AccountTable, DefinedDB, LoadedLottie
+from model import AccountTable, Database, LoadedLottie
 
 
 class SignUpComponent(BaseComponent):
@@ -128,7 +128,7 @@ class SignUpComponent(BaseComponent):
 
     @staticmethod
     def _display_account_table() -> None:
-        account_table = AccountTable.load_from_database(database_engine=DefinedDB.engine)
+        account_table = AccountTable.load_from_database(database_engine=Database.engine)
         st.dataframe(account_table.df, use_container_width=True)
 
     @classmethod

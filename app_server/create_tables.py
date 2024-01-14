@@ -1,6 +1,6 @@
-from model import DefinedDB, AccountConfig, ChatRoomConfig, ChatMessageConfig
+from model import Database, AccountConfig, ChatRoomConfig, ChatMessageConfig
 
 
-AccountConfig.create_table_on_database(database_engine=DefinedDB.engine)
-ChatRoomConfig.create_table_on_database(database_engine=DefinedDB.engine)
-ChatMessageConfig.create_table_on_database(database_engine=DefinedDB.engine)
+AccountConfig.create_table_on_database(database_engine=Database.engine)
+ChatRoomConfig.create_table_on_database(database_engine=Database.engine)
+ChatMessageConfig.create_table_on_database(database_engine=Database.engine)

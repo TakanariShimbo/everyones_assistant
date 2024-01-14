@@ -7,7 +7,7 @@ from streamlit_lottie import st_lottie_spinner
 from .home_action_results import CreateActionResults, EnterActionResults, RoomContainerActionResults
 from ..base import BaseComponent
 from ..main_s_states import AccountSState, MainComponentSState, CreateProcesserSState, EnterProcesserSState
-from model import ChatRoomDtoTable, ChatRoomDto, RELEASE_TYPE_TABLE, LoadedLottie, DefinedDB
+from model import ChatRoomDtoTable, ChatRoomDto, RELEASE_TYPE_TABLE, LoadedLottie, Database
 
 
 class HomeComponent(BaseComponent):
@@ -99,7 +99,7 @@ class HomeComponent(BaseComponent):
             st.markdown("#### 🧍 Yours")
             with st_lottie_spinner(animation_source=LoadedLottie.loading):
                 your_room_table = ChatRoomDtoTable.load_specified_account_from_database(
-                    database_engine=DefinedDB.engine,
+                    database_engine=Database.engine,
                     account_id=AccountSState.get().account_id,
                 )
             for container_id, chat_room_dto in enumerate(your_room_table.get_all_beans()):
@@ -116,7 +116,7 @@ class HomeComponent(BaseComponent):
             st.markdown("#### 🧑‍🤝‍🧑 Everyone")
             with st_lottie_spinner(animation_source=LoadedLottie.loading):
                 your_room_table = ChatRoomDtoTable.load_public_unspecified_account_from_database(
-                    database_engine=DefinedDB.engine,
+                    database_engine=Database.engine,
                     account_id=AccountSState.get().account_id,
                 )
             for container_id, chat_room_dto in enumerate(your_room_table.get_all_beans()):
