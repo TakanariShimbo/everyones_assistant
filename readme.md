@@ -39,5 +39,5 @@ streamlit run main_server.py --server.port 50000
 
 ## Get restarted
 ```
-execute Step 1, 4, 5 of get started.  
+execute step 1, 2, 5, 6 of get started.  
 ```
