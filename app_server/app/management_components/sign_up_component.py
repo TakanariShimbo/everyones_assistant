@@ -4,8 +4,7 @@ from streamlit_lottie import st_lottie_spinner
 from .sign_up_action_results import ActionResults
 from ..base import BaseComponent
 from ..management_s_states import ManagementComponentSState, SignUpProcesserSState
-from model import AccountTable, DATABASE_ENGINE
-from controller import LottieManager
+from model import AccountTable, DefinedDB, LoadedLottie
 
 
 class SignUpComponent(BaseComponent):
@@ -113,7 +112,7 @@ class SignUpComponent(BaseComponent):
             return
 
         with action_results.loading_area:
-            with st_lottie_spinner(animation_source=LottieManager.LOADING):
+            with st_lottie_spinner(animation_source=LoadedLottie.loading):
                 processers_manager = SignUpProcesserSState.get()
                 processers_manager.run_all(
                     message_area=action_results.message_area,
@@ -129,7 +128,7 @@ class SignUpComponent(BaseComponent):
 
     @staticmethod
     def _display_account_table() -> None:
-        account_table = AccountTable.load_from_database(database_engine=DATABASE_ENGINE)
+        account_table = AccountTable.load_from_database(database_engine=DefinedDB.engine)
         st.dataframe(account_table.df, use_container_width=True)
 
     @classmethod

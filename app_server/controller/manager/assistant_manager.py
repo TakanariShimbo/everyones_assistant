@@ -1,12 +1,12 @@
 from typing import Callable, List
 
 from ..handler import ChatGptHandler, convert_entity_to_message_param, GeminiHandler, convert_entity_to_content_dict
-from model import ChatMessageEntity, PROVIDER_TYPE_TABLE, OPENAI_API_KEY, GEMINI_API_KEY
+from model import ChatMessageEntity, PROVIDER_TYPE_TABLE, LoadedEnv
 
 
 class AssistantManager:
-    client = ChatGptHandler.generate_client(api_key=OPENAI_API_KEY)
-    GeminiHandler.set_api_key(api_key=GEMINI_API_KEY)
+    client = ChatGptHandler.generate_client(api_key=LoadedEnv.open_ai_api_key)
+    GeminiHandler.set_api_key(api_key=LoadedEnv.gemini_api_key)
 
     @classmethod
     def query_streamly_answer_and_display(

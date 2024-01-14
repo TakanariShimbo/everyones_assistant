@@ -4,7 +4,7 @@ from streamlit_lottie import st_lottie_spinner
 from .sign_in_action_results import ActionResults
 from ..base import BaseComponent
 from ..main_s_states import MainComponentSState, SignInProcesserSState
-from controller import LottieManager
+from model import LoadedLottie
 
 
 class SignInComponent(BaseComponent):
@@ -51,7 +51,7 @@ class SignInComponent(BaseComponent):
             return False
 
         with action_results.loading_area:
-            with st_lottie_spinner(animation_source=LottieManager.LOADING):
+            with st_lottie_spinner(animation_source=LoadedLottie.loading):
                 processers_manager = SignInProcesserSState.get()
                 is_success = processers_manager.run_all(
                     message_area=action_results.message_area,

@@ -1,4 +1,4 @@
-from model import DATABASE_ENGINE, BaseResponse, AccountEntity
+from model import DefinedDB, BaseResponse, AccountEntity
 
 
 class SignUpResponse(BaseResponse[None]):
@@ -30,7 +30,7 @@ class AccountManager:
         )
 
         try:
-            new_account_entity.save_to_database(database_engine=DATABASE_ENGINE)
+            new_account_entity.save_to_database(database_engine=DefinedDB.engine)
         except:
             return SignUpResponse(is_success=False, message=f"Account ID '{account_id}' has already signed up.")
 
@@ -39,7 +39,7 @@ class AccountManager:
     @staticmethod
     def sign_in(account_id: str, raw_password: str) -> SignInResponse:
         try:
-            target_account_entity = AccountEntity.load_specified_id_from_database(database_engine=DATABASE_ENGINE, account_id=account_id)
+            target_account_entity = AccountEntity.load_specified_id_from_database(database_engine=DefinedDB.engine, account_id=account_id)
         except ValueError:
             return SignInResponse(is_success=False, message=f"Account ID '{account_id}' hasn't signed up yet.")
 

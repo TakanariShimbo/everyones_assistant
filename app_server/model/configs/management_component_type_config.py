@@ -2,6 +2,7 @@ from typing import List
 
 import pandas as pd
 
+from ..static import TablePathList
 from ..base import ColumnConfig, BaseConfig
 
 
@@ -16,4 +17,4 @@ class ManagementComponentTypeConfig(BaseConfig):
 
     @staticmethod
     def _get_csv_filepath() -> str:
-        return "./model/data/management_component_data.csv"
+        return TablePathList.management_conponennt

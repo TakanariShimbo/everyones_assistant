@@ -7,8 +7,7 @@ from streamlit_lottie import st_lottie_spinner
 from .home_action_results import CreateActionResults, EnterActionResults, RoomContainerActionResults
 from ..base import BaseComponent
 from ..main_s_states import AccountSState, MainComponentSState, CreateProcesserSState, EnterProcesserSState
-from controller import LottieManager
-from model import ChatRoomDtoTable, ChatRoomDto, RELEASE_TYPE_TABLE, DATABASE_ENGINE
+from model import ChatRoomDtoTable, ChatRoomDto, RELEASE_TYPE_TABLE, LoadedLottie, DefinedDB
 
 
 class HomeComponent(BaseComponent):
@@ -98,9 +97,9 @@ class HomeComponent(BaseComponent):
 
         with left_area:
             st.markdown("#### 🧍 Yours")
-            with st_lottie_spinner(animation_source=LottieManager.LOADING):
+            with st_lottie_spinner(animation_source=LoadedLottie.loading):
                 your_room_table = ChatRoomDtoTable.load_specified_account_from_database(
-                    database_engine=DATABASE_ENGINE,
+                    database_engine=DefinedDB.engine,
                     account_id=AccountSState.get().account_id,
                 )
             for container_id, chat_room_dto in enumerate(your_room_table.get_all_beans()):
@@ -115,9 +114,9 @@ class HomeComponent(BaseComponent):
         
         with right_area:
             st.markdown("#### 🧑‍🤝‍🧑 Everyone")
-            with st_lottie_spinner(animation_source=LottieManager.LOADING):
+            with st_lottie_spinner(animation_source=LoadedLottie.loading):
                 your_room_table = ChatRoomDtoTable.load_public_unspecified_account_from_database(
-                    database_engine=DATABASE_ENGINE,
+                    database_engine=DefinedDB.engine,
                     account_id=AccountSState.get().account_id,
                 )
             for container_id, chat_room_dto in enumerate(your_room_table.get_all_beans()):
@@ -146,7 +145,7 @@ class HomeComponent(BaseComponent):
             return False
 
         with create_action_results.loading_area:
-            with st_lottie_spinner(animation_source=LottieManager.LOADING):
+            with st_lottie_spinner(animation_source=LoadedLottie.loading):
                 processers_manager = CreateProcesserSState.get()
                 is_success = processers_manager.run_all(
                     message_area=create_action_results.message_area,
@@ -161,7 +160,7 @@ class HomeComponent(BaseComponent):
             return False
 
         with enter_action_results.loading_area:
-            with st_lottie_spinner(animation_source=LottieManager.LOADING):
+            with st_lottie_spinner(animation_source=LoadedLottie.loading):
                 processers_manager = EnterProcesserSState.get()
                 is_success = processers_manager.run_all(
                     room_id=enter_action_results.chat_room_dto.room_id,
