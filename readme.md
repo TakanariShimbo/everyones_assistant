@@ -2,36 +2,43 @@
 * conda
 * docker
 
-## Get started
 
-1. build db server
+## Get started
+1. create .env
+```
+duplicate "./db_server/.env_sample" as ".env" in same dir
+duplicate "./app_server/model/static/env/.env_sample" as ".env" in same dir
+customize yourself
+```
+
+2. build db server
 ```
 docker-compose up -d
 ```
 
-2. enter app_server dir
+3. enter app_server dir
 ```
 cd app_server
 ```
 
-3. create python venv
+4. create python venv
 ```
 conda create --name python310_everyones_assistant python=3.10
 conda activate python310_everyones_assistant
 pip install -r requirements.txt
 ```
 
-4. create_table
+5. create_table
 ```
 python create_tables.py
 ```
 
-5. build management server
+6. build management server
 ```
 streamlit run management_server.py --server.port 50001
 ```
 
-6. build main server
+7. build main server
 ```
 streamlit run main_server.py --server.port 50000
 ```
@@ -39,5 +46,5 @@ streamlit run main_server.py --server.port 50000
 
 ## Get restarted
 ```
-execute step 1, 2, 5, 6 of get started.  
+execute step 2, 3, 6, 7 of get started.  
 ```
