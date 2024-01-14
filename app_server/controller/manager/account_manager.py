@@ -1,6 +1,5 @@
-from ..base import BaseResponse
 from ..handler import HashHandler
-from model import DATABASE_ENGINE, AccountEntity
+from model import DATABASE_ENGINE, BaseResponse, AccountEntity
 
 
 class SignUpResponse(BaseResponse[None]):
