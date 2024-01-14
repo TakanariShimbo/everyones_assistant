@@ -1,0 +1,12 @@
+bcrypt==4.0.1
+email_validator==2.1.0.post1
+google-generativeai==0.3.2
+openai==1.6.0
+opencv-python-headless==4.8.1.78
+passlib==1.7.4
+psycopg2-binary==2.9.9
+pydantic==2.5.2
+python-dotenv==1.0.0
+SQLAlchemy==2.0.23
+streamlit==1.30.0
+streamlit-lottie==0.0.5

@@ -1,0 +1,6 @@
+assistant_id,provider_id,ai_model_id,label_en,label_jp
+google_gemini-pro,google,gemini-pro,Google Gemini-Pro,Google Gemini-Pro
+open-ai_gpt-3.5-turbo,open-ai,gpt-3.5-turbo,OpenAI GPT3.5-Turbo,OpenAI GPT3.5-Turbo
+open-ai_gpt-3.5-turbo-1106,open-ai,gpt-3.5-turbo-1106,OpenAI GPT3.5-Turbo-1106,OpenAI GPT3.5-Turbo-1106
+open-ai_gpt-4,open-ai,gpt-4,OpenAI GPT4,OpenAI GPT4
+open-ai_gpt-4-1106-preview,open-ai,gpt-4-1106-preview,OpenAI GPT4-1106,OpenAI GPT4-1106

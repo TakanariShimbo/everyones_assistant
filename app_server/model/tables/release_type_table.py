@@ -1,0 +1,26 @@
+from typing import Type
+
+from ..base import BaseTable
+from ..configs import ReleaseTypeConfig
+from ..beans import ReleaseTypeEntity
+
+
+class ReleaseTypeTable(BaseTable[ReleaseTypeConfig, ReleaseTypeEntity]):
+    @staticmethod
+    def _get_config_class() -> Type[ReleaseTypeConfig]:
+        return ReleaseTypeConfig
+    
+    @staticmethod
+    def _get_bean_class() -> Type[ReleaseTypeEntity]:
+        return ReleaseTypeEntity
+
+    @property
+    def public_id(self) -> str:
+        return self.get_bean(column_name=ReleaseTypeConfig.get_key_column_name(), value="public").release_id
+
+    @property
+    def private_id(self) -> str:
+        return self.get_bean(column_name=ReleaseTypeConfig.get_key_column_name(), value="private").release_id
+
+
+RELEASE_TYPE_TABLE = ReleaseTypeTable.load_from_csv()
