@@ -3,7 +3,7 @@ from typing import Type
 import pandas as pd
 from sqlalchemy import Engine
 
-from ..base import BaseTable
+from ..base import BaseDtoTable
 from ..configs import ChatRoomDtoConfig, AccountConfig, ReleaseTypeConfig
 from ..beans import ChatRoomDto
 from .chat_room_table import ChatRoomTable
@@ -11,7 +11,7 @@ from .account_table import AccountTable
 from .release_type_table import RELEASE_TYPE_TABLE
 
 
-class ChatRoomDtoTable(BaseTable[ChatRoomDtoConfig, ChatRoomDto]):
+class ChatRoomDtoTable(BaseDtoTable[ChatRoomDtoConfig, ChatRoomDto]):
     @staticmethod
     def _get_config_class() -> Type[ChatRoomDtoConfig]:
         return ChatRoomDtoConfig

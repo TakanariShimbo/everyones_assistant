@@ -2,12 +2,12 @@ from typing import Type
 
 from sqlalchemy import Engine
 
-from ..base import BaseTable
+from ..base import BaseDatabaseTable
 from ..configs import ChatMessageConfig, ChatRoomConfig
 from ..beans import ChatMessageEntity
 
 
-class ChatMessageTable(BaseTable[ChatMessageConfig, ChatMessageEntity]):
+class ChatMessageTable(BaseDatabaseTable[ChatMessageConfig, ChatMessageEntity]):
     @staticmethod
     def _get_config_class() -> Type[ChatMessageConfig]:
         return ChatMessageConfig

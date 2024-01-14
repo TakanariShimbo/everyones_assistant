@@ -2,11 +2,11 @@ from typing import Any, Optional, Type, Union
 from datetime import datetime
 
 from ..handler import DateHandler
-from ..base import BaseBean
+from ..base import BaseDatabaseEntity
 from ..configs import ChatRoomConfig
 
 
-class ChatRoomEntity(BaseBean[ChatRoomConfig]):
+class ChatRoomEntity(BaseDatabaseEntity[ChatRoomConfig]):
     def __init__(self, room_id: str, account_id: str, title: str, release_id: str, created_at: Optional[Union[str, datetime]] = None) -> None:
         self._room_id = room_id
         self._account_id = account_id

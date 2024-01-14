@@ -2,12 +2,12 @@ from typing import List, Type
 
 from sqlalchemy import Engine
 
-from ..base import BaseTable
+from ..base import BaseDatabaseTable
 from ..configs import AccountConfig
 from ..beans import AccountEntity
 
 
-class AccountTable(BaseTable[AccountConfig, AccountEntity]):
+class AccountTable(BaseDatabaseTable[AccountConfig, AccountEntity]):
     @staticmethod
     def _get_config_class() -> Type[AccountConfig]:
         return AccountConfig

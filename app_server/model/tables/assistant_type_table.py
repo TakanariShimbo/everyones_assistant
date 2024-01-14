@@ -1,11 +1,11 @@
 from typing import Type
 
-from ..base import BaseTable
+from ..base import BaseCsvTable
 from ..configs import AssistantTypeConfig
 from ..beans import AssistantTypeEntity
 
 
-class AssistantTypeTable(BaseTable[AssistantTypeConfig, AssistantTypeEntity]):
+class AssistantTypeTable(BaseCsvTable[AssistantTypeConfig, AssistantTypeEntity]):
     @staticmethod
     def _get_config_class() -> Type[AssistantTypeConfig]:
         return AssistantTypeConfig

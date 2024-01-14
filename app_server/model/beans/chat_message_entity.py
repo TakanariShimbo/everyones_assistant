@@ -2,11 +2,11 @@ from typing import Any, Optional, Type, Union
 from datetime import datetime
 
 from ..handler import DateHandler
-from ..base import BaseBean
+from ..base import BaseDatabaseEntity
 from ..configs import ChatMessageConfig
 
 
-class ChatMessageEntity(BaseBean):
+class ChatMessageEntity(BaseDatabaseEntity):
     def __init__(self, room_id: str, sender_id: str, role_id: str, content: str, message_serial_id: Optional[int] = None, sent_at: Optional[Union[str, datetime]] = None) -> None:
         self._message_serial_id = message_serial_id
         self._room_id = room_id

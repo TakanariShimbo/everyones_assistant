@@ -1,10 +1,10 @@
 from typing import Any, Type
 
-from ..base import BaseBean
+from ..base import BaseCsvEntity
 from ..configs import ReleaseTypeConfig
 
 
-class ReleaseTypeEntity(BaseBean[ReleaseTypeConfig]):
+class ReleaseTypeEntity(BaseCsvEntity[ReleaseTypeConfig]):
     def __init__(self, release_id: str, label_en: str, label_jp: str):
         self._release_id = release_id
         self._label_en = label_en

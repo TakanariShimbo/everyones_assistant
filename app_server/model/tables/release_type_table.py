@@ -1,11 +1,11 @@
 from typing import Type
 
-from ..base import BaseTable
+from ..base import BaseCsvTable
 from ..configs import ReleaseTypeConfig
 from ..beans import ReleaseTypeEntity
 
 
-class ReleaseTypeTable(BaseTable[ReleaseTypeConfig, ReleaseTypeEntity]):
+class ReleaseTypeTable(BaseCsvTable[ReleaseTypeConfig, ReleaseTypeEntity]):
     @staticmethod
     def _get_config_class() -> Type[ReleaseTypeConfig]:
         return ReleaseTypeConfig

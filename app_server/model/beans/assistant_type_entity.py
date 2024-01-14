@@ -1,10 +1,10 @@
 from typing import Any, Type
 
-from ..base import BaseBean
+from ..base import BaseCsvEntity
 from ..configs import AssistantTypeConfig
 
 
-class AssistantTypeEntity(BaseBean[AssistantTypeConfig]):
+class AssistantTypeEntity(BaseCsvEntity[AssistantTypeConfig]):
     def __init__(self, assistant_id: str, provider_id: str, ai_model_id: str, label_en: str, label_jp: str):
         self._assistant_id = assistant_id
         self._provider_id = provider_id

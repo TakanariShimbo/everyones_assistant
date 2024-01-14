@@ -3,10 +3,10 @@ from textwrap import dedent
 
 import pandas as pd
 
-from ..base import ColumnConfig, BaseConfig
+from ..base import ColumnConfig, BaseDatabaseConfig
 
 
-class ChatMessageConfig(BaseConfig):
+class ChatMessageConfig(BaseDatabaseConfig):
     @staticmethod
     def _get_column_configs() -> List[ColumnConfig]:
         return [

@@ -1,10 +1,10 @@
 from typing import Any, Type
 
-from ..base import BaseBean
+from ..base import BaseCsvEntity
 from ..configs import RoleTypeConfig
 
 
-class RoleTypeEntity(BaseBean[RoleTypeConfig]):
+class RoleTypeEntity(BaseCsvEntity[RoleTypeConfig]):
     def __init__(self, role_id: str, label_en: str, label_jp: str):
         self._role_id = role_id
         self._label_en = label_en

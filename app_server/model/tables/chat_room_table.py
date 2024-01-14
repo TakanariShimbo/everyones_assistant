@@ -2,13 +2,13 @@ from typing import Type
 
 from sqlalchemy import Engine
 
-from ..base import BaseTable
+from ..base import BaseDatabaseTable
 from ..configs import ChatRoomConfig, AccountConfig, ReleaseTypeConfig
 from ..beans import ChatRoomEntity
 from .release_type_table import RELEASE_TYPE_TABLE
 
 
-class ChatRoomTable(BaseTable[ChatRoomConfig, ChatRoomEntity]):
+class ChatRoomTable(BaseDatabaseTable[ChatRoomConfig, ChatRoomEntity]):
     @staticmethod
     def _get_config_class() -> Type[ChatRoomConfig]:
         return ChatRoomConfig
@@ -35,4 +35,3 @@ class ChatRoomTable(BaseTable[ChatRoomConfig, ChatRoomEntity]):
         statement, _ = cls._get_select_sql(filter_conditions=filter_conditions, order_condition=order_condition, limit=limit)
         parameters = {release_id_name: RELEASE_TYPE_TABLE.public_id, account_id_name: account_id}
         return cls.load_from_database(database_engine=database_engine, statement=statement, parameters=parameters)
-

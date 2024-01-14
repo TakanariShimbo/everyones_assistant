@@ -2,11 +2,11 @@ from typing import Any, Type, Union
 from datetime import datetime
 
 from ..handler import DateHandler
-from ..base import BaseBean
+from ..base import BaseDto
 from ..configs import ChatRoomDtoConfig
 
 
-class ChatRoomDto(BaseBean[ChatRoomDtoConfig]):
+class ChatRoomDto(BaseDto[ChatRoomDtoConfig]):
     def __init__(
         self,
         room_id: str,

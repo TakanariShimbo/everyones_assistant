@@ -2,10 +2,10 @@ from typing import List
 
 import pandas as pd
 
-from ..base import ColumnConfig, BaseConfig
+from ..base import ColumnConfig, BaseDtoConfig
 
 
-class ChatRoomDtoConfig(BaseConfig):
+class ChatRoomDtoConfig(BaseDtoConfig):
     @staticmethod
     def _get_column_configs() -> List[ColumnConfig]:
         return [

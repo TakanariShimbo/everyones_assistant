@@ -3,10 +3,10 @@ from typing import List
 import pandas as pd
 
 from ..static import TablePathList
-from ..base import ColumnConfig, BaseConfig
+from ..base import ColumnConfig, BaseCsvConfig
 
 
-class RoleTypeConfig(BaseConfig):
+class RoleTypeConfig(BaseCsvConfig):
     @staticmethod
     def _get_column_configs() -> List[ColumnConfig]:
         return [

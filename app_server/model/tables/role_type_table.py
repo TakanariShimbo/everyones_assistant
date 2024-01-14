@@ -1,11 +1,11 @@
 from typing import Type
 
-from ..base import BaseTable
+from ..base import BaseCsvTable
 from ..configs import RoleTypeConfig
 from ..beans import RoleTypeEntity
 
 
-class RoleTypeTable(BaseTable[RoleTypeConfig, RoleTypeEntity]):
+class RoleTypeTable(BaseCsvTable[RoleTypeConfig, RoleTypeEntity]):
     @staticmethod
     def _get_config_class() -> Type[RoleTypeConfig]:
         return RoleTypeConfig

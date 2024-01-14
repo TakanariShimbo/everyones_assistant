@@ -1,10 +1,10 @@
 from typing import Any, Type
 
-from ..base import BaseBean
+from ..base import BaseCsvEntity
 from ..configs import ManagementComponentTypeConfig
 
 
-class ManagementComponentTypeEntity(BaseBean[ManagementComponentTypeConfig]):
+class ManagementComponentTypeEntity(BaseCsvEntity[ManagementComponentTypeConfig]):
     def __init__(self, component_id: str, label_en: str, label_jp: str):
         self._component_id = component_id
         self._label_en = label_en

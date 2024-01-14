@@ -1,11 +1,11 @@
 from typing import Type
 
-from ..base import BaseTable
+from ..base import BaseCsvTable
 from ..configs import ProviderTypeConfig
 from ..beans import ProviderTypeEntity
 
 
-class ProviderTypeTable(BaseTable[ProviderTypeConfig, ProviderTypeEntity]):
+class ProviderTypeTable(BaseCsvTable[ProviderTypeConfig, ProviderTypeEntity]):
     @staticmethod
     def _get_config_class() -> Type[ProviderTypeConfig]:
         return ProviderTypeConfig

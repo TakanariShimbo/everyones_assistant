@@ -4,11 +4,11 @@ from datetime import datetime
 from sqlalchemy import Engine
 
 from ..handler import DateHandler, HashHandler
-from ..base import BaseBean
+from ..base import BaseDatabaseEntity
 from ..configs import AccountConfig
 
 
-class AccountEntity(BaseBean[AccountConfig]):
+class AccountEntity(BaseDatabaseEntity[AccountConfig]):
     def __init__(
         self,
         account_id: str,

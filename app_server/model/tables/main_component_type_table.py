@@ -1,11 +1,11 @@
 from typing import Type
 
-from ..base import BaseTable
+from ..base import BaseCsvTable
 from ..configs import MainComponentTypeConfig
 from ..beans import MainComponentTypeEntity
 
 
-class MainComponentTypeTable(BaseTable[MainComponentTypeConfig, MainComponentTypeEntity]):
+class MainComponentTypeTable(BaseCsvTable[MainComponentTypeConfig, MainComponentTypeEntity]):
     @staticmethod
     def _get_config_class() -> Type[MainComponentTypeConfig]:
         return MainComponentTypeConfig
