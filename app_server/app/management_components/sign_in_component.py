@@ -3,7 +3,7 @@ import streamlit as st
 from .sign_in_action_results import ActionResults
 from ..base import BaseComponent
 from ..management_s_states import ManagementComponentSState
-from model import ADMIN_ID, ADMIN_PASSWORD
+from model import LoadedEnv
 
 
 class SignInComponent(BaseComponent):
@@ -47,11 +47,11 @@ class SignInComponent(BaseComponent):
         if not action_results.is_pushed:
             return False
 
-        if not action_results.admin_id == ADMIN_ID:
+        if not action_results.admin_id == LoadedEnv.admin_id:
             action_results.message_area.warning("Please input form corectly.")
             return False
         
-        if not action_results.admin_password == ADMIN_PASSWORD:
+        if not action_results.admin_password == LoadedEnv.admin_password:
             action_results.message_area.warning("Please input form corectly.")
             return False
         
