@@ -12,8 +12,8 @@ class LottiePathList:
 
 class TablePathList:
     assistant = TABLE_DIR + "assistant.csv"
-    main_conponennt = TABLE_DIR + "main_conponent.csv"
-    management_conponennt = TABLE_DIR + "management_conponent.csv"
+    main_component = TABLE_DIR + "main_component.csv"
+    management_component = TABLE_DIR + "management_component.csv"
     provider = TABLE_DIR + "provider.csv"
     release = TABLE_DIR + "release.csv"
     role = TABLE_DIR + "role.csv"

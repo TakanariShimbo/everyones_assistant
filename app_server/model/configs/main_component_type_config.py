@@ -17,4 +17,4 @@ class MainComponentTypeConfig(BaseConfig):
 
     @staticmethod
     def _get_csv_filepath() -> str:
-        return TablePathList.main_conponennt
+        return TablePathList.main_component

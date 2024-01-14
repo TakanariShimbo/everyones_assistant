@@ -17,4 +17,4 @@ class ManagementComponentTypeConfig(BaseConfig):
 
     @staticmethod
     def _get_csv_filepath() -> str:
-        return TablePathList.management_conponennt
+        return TablePathList.management_component
