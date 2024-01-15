@@ -17,14 +17,14 @@ class AssistantManager:
         message_entities: List[ChatMessageEntity],
         callback_func: Callable[[str], None],
     ) -> str:
-        if provider_id == PROVIDER_TYPE_TABLE.open_ai_id:
+        if provider_id == PROVIDER_TYPE_TABLE.OPEN_AI_ID:
             return cls._query_to_open_ai(
                 prompt=prompt, 
                 ai_model_id=ai_model_id, 
                 message_entities=message_entities, 
                 callback_func=callback_func,
             )
-        elif provider_id == PROVIDER_TYPE_TABLE.google_id:
+        elif provider_id == PROVIDER_TYPE_TABLE.GOOGLE_ID:
             return cls._query_to_google(
                 prompt=prompt, 
                 ai_model_id=ai_model_id, 

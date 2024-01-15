@@ -20,11 +20,11 @@ class ManagementPage(BasePage):
     @staticmethod
     def main() -> None:
         current_component_entity = ManagementComponentSState.get()
-        if current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.sign_in_entity:
+        if current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.SIGN_IN_ENTITY:
             SignInComponent.run()
-        elif current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.home_entity:
+        elif current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.HOME_ENTITY:
             HomeComponent.run()
-        elif current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.sign_up_entity:
+        elif current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.SIGN_UP_ENTITY:
             SignUpComponent.run()
         else:
             raise ValueError("ComponentSState Value Error")

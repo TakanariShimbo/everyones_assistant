@@ -15,11 +15,11 @@ class ReleaseTypeTable(BaseCsvTable[ReleaseTypeConfig, ReleaseTypeEntity]):
         return ReleaseTypeEntity
 
     @property
-    def public_id(self) -> str:
+    def PUBLIC_ID(self) -> str:
         return self.get_bean(column_name=ReleaseTypeConfig.get_key_column_name(), value="public").release_id
 
     @property
-    def private_id(self) -> str:
+    def PRIVATE_ID(self) -> str:
         return self.get_bean(column_name=ReleaseTypeConfig.get_key_column_name(), value="private").release_id
 
 

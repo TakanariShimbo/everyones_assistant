@@ -9,16 +9,16 @@ class MainComponentSState(BaseSState[MainComponentTypeEntity]):
 
     @staticmethod
     def get_default() -> MainComponentTypeEntity:
-        return MAIN_COMPONENT_TYPE_TABLE.wake_up_entity
+        return MAIN_COMPONENT_TYPE_TABLE.WAKE_UP_ENTITY
 
     @classmethod
     def set_sign_in_entity(cls):
-        cls.set(value=MAIN_COMPONENT_TYPE_TABLE.sign_in_entity)
+        cls.set(value=MAIN_COMPONENT_TYPE_TABLE.SIGN_IN_ENTITY)
 
     @classmethod
     def set_home_entity(cls):
-        cls.set(value=MAIN_COMPONENT_TYPE_TABLE.home_entity)
+        cls.set(value=MAIN_COMPONENT_TYPE_TABLE.HOME_ENTITY)
 
     @classmethod
     def set_chat_room_entity(cls):
-        cls.set(value=MAIN_COMPONENT_TYPE_TABLE.chat_room_entity)
+        cls.set(value=MAIN_COMPONENT_TYPE_TABLE.CHAT_ROOM_ENTITY)

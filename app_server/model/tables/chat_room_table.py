@@ -33,5 +33,5 @@ class ChatRoomTable(BaseDatabaseTable[ChatRoomConfig, ChatRoomEntity]):
         filter_conditions = [f"{release_id_name} = :{release_id_name}", f"{account_id_name} != :{account_id_name}"]
         order_condition = "created_at DESC"
         statement, _ = cls._get_select_sql(filter_conditions=filter_conditions, order_condition=order_condition, limit=limit)
-        parameters = {release_id_name: RELEASE_TYPE_TABLE.public_id, account_id_name: account_id}
+        parameters = {release_id_name: RELEASE_TYPE_TABLE.PUBLIC_ID, account_id_name: account_id}
         return cls.load_from_database(database_engine=database_engine, statement=statement, parameters=parameters)

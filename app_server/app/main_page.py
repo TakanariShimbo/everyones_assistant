@@ -20,13 +20,13 @@ class MainPage(BasePage):
     @staticmethod
     def main() -> None:
         current_component_entity = MainComponentSState.get()
-        if current_component_entity == MAIN_COMPONENT_TYPE_TABLE.wake_up_entity:
+        if current_component_entity == MAIN_COMPONENT_TYPE_TABLE.WAKE_UP_ENTITY:
             WakeupComponent.run()
-        elif current_component_entity == MAIN_COMPONENT_TYPE_TABLE.sign_in_entity:
+        elif current_component_entity == MAIN_COMPONENT_TYPE_TABLE.SIGN_IN_ENTITY:
             SignInComponent.run()
-        elif current_component_entity == MAIN_COMPONENT_TYPE_TABLE.home_entity:
+        elif current_component_entity == MAIN_COMPONENT_TYPE_TABLE.HOME_ENTITY:
             HomeComponent.run()
-        elif current_component_entity == MAIN_COMPONENT_TYPE_TABLE.chat_room_entity:
+        elif current_component_entity == MAIN_COMPONENT_TYPE_TABLE.CHAT_ROOM_ENTITY:
             ChatRoomComponent.run()
         else:
             raise ValueError("ComponentSState Value Error")

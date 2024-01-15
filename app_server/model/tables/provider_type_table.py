@@ -15,11 +15,11 @@ class ProviderTypeTable(BaseCsvTable[ProviderTypeConfig, ProviderTypeEntity]):
         return ProviderTypeEntity
 
     @property
-    def open_ai_id(self) -> str:
+    def OPEN_AI_ID(self) -> str:
         return self.get_bean(column_name=ProviderTypeConfig.get_key_column_name(), value="open-ai").provider_id
 
     @property
-    def google_id(self) -> str:
+    def GOOGLE_ID(self) -> str:
         return self.get_bean(column_name=ProviderTypeConfig.get_key_column_name(), value="google").provider_id
 
 

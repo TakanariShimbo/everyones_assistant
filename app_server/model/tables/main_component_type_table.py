@@ -15,19 +15,19 @@ class MainComponentTypeTable(BaseCsvTable[MainComponentTypeConfig, MainComponent
         return MainComponentTypeEntity
 
     @property
-    def wake_up_entity(self) -> MainComponentTypeEntity:
+    def WAKE_UP_ENTITY(self) -> MainComponentTypeEntity:
         return self.get_bean(column_name=MainComponentTypeConfig.get_key_column_name(), value="wake_up")
 
     @property
-    def sign_in_entity(self) -> MainComponentTypeEntity:
+    def SIGN_IN_ENTITY(self) -> MainComponentTypeEntity:
         return self.get_bean(column_name=MainComponentTypeConfig.get_key_column_name(), value="sign_in")
 
     @property
-    def home_entity(self) -> MainComponentTypeEntity:
+    def HOME_ENTITY(self) -> MainComponentTypeEntity:
         return self.get_bean(column_name=MainComponentTypeConfig.get_key_column_name(), value="home")
 
     @property
-    def chat_room_entity(self) -> MainComponentTypeEntity:
+    def CHAT_ROOM_ENTITY(self) -> MainComponentTypeEntity:
         return self.get_bean(column_name=MainComponentTypeConfig.get_key_column_name(), value="chat_room")
 
 

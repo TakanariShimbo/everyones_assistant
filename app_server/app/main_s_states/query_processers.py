@@ -33,9 +33,9 @@ class QueryProcesser(BaseProcesser[str]):
     def pre_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
         form: QueryForm = inner_dict["form"]
         with outer_dict["history_area"]:
-            with st.chat_message(name=ROLE_TYPE_TABLE.user_id):
+            with st.chat_message(name=ROLE_TYPE_TABLE.USER_ID):
                 st.write(form.prompt)
-            with st.chat_message(name=ROLE_TYPE_TABLE.assistant_id):
+            with st.chat_message(name=ROLE_TYPE_TABLE.ASSISTANT_ID):
                 outer_dict["answer_area"] = st.empty()
 
     def post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:

@@ -15,15 +15,15 @@ class ManagementComponentTypeTable(BaseCsvTable[ManagementComponentTypeConfig, M
         return ManagementComponentTypeEntity
 
     @property
-    def sign_in_entity(self) -> ManagementComponentTypeEntity:
+    def SIGN_IN_ENTITY(self) -> ManagementComponentTypeEntity:
         return self.get_bean(column_name=ManagementComponentTypeConfig.get_key_column_name(), value="sign_in")
 
     @property
-    def home_entity(self) -> ManagementComponentTypeEntity:
+    def HOME_ENTITY(self) -> ManagementComponentTypeEntity:
         return self.get_bean(column_name=ManagementComponentTypeConfig.get_key_column_name(), value="home")
 
     @property
-    def sign_up_entity(self) -> ManagementComponentTypeEntity:
+    def SIGN_UP_ENTITY(self) -> ManagementComponentTypeEntity:
         return self.get_bean(column_name=ManagementComponentTypeConfig.get_key_column_name(), value="sign_up")
 
 

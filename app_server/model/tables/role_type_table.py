@@ -15,15 +15,15 @@ class RoleTypeTable(BaseCsvTable[RoleTypeConfig, RoleTypeEntity]):
         return RoleTypeEntity
 
     @property
-    def system_id(self) -> str:
+    def SYSTEM_ID(self) -> str:
         return self.get_bean(column_name=RoleTypeConfig.get_key_column_name(), value="system").role_id
 
     @property
-    def user_id(self) -> str:
+    def USER_ID(self) -> str:
         return self.get_bean(column_name=RoleTypeConfig.get_key_column_name(), value="user").role_id
     
     @property
-    def assistant_id(self) -> str:
+    def ASSISTANT_ID(self) -> str:
         return self.get_bean(column_name=RoleTypeConfig.get_key_column_name(), value="assistant").role_id
 
 
