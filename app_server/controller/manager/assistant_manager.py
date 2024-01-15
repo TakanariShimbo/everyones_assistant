@@ -5,7 +5,7 @@ from model import ChatMessageEntity, PROVIDER_TYPE_TABLE, LoadedEnv
 
 
 class AssistantManager:
-    client = ChatGptHandler.generate_client(api_key=LoadedEnv.OPEN_AI_API_KEY)
+    _CLIENT = ChatGptHandler.generate_client(api_key=LoadedEnv.OPEN_AI_API_KEY)
     GeminiHandler.set_api_key(api_key=LoadedEnv.GEMINI_API_KEY)
 
     @classmethod
@@ -44,7 +44,7 @@ class AssistantManager:
     ) -> str:
         message_params = [convert_entity_to_message_param(role=message_entity.role_id, content=message_entity.content) for message_entity in message_entities]
         answer = ChatGptHandler.query_streamly_answer_and_display(
-            client=cls.client,
+            client=cls._CLIENT,
             prompt=prompt,
             ai_model_id=ai_model_id,
             message_prams=message_params,
