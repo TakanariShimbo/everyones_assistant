@@ -23,12 +23,12 @@ table_builder = base_builder.generate_child_builder("tables")
 ENV_PATH = base_builder.generate_path("env", ".env")
 
 
-class LottiePathList:
+class LottiePathes:
     LOADING = lottie_builder.generate_path("loading.json")
     WAKE_UP_LOGO = lottie_builder.generate_path("wake_up_logo_streamlit.json")
 
 
-class TablePathList:
+class TablePathes:
     ASSISTNAT = table_builder.generate_path("assistant.csv")
     MAIN_COMPONENT = table_builder.generate_path("main_component.csv")
     MANAGEMENT_COMPONENT = table_builder.generate_path("management_component.csv")

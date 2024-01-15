@@ -2,7 +2,7 @@ from typing import List
 
 import pandas as pd
 
-from ..static import TablePathList
+from ..static import TablePathes
 from ..base import ColumnConfig, BaseCsvConfig
 
 
@@ -17,4 +17,4 @@ class ReleaseTypeConfig(BaseCsvConfig):
 
     @staticmethod
     def _get_csv_filepath() -> str:
-        return TablePathList.RELEASE
+        return TablePathes.RELEASE

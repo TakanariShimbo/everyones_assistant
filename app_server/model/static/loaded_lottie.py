@@ -1,7 +1,7 @@
 from ..handler import JsonHandler
-from .path_list import LottiePathList
+from .pathes import LottiePathes
 
 
 class LoadedLottie:
-    WAKE_UP_LOGO = JsonHandler.load(LottiePathList.WAKE_UP_LOGO)
-    LOADING = JsonHandler.load(LottiePathList.LOADING)
+    WAKE_UP_LOGO = JsonHandler.load(LottiePathes.WAKE_UP_LOGO)
+    LOADING = JsonHandler.load(LottiePathes.LOADING)

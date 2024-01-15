@@ -1,3 +1,3 @@
-from .path_list import TablePathList
+from .pathes import TablePathes
 from .loaded_env import LoadedEnv
 from .loaded_lottie import LoadedLottie

@@ -2,7 +2,7 @@ from typing import List
 
 import pandas as pd
 
-from ..static import TablePathList
+from ..static import TablePathes
 from ..base import ColumnConfig, BaseCsvConfig
 
 
@@ -17,4 +17,4 @@ class ProviderTypeConfig(BaseCsvConfig):
 
     @staticmethod
     def _get_csv_filepath() -> str:
-        return TablePathList.PROVIDER
+        return TablePathes.PROVIDER
