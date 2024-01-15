@@ -1,22 +1,17 @@
-from enum import Enum
 from typing import List
 from textwrap import dedent
 
 import pandas as pd
 
-from ..base import ColumnConfig, BaseDatabaseConfig
+from ..base import ColumnConfig, BaseColumnConfigEnum, BaseDatabaseConfig
 
 
-class ChatRoomColumnConfigs(Enum):
+class ChatRoomColumnConfigs(BaseColumnConfigEnum):
     ROOM_ID = ColumnConfig(name="room_id", dtype=pd.StringDtype(), auto_assigned=False)
     ACCOUNT_ID = ColumnConfig(name="account_id", dtype=pd.StringDtype(), auto_assigned=False)
     TITLE = ColumnConfig(name="title", dtype=pd.StringDtype(), auto_assigned=False)
     RELEASE_ID = ColumnConfig(name="release_id", dtype=pd.StringDtype(), auto_assigned=False)
     CREATED_AT = ColumnConfig(name="created_at", dtype=pd.StringDtype(), auto_assigned=True)
-
-    @classmethod
-    def to_list(cls) -> List[ColumnConfig]:
-        return [config.value for config in cls]
 
 
 class ChatRoomConfig(BaseDatabaseConfig):

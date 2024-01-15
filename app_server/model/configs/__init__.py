@@ -1,10 +1,10 @@
-from .account_config import AccountConfig
-from .assistant_type_config import AssistantTypeConfig
-from .chat_message_config import ChatMessageConfig
-from .chat_room_config import ChatRoomConfig
-from .chat_room_dto_config import ChatRoomDtoConfig
-from .main_component_type_config import MainComponentTypeConfig
-from .management_component_type_config import ManagementComponentTypeConfig
-from .provider_type_config import ProviderTypeConfig
-from .release_type_config import ReleaseTypeConfig
-from .role_type_config import RoleTypeConfig
+from .account_config import AccountColumnConfigs, AccountConfig
+from .assistant_type_config import AssistantTypeColumnConfigs, AssistantTypeConfig
+from .chat_message_config import ChatMessageColumnConfigs, ChatMessageConfig
+from .chat_room_config import ChatRoomColumnConfigs, ChatRoomConfig
+from .chat_room_dto_config import ChatRoomDtoColumnConfigs, ChatRoomDtoConfig
+from .main_component_type_config import MainComponentTypeColumnConfigs, MainComponentTypeConfig
+from .management_component_type_config import ManagementComponentTypeColumnConfigs, ManagementComponentTypeConfig
+from .provider_type_config import ProviderTypeColumnConfigs, ProviderTypeConfig
+from .release_type_config import ReleaseTypeColumnConfigs, ReleaseTypeConfig
+from .role_type_config import RoleTypeColumnConfigs, RoleTypeConfig

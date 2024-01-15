@@ -1,3 +1,6 @@
+from enum import Enum
+from typing import List
+
 from pandas.api.extensions import ExtensionDtype
 
 
@@ -35,3 +38,13 @@ class ColumnConfig:
     @property
     def auto_assigned(self) -> bool:
         return self._auto_assigned
+
+
+class BaseColumnConfigEnum(ColumnConfig, Enum):
+    @classmethod
+    def to_list(cls) -> List[ColumnConfig]:
+        return [config.value for config in cls]
+
+    @classmethod
+    def get_key_column_name(cls) -> str:
+        return cls.to_list()[0].name

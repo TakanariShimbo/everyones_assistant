@@ -22,7 +22,3 @@ class BaseConfig(ABC):
     @classmethod
     def _get_dtype_dict(cls) -> Dict[str, ExtensionDtype]:
         return {config.name: config.dtype for config in cls._get_column_configs()}
-
-    @classmethod
-    def get_key_column_name(cls) -> str:
-        return cls._get_column_names(ignore_auto_assigned=False)[0]

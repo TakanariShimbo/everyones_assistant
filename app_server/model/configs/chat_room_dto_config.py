@@ -1,12 +1,11 @@
-from enum import Enum
 from typing import List
 
 import pandas as pd
 
-from ..base import ColumnConfig, BaseDtoConfig
+from ..base import ColumnConfig, BaseColumnConfigEnum, BaseDtoConfig
 
 
-class ChatRoomDtoColumnConfigs(Enum):
+class ChatRoomDtoColumnConfigs(BaseColumnConfigEnum):
     ROOM_ID = ColumnConfig(name="room_id", dtype=pd.StringDtype())
     ROOM_TITLE = ColumnConfig(name="room_title", dtype=pd.StringDtype())
     ROOM_CREATED_AT = ColumnConfig(name="room_created_at", dtype=pd.StringDtype())
@@ -23,10 +22,6 @@ class ChatRoomDtoColumnConfigs(Enum):
     RELEASE_ID = ColumnConfig(name="release_id", dtype=pd.StringDtype())
     RELEASE_LABEL_EN = ColumnConfig(name="release_label_en", dtype=pd.StringDtype())
     RELEASE_LABEL_JP = ColumnConfig(name="release_label_jp", dtype=pd.StringDtype())
-
-    @classmethod
-    def to_list(cls) -> List[ColumnConfig]:
-        return [config.value for config in cls]
 
 
 class ChatRoomDtoConfig(BaseDtoConfig):

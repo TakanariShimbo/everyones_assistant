@@ -1,13 +1,12 @@
-from enum import Enum
 from typing import List
 from textwrap import dedent
 
 import pandas as pd
 
-from ..base import ColumnConfig, BaseDatabaseConfig
+from ..base import ColumnConfig, BaseColumnConfigEnum, BaseDatabaseConfig
 
 
-class AccountColumnConfigs(Enum):
+class AccountColumnConfigs(BaseColumnConfigEnum):
     ACCOUNT_ID = ColumnConfig(name="account_id", dtype=pd.StringDtype(), auto_assigned=False)
     MAIL_ADDRESS = ColumnConfig(name="mail_address", dtype=pd.StringDtype(), auto_assigned=False)
     FAMILY_NAME_EN = ColumnConfig(name="family_name_en", dtype=pd.StringDtype(), auto_assigned=False)
@@ -16,10 +15,6 @@ class AccountColumnConfigs(Enum):
     GIVEN_NAME_JP = ColumnConfig(name="given_name_jp", dtype=pd.StringDtype(), auto_assigned=False)
     HASHED_PASSWORD = ColumnConfig(name="hashed_password", dtype=pd.StringDtype(), auto_assigned=False)
     REGISTERED_AT = ColumnConfig(name="registered_at", dtype=pd.StringDtype(), auto_assigned=True)
-
-    @classmethod
-    def to_list(cls) -> List[ColumnConfig]:
-        return [config.value for config in cls]
 
 
 class AccountConfig(BaseDatabaseConfig):
