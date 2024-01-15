@@ -5,7 +5,7 @@ from sqlalchemy import Engine
 
 from ..handler import DateHandler, HashHandler
 from ..base import BaseDatabaseEntity
-from ..configs import AccountConfig, AccountColumnConfigs
+from ..configs import AccountConfig
 
 
 class AccountEntity(BaseDatabaseEntity[AccountConfig]):
@@ -103,7 +103,7 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
 
     @classmethod
     def load_specified_id_from_database(cls, database_engine: Engine, account_id: str) -> "AccountEntity":
-        return cls.load_from_database(database_engine=database_engine, column_name=AccountColumnConfigs.get_key_column_name(), value=account_id)
+        return cls.load_from_database(database_engine=database_engine, column_name=AccountConfig.get_key_column_name(), value=account_id)
 
     def verify_password(self, raw_password: str) -> bool:
         return HashHandler.verify(raw_contents=raw_password, hashed_contents=self.hashed_password)
