@@ -36,10 +36,12 @@ class ChatRoomDtoTable(BaseDtoTable[ChatRoomDtoConfig, ChatRoomDto]):
             account_id=account_id, 
             limit=limit,
         )
+        
         account_table = AccountTable.load_specified_accounts_from_database(
             database_engine=database_engine, 
             account_ids=[account_id],
         )
+        
         return cls.init_from_tables(chat_room_table=chat_room_table, account_table=account_table)
 
 
@@ -50,7 +52,11 @@ class ChatRoomDtoTable(BaseDtoTable[ChatRoomDtoConfig, ChatRoomDto]):
             account_id=account_id, 
             limit=limit,
         )
+        
         account_ids = chat_room_table.get_unique_values(column_name=AccountConfig.get_key_column_name())
+        if len(account_ids) == 0:
+            return cls.create_empty_table()
+        
         account_table = AccountTable.load_specified_accounts_from_database(
             database_engine=database_engine, 
             account_ids=account_ids,
