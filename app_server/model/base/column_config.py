@@ -40,7 +40,7 @@ class ColumnConfig:
         return self._auto_assigned
 
 
-class BaseColumnConfigEnum(ColumnConfig, Enum):
+class BaseColumnConfigEnum(Enum):
     @classmethod
     def to_list(cls) -> List[ColumnConfig]:
         return [config.value for config in cls]
