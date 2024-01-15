@@ -17,4 +17,4 @@ class ReleaseTypeConfig(BaseCsvConfig):
 
     @staticmethod
     def _get_csv_filepath() -> str:
-        return TablePathList.release
+        return TablePathList.RELEASE

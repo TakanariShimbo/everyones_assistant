@@ -112,7 +112,7 @@ class SignUpComponent(BaseComponent):
             return
 
         with action_results.loading_area:
-            with st_lottie_spinner(animation_source=LoadedLottie.loading):
+            with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
                 processers_manager = SignUpProcesserSState.get()
                 processers_manager.run_all(
                     message_area=action_results.message_area,
@@ -128,7 +128,7 @@ class SignUpComponent(BaseComponent):
 
     @staticmethod
     def _display_account_table() -> None:
-        account_table = AccountTable.load_from_database(database_engine=Database.engine)
+        account_table = AccountTable.load_from_database(database_engine=Database.ENGINE)
         st.dataframe(account_table.df, use_container_width=True)
 
     @classmethod

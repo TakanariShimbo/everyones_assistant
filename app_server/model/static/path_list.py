@@ -24,14 +24,14 @@ ENV_PATH = base_builder.generate_path("env", ".env")
 
 
 class LottiePathList:
-    loading = lottie_builder.generate_path("loading.json")
-    wake_up_logo = lottie_builder.generate_path("wake_up_logo_streamlit.json")
+    LOADING = lottie_builder.generate_path("loading.json")
+    WAKE_UP_LOGO = lottie_builder.generate_path("wake_up_logo_streamlit.json")
 
 
 class TablePathList:
-    assistant = table_builder.generate_path("assistant.csv")
-    main_component = table_builder.generate_path("main_component.csv")
-    management_component = table_builder.generate_path("management_component.csv")
-    provider = table_builder.generate_path("provider.csv")
-    release = table_builder.generate_path("release.csv")
-    role = table_builder.generate_path("role.csv")
+    ASSISTNAT = table_builder.generate_path("assistant.csv")
+    MAIN_COMPONENT = table_builder.generate_path("main_component.csv")
+    MANAGEMENT_COMPONENT = table_builder.generate_path("management_component.csv")
+    PROVIDER = table_builder.generate_path("provider.csv")
+    RELEASE = table_builder.generate_path("release.csv")
+    ROLE = table_builder.generate_path("role.csv")

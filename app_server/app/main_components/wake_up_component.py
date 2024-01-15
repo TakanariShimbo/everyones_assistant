@@ -15,7 +15,7 @@ class WakeupComponent(BaseComponent):
 
     @classmethod
     def main(cls) -> None:
-        st_lottie(animation_source=LoadedLottie.wake_up_logo, speed=1.2, reverse=False, loop=False)
+        st_lottie(animation_source=LoadedLottie.WAKE_UP_LOGO, speed=1.2, reverse=False, loop=False)
         sleep(4)
         MainComponentSState.set_sign_in_entity()
         st.rerun()

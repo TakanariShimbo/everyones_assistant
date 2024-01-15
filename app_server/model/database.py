@@ -4,5 +4,5 @@ from .static import LoadedEnv
 
 
 class Database:
-    url = f"{LoadedEnv.database_type}://{LoadedEnv.database_user}:{LoadedEnv.database_password}@{LoadedEnv.database_host}:{LoadedEnv.database_port}/{LoadedEnv.database_db}"
-    engine = create_engine(url=url)
+    URL = f"{LoadedEnv.DATABASE_TYPE}://{LoadedEnv.DATABASE_USER}:{LoadedEnv.DATABASE_PASSWORD}@{LoadedEnv.DATABASE_HOST}:{LoadedEnv.DATABASE_PORT}/{LoadedEnv.DATABASE_DB}"
+    ENGINE = create_engine(url=URL)

@@ -17,4 +17,4 @@ class RoleTypeConfig(BaseCsvConfig):
 
     @staticmethod
     def _get_csv_filepath() -> str:
-        return TablePathList.role
+        return TablePathList.ROLE

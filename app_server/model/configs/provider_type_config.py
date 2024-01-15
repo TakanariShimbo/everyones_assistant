@@ -17,4 +17,4 @@ class ProviderTypeConfig(BaseCsvConfig):
 
     @staticmethod
     def _get_csv_filepath() -> str:
-        return TablePathList.provider
+        return TablePathList.PROVIDER

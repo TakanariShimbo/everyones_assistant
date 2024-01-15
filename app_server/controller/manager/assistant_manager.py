@@ -5,8 +5,8 @@ from model import ChatMessageEntity, PROVIDER_TYPE_TABLE, LoadedEnv
 
 
 class AssistantManager:
-    client = ChatGptHandler.generate_client(api_key=LoadedEnv.open_ai_api_key)
-    GeminiHandler.set_api_key(api_key=LoadedEnv.gemini_api_key)
+    client = ChatGptHandler.generate_client(api_key=LoadedEnv.OPEN_AI_API_KEY)
+    GeminiHandler.set_api_key(api_key=LoadedEnv.GEMINI_API_KEY)
 
     @classmethod
     def query_streamly_answer_and_display(

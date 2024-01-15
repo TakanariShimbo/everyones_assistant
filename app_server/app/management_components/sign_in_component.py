@@ -47,11 +47,11 @@ class SignInComponent(BaseComponent):
         if not action_results.is_pushed:
             return False
 
-        if not action_results.admin_id == LoadedEnv.admin_id:
+        if not action_results.admin_id == LoadedEnv.ADMIN_ID:
             action_results.message_area.warning("Please input form corectly.")
             return False
         
-        if not action_results.admin_password == LoadedEnv.admin_password:
+        if not action_results.admin_password == LoadedEnv.ADMIN_PASSWORD:
             action_results.message_area.warning("Please input form corectly.")
             return False
         

@@ -19,4 +19,4 @@ class AssistantTypeConfig(BaseCsvConfig):
 
     @staticmethod
     def _get_csv_filepath() -> str:
-        return TablePathList.assistant
+        return TablePathList.ASSISTNAT
