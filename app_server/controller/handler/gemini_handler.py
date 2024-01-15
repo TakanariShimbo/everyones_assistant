@@ -4,17 +4,6 @@ from google.generativeai import configure, GenerativeModel
 from google.generativeai.types import GenerateContentResponse, ContentDict
 
 
-def convert_entity_to_content_dict(role: str, content: str) -> ContentDict:
-    if role == "user":
-        return ContentDict(role="user", parts=[content])
-    elif role == "assistant":
-        return ContentDict(role="model", parts=[content])
-    elif role == "system":
-        return ContentDict(role="user", parts=[content])
-    else:
-        raise ValueError("role is 'user' or 'assistant' or 'system'")
-
-
 class GeminiHandler:
     @staticmethod
     def set_api_key(api_key: str) -> None:
@@ -55,3 +44,14 @@ class GeminiHandler:
             answer += answer_peace
             callback_func(answer)
         return answer
+
+    @staticmethod
+    def convert_entity_to_content_dict(role: str, content: str) -> ContentDict:
+        if role == "user":
+            return ContentDict(role="user", parts=[content])
+        elif role == "assistant":
+            return ContentDict(role="model", parts=[content])
+        elif role == "system":
+            return ContentDict(role="user", parts=[content])
+        else:
+            raise ValueError("role is 'user' or 'assistant' or 'system'")

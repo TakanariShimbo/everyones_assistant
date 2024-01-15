@@ -12,17 +12,6 @@ from openai.types.chat import (
 from .open_ai_handler import OpenAiHandler
 
 
-def convert_entity_to_message_param(role: str, content: str) -> ChatCompletionMessageParam:
-    if role == "user":
-        return ChatCompletionUserMessageParam(role="user", content=content)
-    elif role == "assistant":
-        return ChatCompletionAssistantMessageParam(role="assistant", content=content)
-    elif role == "system":
-        return ChatCompletionSystemMessageParam(role="system", content=content)
-    else:
-        raise ValueError("role is 'user' or 'assistant' or 'system'")
-
-
 class ChatGptHandler(OpenAiHandler):
     @classmethod
     def query_answer(
@@ -91,3 +80,14 @@ class ChatGptHandler(OpenAiHandler):
         copyed_message_params = message_prams.copy()
         copyed_message_params.append(ChatCompletionUserMessageParam(role="user", content=prompt))
         return copyed_message_params
+
+    @staticmethod
+    def convert_entity_to_message_param(role: str, content: str) -> ChatCompletionMessageParam:
+        if role == "user":
+            return ChatCompletionUserMessageParam(role="user", content=content)
+        elif role == "assistant":
+            return ChatCompletionAssistantMessageParam(role="assistant", content=content)
+        elif role == "system":
+            return ChatCompletionSystemMessageParam(role="system", content=content)
+        else:
+            raise ValueError("role is 'user' or 'assistant' or 'system'")

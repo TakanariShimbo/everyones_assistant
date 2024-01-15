@@ -1,6 +1,6 @@
 from typing import Callable, List
 
-from ..handler import ChatGptHandler, convert_entity_to_message_param, GeminiHandler, convert_entity_to_content_dict
+from ..handler import ChatGptHandler, GeminiHandler
 from model import ChatMessageEntity, PROVIDER_TYPE_TABLE, LoadedEnv
 
 
@@ -42,7 +42,7 @@ class AssistantManager:
         message_entities: List[ChatMessageEntity],
         callback_func: Callable[[str], None],
     ) -> str:
-        message_params = [convert_entity_to_message_param(role=message_entity.role_id, content=message_entity.content) for message_entity in message_entities]
+        message_params = [ChatGptHandler.convert_entity_to_message_param(role=message_entity.role_id, content=message_entity.content) for message_entity in message_entities]
         answer = ChatGptHandler.query_streamly_answer_and_display(
             client=cls._CLIENT,
             prompt=prompt,
@@ -59,7 +59,7 @@ class AssistantManager:
         message_entities: List[ChatMessageEntity],
         callback_func: Callable[[str], None],
     ) -> str:
-        content_dicts = [convert_entity_to_content_dict(role=message_entity.role_id, content=message_entity.content) for message_entity in message_entities]
+        content_dicts = [GeminiHandler.convert_entity_to_content_dict(role=message_entity.role_id, content=message_entity.content) for message_entity in message_entities]
         answer = GeminiHandler.query_streamly_answer_and_display(
             prompt=prompt,
             ai_model_id=ai_model_id,
