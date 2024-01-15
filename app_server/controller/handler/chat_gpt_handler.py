@@ -34,7 +34,7 @@ class ChatGptHandler(OpenAiHandler):
     ) -> str:
         response = client.chat.completions.create(
             model=ai_model_id,
-            messages=cls.get_message_params_added_prompt(prompt=prompt, message_prams=message_prams),
+            messages=cls._get_message_params_added_prompt(prompt=prompt, message_prams=message_prams),
         )
 
         answer = response.choices[0].message.content
@@ -65,7 +65,7 @@ class ChatGptHandler(OpenAiHandler):
     ) -> Stream[ChatCompletionChunk]:
         streamly_answer = client.chat.completions.create(
             model=ai_model_id,
-            messages=cls.get_message_params_added_prompt(prompt=prompt, message_prams=message_prams),
+            messages=cls._get_message_params_added_prompt(prompt=prompt, message_prams=message_prams),
             stream=True,
         )
 
@@ -84,7 +84,7 @@ class ChatGptHandler(OpenAiHandler):
         return answer
 
     @staticmethod
-    def get_message_params_added_prompt(prompt: str, message_prams: Optional[List[ChatCompletionMessageParam]]) -> List[ChatCompletionMessageParam]:
+    def _get_message_params_added_prompt(prompt: str, message_prams: Optional[List[ChatCompletionMessageParam]]) -> List[ChatCompletionMessageParam]:
         if message_prams == None:
             message_prams = []
 
