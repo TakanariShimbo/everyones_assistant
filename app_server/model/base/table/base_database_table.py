@@ -49,20 +49,24 @@ class BaseDatabaseTable(BaseTable[C, B], ABC):
 
     @classmethod
     def _get_truncate_temp_sql(cls) -> Tuple[str, None]:
-        return DatabaseHandler.get_truncate_sql(table_name=cls._get_temp_database_table_name())
+        temp_table_name = cls._get_temp_database_table_name()
+        return DatabaseHandler.get_truncate_sql(table_name=temp_table_name)
 
     @classmethod
     def _get_upsert_sql(cls) -> Tuple[str, None]:
         """
         NOTES: KEY COLUMN MUST BE 'AUTO_ASSIGNED'=FALSE.
         """
+        table_name = cls._get_database_table_name()
+        temp_table_name = cls._get_temp_database_table_name()
+        key_column_name = cls._get_key_column_name()
         column_names = cls._get_column_names(ignore_auto_assigned=True)
 
         return DatabaseHandler.get_upsert_sql(
-            table_name=cls._get_database_table_name(),
-            temp_table_name=cls._get_temp_database_table_name(),
-            key_column_name=column_names[0],
-            non_key_column_names=column_names[1::],
+            table_name=table_name,
+            temp_table_name=temp_table_name,
+            key_column_name=key_column_name,
+            non_key_column_names=[column_name for column_name in column_names if column_name != key_column_name],
         )
 
     def _insert_to_database(self, database_engine: Engine) -> None:

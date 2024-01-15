@@ -1,4 +1,4 @@
-from typing import List
+from typing import Type
 
 import pandas as pd
 
@@ -16,8 +16,8 @@ class AssistantTypeColumnConfigs(BaseColumnConfigEnum):
 
 class AssistantTypeConfig(BaseCsvConfig):
     @staticmethod
-    def _get_column_configs() -> List[ColumnConfig]:
-        return AssistantTypeColumnConfigs.to_list()
+    def _get_column_configs() -> Type[BaseColumnConfigEnum]:
+        return AssistantTypeColumnConfigs
 
     @staticmethod
     def _get_csv_filepath() -> str:

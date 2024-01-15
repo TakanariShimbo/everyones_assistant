@@ -4,7 +4,7 @@ import pandas as pd
 from sqlalchemy import Engine
 
 from ..base import BaseDtoTable
-from ..configs import ChatRoomDtoConfig, AccountColumnConfigs, ReleaseTypeColumnConfigs
+from ..configs import ChatRoomDtoConfig, AccountConfig, ReleaseTypeConfig
 from ..beans import ChatRoomDto
 from .chat_room_table import ChatRoomTable
 from .account_table import AccountTable
@@ -25,8 +25,8 @@ class ChatRoomDtoTable(BaseDtoTable[ChatRoomDtoConfig, ChatRoomDto]):
         chat_room_df = cls._add_prefix_to_columns_except_id(df=chat_room_table.df.copy(), prefix="room_")
         account_df = cls._add_prefix_to_columns_except_id(df=account_table.df.copy(), prefix="account_")
         release_type_df = cls._add_prefix_to_columns_except_id(df=RELEASE_TYPE_TABLE.df.copy(), prefix="release_")
-        merged_df = pd.merge(chat_room_df, account_df, on=AccountColumnConfigs.get_key_column_name(), how="left")
-        merged_df = pd.merge(merged_df, release_type_df, on=ReleaseTypeColumnConfigs.get_key_column_name(), how="left")
+        merged_df = pd.merge(chat_room_df, account_df, on=AccountConfig.get_key_column_name(), how="left")
+        merged_df = pd.merge(merged_df, release_type_df, on=ReleaseTypeConfig.get_key_column_name(), how="left")
         return cls(df=merged_df)
 
     @classmethod
@@ -52,7 +52,7 @@ class ChatRoomDtoTable(BaseDtoTable[ChatRoomDtoConfig, ChatRoomDto]):
             limit=limit,
         )
 
-        account_ids = chat_room_table.get_unique_values(column_name=AccountColumnConfigs.get_key_column_name())
+        account_ids = chat_room_table.get_unique_values(column_name=AccountConfig.get_key_column_name())
         if len(account_ids) == 0:
             return cls.create_empty_table()
 

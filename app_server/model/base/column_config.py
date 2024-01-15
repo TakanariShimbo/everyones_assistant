@@ -44,7 +44,3 @@ class BaseColumnConfigEnum(Enum):
     @classmethod
     def to_list(cls) -> List[ColumnConfig]:
         return [config.value for config in cls]
-
-    @classmethod
-    def get_key_column_name(cls) -> str:
-        return cls.to_list()[0].name

@@ -1,4 +1,4 @@
-from typing import List
+from typing import Type
 
 import pandas as pd
 
@@ -14,8 +14,8 @@ class MainComponentTypeColumnConfigs(BaseColumnConfigEnum):
 
 class MainComponentTypeConfig(BaseCsvConfig):
     @staticmethod
-    def _get_column_configs() -> List[ColumnConfig]:
-        return MainComponentTypeColumnConfigs.to_list()
+    def _get_column_configs() -> Type[BaseColumnConfigEnum]:
+        return MainComponentTypeColumnConfigs
 
     @staticmethod
     def _get_csv_filepath() -> str:

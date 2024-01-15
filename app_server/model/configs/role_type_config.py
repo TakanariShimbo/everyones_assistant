@@ -1,4 +1,4 @@
-from typing import List
+from typing import Type
 
 import pandas as pd
 
@@ -14,8 +14,8 @@ class RoleTypeColumnConfigs(BaseColumnConfigEnum):
 
 class RoleTypeConfig(BaseCsvConfig):
     @staticmethod
-    def _get_column_configs() -> List[ColumnConfig]:
-        return RoleTypeColumnConfigs.to_list()
+    def _get_column_configs() -> Type[BaseColumnConfigEnum]:
+        return RoleTypeColumnConfigs
 
     @staticmethod
     def _get_csv_filepath() -> str:

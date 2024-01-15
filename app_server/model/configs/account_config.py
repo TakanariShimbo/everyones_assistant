@@ -1,4 +1,4 @@
-from typing import List
+from typing import Type
 from textwrap import dedent
 
 import pandas as pd
@@ -19,8 +19,8 @@ class AccountColumnConfigs(BaseColumnConfigEnum):
 
 class AccountConfig(BaseDatabaseConfig):
     @staticmethod
-    def _get_column_configs() -> List[ColumnConfig]:
-        return AccountColumnConfigs.to_list()
+    def _get_column_configs() -> Type[BaseColumnConfigEnum]:
+        return AccountColumnConfigs
 
     @staticmethod
     def _get_database_table_name() -> str:

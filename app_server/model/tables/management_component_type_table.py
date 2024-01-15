@@ -1,7 +1,7 @@
 from typing import Type
 
 from ..base import BaseCsvTable
-from ..configs import ManagementComponentTypeConfig, ManagementComponentTypeColumnConfigs
+from ..configs import ManagementComponentTypeConfig
 from ..beans import ManagementComponentTypeEntity
 
 
@@ -16,15 +16,15 @@ class ManagementComponentTypeTable(BaseCsvTable[ManagementComponentTypeConfig, M
 
     @property
     def SIGN_IN_ENTITY(self) -> ManagementComponentTypeEntity:
-        return self.get_bean(column_name=ManagementComponentTypeColumnConfigs.get_key_column_name(), value="sign_in")
+        return self.get_bean(column_name=ManagementComponentTypeConfig.get_key_column_name(), value="sign_in")
 
     @property
     def HOME_ENTITY(self) -> ManagementComponentTypeEntity:
-        return self.get_bean(column_name=ManagementComponentTypeColumnConfigs.get_key_column_name(), value="home")
+        return self.get_bean(column_name=ManagementComponentTypeConfig.get_key_column_name(), value="home")
 
     @property
     def SIGN_UP_ENTITY(self) -> ManagementComponentTypeEntity:
-        return self.get_bean(column_name=ManagementComponentTypeColumnConfigs.get_key_column_name(), value="sign_up")
+        return self.get_bean(column_name=ManagementComponentTypeConfig.get_key_column_name(), value="sign_up")
 
 
 MANAGEMENT_COMPONENT_TYPE_TABLE = ManagementComponentTypeTable.load_from_csv()

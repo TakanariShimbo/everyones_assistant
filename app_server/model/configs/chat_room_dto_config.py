@@ -1,4 +1,4 @@
-from typing import List
+from typing import Type
 
 import pandas as pd
 
@@ -26,5 +26,5 @@ class ChatRoomDtoColumnConfigs(BaseColumnConfigEnum):
 
 class ChatRoomDtoConfig(BaseDtoConfig):
     @staticmethod
-    def _get_column_configs() -> List[ColumnConfig]:
-        return ChatRoomDtoColumnConfigs.to_list()
+    def _get_column_configs() -> Type[BaseColumnConfigEnum]:
+        return ChatRoomDtoColumnConfigs

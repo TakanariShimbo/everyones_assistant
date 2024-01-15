@@ -1,4 +1,4 @@
-from typing import List
+from typing import Type
 
 import pandas as pd
 
@@ -14,8 +14,8 @@ class ReleaseTypeColumnConfigs(BaseColumnConfigEnum):
 
 class ReleaseTypeConfig(BaseCsvConfig):
     @staticmethod
-    def _get_column_configs() -> List[ColumnConfig]:
-        return ReleaseTypeColumnConfigs.to_list()
+    def _get_column_configs() -> Type[BaseColumnConfigEnum]:
+        return ReleaseTypeColumnConfigs
 
     @staticmethod
     def _get_csv_filepath() -> str:

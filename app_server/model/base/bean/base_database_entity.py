@@ -36,29 +36,36 @@ class BaseDatabaseEntity(BaseBean[C], ABC):
         return cls.init_from_dict(bean_dict=first_result._asdict())
 
     def _get_insert_sql(self) -> Tuple[str, Dict[str, Any]]:
+        table_name=self._get_database_table_name()
+        column_names = self._get_column_names(ignore_auto_assigned=True)
+
         statement, _ = DatabaseHandler.get_insert_sql(
-            table_name=self._get_database_table_name(),
-            column_names=self._get_column_names(ignore_auto_assigned=True),
+            table_name=table_name,
+            column_names=column_names,
         )
         parameters = self.to_dict(ignore_auto_assigned=True)
         return statement, parameters
 
     def _get_update_sql(self) -> Tuple[str, Dict[str, Any]]:
+        table_name=self._get_database_table_name()
+        key_column_name = self._get_key_column_name()
         column_names = self._get_column_names(ignore_auto_assigned=False)
+        
         statement, _ = DatabaseHandler.get_update_sql(
-            table_name=self._get_database_table_name(),
-            key_column_name=column_names[0],
-            non_key_column_names=column_names[1::],
+            table_name=table_name,
+            key_column_name=key_column_name,
+            non_key_column_names=[column_name for column_name in column_names if column_name != key_column_name],
         )
         parameters = self.to_dict(ignore_auto_assigned=False)
         return statement, parameters
 
     def _get_delete_sql(self) -> Tuple[str, Dict[str, Any]]:
-        key_column_name = self._get_column_names(ignore_auto_assigned=False)[0]
+        table_name = self._get_database_table_name()
+        key_column_name = self._get_key_column_name()
         key_value = getattr(self, key_column_name)
 
         statement, parameters = DatabaseHandler.get_delete_sql(
-            table_name=self._get_database_table_name(),
+            table_name=table_name,
             key_column_name=key_column_name,
             key_value=key_value,
         )

@@ -4,7 +4,6 @@ from typing import Any, Dict, List, Generic, TypeVar, Type, Union
 import pandas as pd
 from pandas.api.extensions import ExtensionDtype
 
-from ..column_config import ColumnConfig
 from ..config import BaseConfig
 
 
@@ -23,12 +22,12 @@ class BaseBean(Generic[C], ABC):
         raise NotImplementedError("Subclasses must implement this method")
 
     @classmethod
-    def _get_column_configs(cls) -> List[ColumnConfig]:
-        return cls._get_config_class()._get_column_configs()
-
-    @classmethod
     def _get_column_names(cls, ignore_auto_assigned: bool) -> List[str]:
         return cls._get_config_class()._get_column_names(ignore_auto_assigned=ignore_auto_assigned)
+
+    @classmethod
+    def _get_key_column_name(cls) -> str:
+        return cls._get_config_class().get_key_column_name()
 
     @classmethod
     def _get_dtype_dict(cls) -> Dict[str, ExtensionDtype]:

@@ -20,13 +20,13 @@ class BaseCsvTable(BaseTable[C, B], ABC):
 
     @classmethod
     def _validate_unique(cls: Type[T], df: pd.DataFrame) -> None:
-        for config in cls._get_column_configs():
+        for config in cls._get_column_config_list():
             if config.unique and df[config.name].duplicated().any():
                 raise ValueError(f"Column {config.name} has duplicate values")
 
     @classmethod
     def _validate_non_null(cls: Type[T], df: pd.DataFrame) -> None:
-        for config in cls._get_column_configs():
+        for config in cls._get_column_config_list():
             if config.non_null and df[config.name].isnull().any():
                 raise ValueError(f"Column {config.name} has null values")
 

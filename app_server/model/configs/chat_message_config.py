@@ -1,4 +1,4 @@
-from typing import List
+from typing import Type
 from textwrap import dedent
 
 import pandas as pd
@@ -17,8 +17,8 @@ class ChatMessageColumnConfigs(BaseColumnConfigEnum):
 
 class ChatMessageConfig(BaseDatabaseConfig):
     @staticmethod
-    def _get_column_configs() -> List[ColumnConfig]:
-        return ChatMessageColumnConfigs.to_list()
+    def _get_column_configs() -> Type[BaseColumnConfigEnum]:
+        return ChatMessageColumnConfigs
 
     @staticmethod
     def _get_database_table_name() -> str:

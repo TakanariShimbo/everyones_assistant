@@ -26,12 +26,16 @@ class BaseTable(Generic[C, B], ABC):
         raise NotImplementedError("Subclasses must implement this method")
 
     @classmethod
-    def _get_column_configs(cls) -> List[ColumnConfig]:
-        return cls._get_config_class()._get_column_configs()
+    def _get_column_config_list(cls) -> List[ColumnConfig]:
+        return cls._get_config_class()._get_column_config_list()
 
     @classmethod
     def _get_column_names(cls, ignore_auto_assigned: bool) -> List[str]:
         return cls._get_config_class()._get_column_names(ignore_auto_assigned=ignore_auto_assigned)
+
+    @classmethod
+    def _get_key_column_name(cls) -> str:
+        return cls._get_config_class().get_key_column_name()
 
     @classmethod
     def _get_dtype_dict(cls) -> Dict[str, ExtensionDtype]:
