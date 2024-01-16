@@ -20,10 +20,6 @@ class BaseDatabaseTable(BaseTable[C, B], ABC):
         return cls._get_config_class()._get_database_table_name()
 
     @classmethod
-    def _get_temp_database_table_name(cls) -> str:
-        return cls._get_config_class()._get_temp_database_table_name()
-
-    @classmethod
     def load_from_database(cls: Type[T], database_engine: Engine, statement: Optional[str] = None, parameters: Optional[Dict[str, Any]] = None) -> T:
         if statement == None:
             table_name = cls._get_database_table_name()
@@ -68,6 +64,9 @@ class BaseDatabaseTable(BaseTable[C, B], ABC):
         self._df.loc[:, column_names].to_sql(name=self._get_database_table_name(), con=database_engine, if_exists="append", index=False)
 
     def _upsert_to_database(self, database_engine: Engine) -> None:
+        column_names = self._get_column_names(ignore_auto_assigned=True)
+        record_dicts = self._df.loc[:, column_names].to_dict(orient='records')
+
         statement, parameters = self._get_upsert_sql(record_dicts=record_dicts)   # type: ignore
         DatabaseHandler.execute_sql(database_engine=database_engine, statement=statement, parameters=parameters)
 
