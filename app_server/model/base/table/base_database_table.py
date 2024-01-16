@@ -48,25 +48,19 @@ class BaseDatabaseTable(BaseTable[C, B], ABC):
         return DatabaseHandler.get_select_sql(table_name=table_name, filter_conditions=filter_conditions, order_condition=order_condition, limit=limit)
 
     @classmethod
-    def _get_truncate_temp_sql(cls) -> Tuple[str, None]:
-        temp_table_name = cls._get_temp_database_table_name()
-        return DatabaseHandler.get_truncate_sql(table_name=temp_table_name)
-
-    @classmethod
-    def _get_upsert_sql(cls) -> Tuple[str, None]:
+    def _get_upsert_sql(cls, record_dicts: List[Dict[str, Any]]) -> Tuple[str, Dict[str, Any]]:
         """
         NOTES: KEY COLUMN MUST BE 'AUTO_ASSIGNED'=FALSE.
         """
         table_name = cls._get_database_table_name()
-        temp_table_name = cls._get_temp_database_table_name()
         key_column_name = cls._get_key_column_name()
         column_names = cls._get_column_names(ignore_auto_assigned=True)
 
         return DatabaseHandler.get_upsert_sql(
             table_name=table_name,
-            temp_table_name=temp_table_name,
             key_column_name=key_column_name,
             non_key_column_names=[column_name for column_name in column_names if column_name != key_column_name],
+            record_dicts=record_dicts,
         )
 
     def _insert_to_database(self, database_engine: Engine) -> None:
@@ -74,13 +68,7 @@ class BaseDatabaseTable(BaseTable[C, B], ABC):
         self._df.loc[:, column_names].to_sql(name=self._get_database_table_name(), con=database_engine, if_exists="append", index=False)
 
     def _upsert_to_database(self, database_engine: Engine) -> None:
-        statement, parameters = self._get_truncate_temp_sql()
-        DatabaseHandler.execute_sql(database_engine=database_engine, statement=statement, parameters=parameters)
-
-        column_names = self._get_column_names(ignore_auto_assigned=True)
-        self._df.loc[:, column_names].to_sql(name=self._get_temp_database_table_name(), con=database_engine, if_exists="append", index=False)
-
-        statement, parameters = self._get_upsert_sql()
+        statement, parameters = self._get_upsert_sql(record_dicts=record_dicts)   # type: ignore
         DatabaseHandler.execute_sql(database_engine=database_engine, statement=statement, parameters=parameters)
 
     def save_to_database(self, database_engine: Engine, mode: Literal["insert", "upsert"] = "insert") -> None:
