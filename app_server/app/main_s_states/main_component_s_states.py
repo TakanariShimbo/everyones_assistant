@@ -12,13 +12,17 @@ class MainComponentSState(BaseSState[MainComponentTypeEntity]):
         return MAIN_COMPONENT_TYPE_TABLE.WAKE_UP_ENTITY
 
     @classmethod
-    def set_sign_in_entity(cls):
+    def set_sign_in_entity(cls) -> None:
         cls.set(value=MAIN_COMPONENT_TYPE_TABLE.SIGN_IN_ENTITY)
 
     @classmethod
-    def set_home_entity(cls):
+    def set_home_entity(cls) -> None:
         cls.set(value=MAIN_COMPONENT_TYPE_TABLE.HOME_ENTITY)
 
     @classmethod
-    def set_chat_room_entity(cls):
+    def set_chat_room_entity(cls) -> None:
         cls.set(value=MAIN_COMPONENT_TYPE_TABLE.CHAT_ROOM_ENTITY)
+
+    @classmethod
+    def set_accounts_entity(cls) -> None:
+        cls.set(value=MAIN_COMPONENT_TYPE_TABLE.ACCOUNTS_ENTITY)

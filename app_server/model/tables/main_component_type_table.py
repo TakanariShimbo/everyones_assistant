@@ -30,5 +30,9 @@ class MainComponentTypeTable(BaseCsvTable[MainComponentTypeConfig, MainComponent
     def CHAT_ROOM_ENTITY(self) -> MainComponentTypeEntity:
         return self.get_bean(column_name=MainComponentTypeConfig.get_key_column_name(), value="chat_room")
 
+    @property
+    def ACCOUNTS_ENTITY(self) -> MainComponentTypeEntity:
+        return self.get_bean(column_name=MainComponentTypeConfig.get_key_column_name(), value="accounts")
+
 
 MAIN_COMPONENT_TYPE_TABLE = MainComponentTypeTable.load_from_csv()

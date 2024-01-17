@@ -28,5 +28,7 @@ class MainPage(BasePage):
             HomeComponent.run()
         elif current_component_entity == MAIN_COMPONENT_TYPE_TABLE.CHAT_ROOM_ENTITY:
             ChatRoomComponent.run()
+        elif current_component_entity == MAIN_COMPONENT_TYPE_TABLE.ACCOUNTS_ENTITY:
+            raise NotImplementedError()
         else:
             raise ValueError("ComponentSState Value Error")
