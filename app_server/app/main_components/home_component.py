@@ -21,6 +21,10 @@ class HomeComponent(BaseComponent):
     def _display_sign_out_button(cls) -> None:
         st.sidebar.button(label="🚪 Sign out", key="SignOutButton", on_click=cls._on_click_sign_out, use_container_width=True)
 
+    @classmethod
+    def _display_accounts_button(cls) -> None:
+        st.sidebar.button(label="👤 Accounts", key="AccountsButton", on_click=cls._on_click_accounts, use_container_width=True)
+
     @staticmethod
     def _display_title() -> None:
         current_component_entity = MainComponentSState.get()
@@ -177,8 +181,14 @@ class HomeComponent(BaseComponent):
         AccountSState.deinit()
 
     @classmethod
+    def _on_click_accounts(cls) -> None:
+        MainComponentSState.set_accounts_entity()
+        cls.deinit()
+
+    @classmethod
     def main(cls) -> None:
         cls._display_sign_out_button()
+        cls._display_accounts_button()
         cls._display_title()
         cls._display_overview()
 
