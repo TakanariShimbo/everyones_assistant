@@ -20,5 +20,5 @@ class ManagementComponentSState(BaseSState[ManagementComponentTypeEntity]):
         cls.set(value=MANAGEMENT_COMPONENT_TYPE_TABLE.HOME_ENTITY)
 
     @classmethod
-    def set_sign_up_entity(cls):
-        cls.set(value=MANAGEMENT_COMPONENT_TYPE_TABLE.SIGN_UP_ENTITY)
+    def set_accounts_entity(cls):
+        cls.set(value=MANAGEMENT_COMPONENT_TYPE_TABLE.ACCOUNTS_ENTITY)

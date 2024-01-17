@@ -24,7 +24,7 @@ class ManagementPage(BasePage):
             SignInComponent.run()
         elif current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.HOME_ENTITY:
             HomeComponent.run()
-        elif current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.SIGN_UP_ENTITY:
+        elif current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.ACCOUNTS_ENTITY:
             AccountsComponent.run()
         else:
             raise ValueError("ComponentSState Value Error")

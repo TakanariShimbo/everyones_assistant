@@ -56,7 +56,7 @@ class HomeComponent(BaseComponent):
 
     @classmethod
     def _on_click_accounts(cls) -> None:
-        ManagementComponentSState.set_sign_up_entity()
+        ManagementComponentSState.set_accounts_entity()
         cls.deinit()
 
     @classmethod

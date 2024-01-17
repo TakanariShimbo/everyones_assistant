@@ -23,8 +23,8 @@ class ManagementComponentTypeTable(BaseCsvTable[ManagementComponentTypeConfig, M
         return self.get_bean(column_name=ManagementComponentTypeConfig.get_key_column_name(), value="home")
 
     @property
-    def SIGN_UP_ENTITY(self) -> ManagementComponentTypeEntity:
-        return self.get_bean(column_name=ManagementComponentTypeConfig.get_key_column_name(), value="sign_up")
+    def ACCOUNTS_ENTITY(self) -> ManagementComponentTypeEntity:
+        return self.get_bean(column_name=ManagementComponentTypeConfig.get_key_column_name(), value="accounts")
 
 
 MANAGEMENT_COMPONENT_TYPE_TABLE = ManagementComponentTypeTable.load_from_csv()
