@@ -41,7 +41,7 @@ class HomeComponent(BaseComponent):
 
     @staticmethod
     def _display_create_form_and_get_results() -> CreateActionResults:
-        st.markdown("#### ➕ New")
+        st.markdown("#### ➕ Get started")
         with st.form(key="CreateForm", border=True):
             selected_release_entity = st.selectbox(
                 label="Release Type",

@@ -27,6 +27,7 @@ class AccountsComponent(BaseComponent):
 
     @staticmethod
     def _display_sign_up_form_and_get_results() -> ActionResults:
+        st.markdown("#### ➕ Sign up")
         with st.form(key="SignUpForm", border=True):
             left_area, right_area = st.columns([1,1])
             with left_area:
@@ -129,6 +130,7 @@ class AccountsComponent(BaseComponent):
     @staticmethod
     def _display_account_table() -> None:
         account_table = AccountTable.load_from_database(database_engine=Database.ENGINE)
+        st.markdown("#### 👀 View")
         st.dataframe(account_table.df, use_container_width=True)
 
     @classmethod
