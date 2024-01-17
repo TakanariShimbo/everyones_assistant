@@ -26,15 +26,16 @@ class HomeComponent(BaseComponent):
 
     @staticmethod
     def _display_overview() -> None:
-        content = dedent(
-            f"""
-            #### 🔎 Overview
-            Welcome to Management Everyone's Assistant.   
-            Experience the forefront of AI technology and explore the possibilities of the future.  
-            AI makes your daily life smarter and easier.  
-            """
-        )
-        st.markdown(content)
+        st.markdown("#### 🔎 Overview")
+        with st.container(border=True):
+            content = dedent(
+                f"""
+                Welcome to Management Everyone's Assistant.   
+                Experience the forefront of AI technology and explore the possibilities of the future.  
+                AI makes your daily life smarter and easier.  
+                """
+            )
+            st.markdown(content)
 
     @classmethod
     def _on_click_sign_out(cls) -> None:

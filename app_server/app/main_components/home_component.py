@@ -28,15 +28,16 @@ class HomeComponent(BaseComponent):
 
     @staticmethod
     def _display_overview() -> None:
-        content = dedent(
-            f"""
-            #### 🔎 Overview
-            Welcome to Everyone's Assistant.   
-            Experience the forefront of AI technology and explore the possibilities of the future.  
-            AI makes your daily life smarter and easier.  
-            """
-        )
-        st.markdown(content)
+        st.markdown("#### 🔎 Overview")
+        with st.container(border=True):
+            content = dedent(
+                f"""
+                Welcome to Everyone's Assistant.   
+                Experience the forefront of AI technology and explore the possibilities of the future.  
+                AI makes your daily life smarter and easier.  
+                """
+            )
+            st.markdown(content)
 
     @staticmethod
     def _display_create_form_and_get_results() -> CreateActionResults:
