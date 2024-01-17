@@ -115,11 +115,11 @@ class HomeComponent(BaseComponent):
         with right_area:
             st.markdown("#### 🧑‍🤝‍🧑 Everyone")
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                your_room_table = ChatRoomDtoTable.load_public_unspecified_account_from_database(
+                everyone_room_table = ChatRoomDtoTable.load_public_unspecified_account_from_database(
                     database_engine=Database.ENGINE,
                     account_id=AccountSState.get().account_id,
                 )
-            for container_id, chat_room_dto in enumerate(your_room_table.get_all_beans()):
+            for container_id, chat_room_dto in enumerate(everyone_room_table.get_all_beans()):
                 action_results = cls._display_room_container_and_get_results(
                     chat_room_dto=chat_room_dto,
                     chat_room_type="View",
