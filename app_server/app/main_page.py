@@ -1,6 +1,6 @@
 from .base import BasePage
 from .main_s_states import MainComponentSState
-from .main_components import WakeupComponent, SignInComponent, HomeComponent, ChatRoomComponent
+from .main_components import WakeupComponent, SignInComponent, HomeComponent, ChatRoomComponent, AccountsComponent
 from model import MAIN_COMPONENT_TYPE_TABLE
 
 
@@ -29,6 +29,6 @@ class MainPage(BasePage):
         elif current_component_entity == MAIN_COMPONENT_TYPE_TABLE.CHAT_ROOM_ENTITY:
             ChatRoomComponent.run()
         elif current_component_entity == MAIN_COMPONENT_TYPE_TABLE.ACCOUNTS_ENTITY:
-            raise NotImplementedError()
+            AccountsComponent.run()
         else:
             raise ValueError("ComponentSState Value Error")
