@@ -16,7 +16,7 @@ class ChatRoomComponent(BaseComponent):
 
     @classmethod
     def _display_sign_out_button(cls) -> None:
-        st.sidebar.button(label="👤 Sign out", key="SignOutButton", on_click=cls._on_click_sign_out, use_container_width=True)
+        st.sidebar.button(label="🚪 Sign out", key="SignOutButton", on_click=cls._on_click_sign_out, use_container_width=True)
 
     @classmethod
     def _display_return_home_button(cls) -> None:
