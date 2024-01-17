@@ -1,6 +1,6 @@
 from .base import BasePage
 from .management_s_states import ManagementComponentSState
-from .management_components import SignInComponent, HomeComponent, SignUpComponent
+from .management_components import SignInComponent, HomeComponent, AccountsComponent
 from model import MANAGEMENT_COMPONENT_TYPE_TABLE
 
 
@@ -25,6 +25,6 @@ class ManagementPage(BasePage):
         elif current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.HOME_ENTITY:
             HomeComponent.run()
         elif current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.SIGN_UP_ENTITY:
-            SignUpComponent.run()
+            AccountsComponent.run()
         else:
             raise ValueError("ComponentSState Value Error")
