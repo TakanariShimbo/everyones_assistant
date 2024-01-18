@@ -7,7 +7,7 @@ from streamlit_lottie import st_lottie_spinner
 from .home_action_results import CreateActionResults, EnterActionResults, RoomContainerActionResults
 from ...base import BaseComponent
 from ..s_states import AccountSState, MainComponentSState, CreateProcesserSState, EnterProcesserSState
-from model import ChatRoomDtoTable, ChatRoomDto, RELEASE_TYPE_TABLE, LoadedLottie, Database
+from model import ChatRoomDtoTable, ChatRoomDto, RELEASE_TYPE_TABLE, LoadedLottie, LoadedImage, Database
 
 
 class HomeComponent(BaseComponent):
@@ -21,6 +21,7 @@ class HomeComponent(BaseComponent):
     def _display_titles() -> None:
         current_component_entity = MainComponentSState.get()
         st.markdown(f"### {current_component_entity.label_en}")
+        st.sidebar.image(image=LoadedImage.LOGO, use_column_width=True)
         st.sidebar.markdown("## Menes")
 
     @classmethod

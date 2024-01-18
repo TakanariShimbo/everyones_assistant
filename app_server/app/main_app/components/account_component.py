@@ -4,7 +4,7 @@ from streamlit_lottie import st_lottie_spinner
 from .account_action_results import UpdateInfoActionResults, ChangePassActionResults
 from ...base import BaseComponent
 from ..s_states import MainComponentSState, AccountSState, UpdateAccountInfoProcesserSState, ChangeAccountPassProcesserSState
-from model import LoadedLottie
+from model import LoadedLottie, LoadedImage
 
 
 class AccountComponent(BaseComponent):
@@ -18,6 +18,7 @@ class AccountComponent(BaseComponent):
     def _display_titles() -> None:
         current_component_entity = MainComponentSState.get()
         st.markdown(f"### {current_component_entity.label_en}")
+        st.sidebar.image(image=LoadedImage.LOGO, use_column_width=True)
         st.sidebar.markdown("## Menes")
 
     @classmethod

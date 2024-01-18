@@ -4,7 +4,7 @@ from streamlit.delta_generator import DeltaGenerator
 from .chat_room_action_results import ActionResults
 from ...base import BaseComponent
 from ..s_states import AccountSState, MainComponentSState, QueryProcesserSState, ChatRoomSState
-from model import ASSISTANT_TYPE_TABLE
+from model import ASSISTANT_TYPE_TABLE, LoadedImage
 
 
 class ChatRoomComponent(BaseComponent):
@@ -18,6 +18,7 @@ class ChatRoomComponent(BaseComponent):
     def _display_titles() -> None:
         current_component_entity = MainComponentSState.get()
         st.markdown(f"### {current_component_entity.label_en}")
+        st.sidebar.image(image=LoadedImage.LOGO, use_column_width=True)
         st.sidebar.markdown("## Menes")
 
     @classmethod

@@ -3,4 +3,4 @@ from .pathes import ImagePathes
 
 
 class LoadedImage:
-    LOGO = ImageHandler.read_image(image_path=ImagePathes.LOGO)
+    LOGO = ImageHandler.read_image_depth32(image_path=ImagePathes.LOGO)
