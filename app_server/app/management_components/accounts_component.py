@@ -80,7 +80,7 @@ class AccountsComponent(BaseComponent):
                 inputed_raw_password_confirm = st.text_input(
                     label="Password (Confirm)",
                     placeholder="Enter password again for confirmation here.",
-                    key="ConfirmPasswordTextInput",
+                    key="PasswordConfirmTextInput",
                     type="password",
                 )
 
