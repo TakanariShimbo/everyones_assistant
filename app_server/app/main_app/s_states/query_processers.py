@@ -2,7 +2,7 @@ from typing import Dict, Any, Tuple
 
 import streamlit as st
 
-from ..main_forms import QueryForm
+from ..forms import QueryForm
 from .account_s_states import AccountSState
 from .chat_room_s_states import ChatRoomSState
 from ...base import BaseProcesser, BaseProcessersManager, EarlyStopProcessException

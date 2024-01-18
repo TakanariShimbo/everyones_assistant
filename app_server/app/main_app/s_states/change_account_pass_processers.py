@@ -1,18 +1,18 @@
 from typing import Dict, Any, Tuple
 
 from .account_s_states import AccountSState
-from .main_component_s_states import MainComponentSState
-from ..main_forms import SignInForm
+from ..forms import ChangeAccountPassForm
 from ...base import BaseProcesser, BaseProcessersManager, EarlyStopProcessException
 from controller import AccountManager
 
 
-class SignInProcesser(BaseProcesser[None]):
+class ChangeAccountPassProcesser(BaseProcesser[None]):
     def main_process(self, inner_dict: Dict[str, Any]) -> None:
-        sign_in_form: SignInForm = inner_dict["form"]
-        inner_dict["response"] = AccountManager.sign_in(
-            account_id=sign_in_form.account_id,
-            raw_password=sign_in_form.raw_password,
+        form: ChangeAccountPassForm = inner_dict["form"]
+        inner_dict["response"] = AccountManager.change_password(
+            account_id=form.account_id,
+            current_raw_password=form.current_raw_password,
+            new_raw_password=form.new_raw_password,
         )
 
     def pre_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
@@ -25,14 +25,14 @@ class SignInProcesser(BaseProcesser[None]):
         pass
 
 
-class SignInProcesserManager(BaseProcessersManager):
+class ChangeAccountPassProcesserManager(BaseProcessersManager):
     def pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         outer_dict = {}
         outer_dict["message_area"] = kwargs["message_area"]
 
         try:
             inner_dict = {}
-            inner_dict["form"] = SignInForm.init(kwargs=kwargs)
+            inner_dict["form"] = ChangeAccountPassForm.init_from_dict(kwargs=kwargs)
         except:
             outer_dict["message_area"].warning("Please input form corectly.")
             raise EarlyStopProcessException()
@@ -51,6 +51,5 @@ class SignInProcesserManager(BaseProcessersManager):
             return False
 
         AccountSState.set(value=inner_dict["response"].contents)
-        MainComponentSState.set_home_entity()
-        outer_dict["message_area"].empty()
+        outer_dict["message_area"].success(inner_dict["response"].message)
         return True

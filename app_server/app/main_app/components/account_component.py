@@ -3,7 +3,7 @@ from streamlit_lottie import st_lottie_spinner
 
 from .account_action_results import UpdateInfoActionResults, ChangePassActionResults
 from ...base import BaseComponent
-from ..main_s_states import MainComponentSState, AccountSState, UpdateAccountInfoProcesserSState, ChangeAccountPassProcesserSState
+from ..s_states import MainComponentSState, AccountSState, UpdateAccountInfoProcesserSState, ChangeAccountPassProcesserSState
 from model import LoadedLottie
 
 

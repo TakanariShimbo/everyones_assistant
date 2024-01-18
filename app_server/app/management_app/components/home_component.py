@@ -3,7 +3,7 @@ from textwrap import dedent
 import streamlit as st
 
 from ...base import BaseComponent
-from ..management_s_states import ManagementComponentSState
+from ..s_states import ManagementComponentSState
 
 
 class HomeComponent(BaseComponent):

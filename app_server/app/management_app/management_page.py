@@ -1,6 +1,6 @@
 from ..base import BasePage
-from .management_s_states import ManagementComponentSState
-from .management_components import SignInComponent, HomeComponent, AccountsComponent
+from .s_states import ManagementComponentSState
+from .components import SignInComponent, HomeComponent, AccountsComponent
 from model import MANAGEMENT_COMPONENT_TYPE_TABLE
 
 

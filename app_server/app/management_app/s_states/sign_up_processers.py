@@ -1,15 +1,14 @@
 from typing import Dict, Any, Tuple
 
-from .account_s_states import AccountSState
-from ..main_forms import UpdateAccountInfoForm
+from ..forms import SignUpForm
 from ...base import BaseProcesser, BaseProcessersManager, EarlyStopProcessException
 from controller import AccountManager
 
 
-class UpdateAccountInfoProcesser(BaseProcesser[None]):
+class SignUpProcesser(BaseProcesser[None]):
     def main_process(self, inner_dict: Dict[str, Any]) -> None:
-        form: UpdateAccountInfoForm = inner_dict["form"]
-        inner_dict["response"] = AccountManager.update_info(
+        form: SignUpForm = inner_dict["form"]
+        inner_dict["response"] = AccountManager.sign_up(
             account_id=form.account_id,
             mail_address=form.mail_address,
             family_name_en=form.family_name_en,
@@ -29,14 +28,14 @@ class UpdateAccountInfoProcesser(BaseProcesser[None]):
         pass
 
 
-class UpdateAccountInfoProcesserManager(BaseProcessersManager):
+class SignUpProcesserManager(BaseProcessersManager):
     def pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         outer_dict = {}
         outer_dict["message_area"] = kwargs["message_area"]
 
         try:
             inner_dict = {}
-            inner_dict["form"] = UpdateAccountInfoForm.init_from_dict(kwargs=kwargs)
+            inner_dict["form"] = SignUpForm.init_from_dict_after_compare_passwords(kwargs=kwargs)
         except:
             outer_dict["message_area"].warning("Please input form corectly.")
             raise EarlyStopProcessException()
@@ -54,6 +53,5 @@ class UpdateAccountInfoProcesserManager(BaseProcessersManager):
             outer_dict["message_area"].warning(inner_dict["response"].message)
             return False
 
-        AccountSState.set(value=inner_dict["response"].contents)
         outer_dict["message_area"].success(inner_dict["response"].message)
         return True

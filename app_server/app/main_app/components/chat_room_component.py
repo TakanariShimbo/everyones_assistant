@@ -3,7 +3,7 @@ from streamlit.delta_generator import DeltaGenerator
 
 from .chat_room_action_results import ActionResults
 from ...base import BaseComponent
-from ..main_s_states import AccountSState, MainComponentSState, QueryProcesserSState, ChatRoomSState
+from ..s_states import AccountSState, MainComponentSState, QueryProcesserSState, ChatRoomSState
 from model import ASSISTANT_TYPE_TABLE
 
 

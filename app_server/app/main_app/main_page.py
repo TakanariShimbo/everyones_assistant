@@ -1,6 +1,6 @@
 from ..base import BasePage
-from .main_s_states import MainComponentSState
-from .main_components import WakeupComponent, SignInComponent, HomeComponent, ChatRoomComponent, AccountComponent
+from .s_states import MainComponentSState
+from .components import WakeupComponent, SignInComponent, HomeComponent, ChatRoomComponent, AccountComponent
 from model import MAIN_COMPONENT_TYPE_TABLE
 
 

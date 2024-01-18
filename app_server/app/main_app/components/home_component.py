@@ -6,7 +6,7 @@ from streamlit_lottie import st_lottie_spinner
 
 from .home_action_results import CreateActionResults, EnterActionResults, RoomContainerActionResults
 from ...base import BaseComponent
-from ..main_s_states import AccountSState, MainComponentSState, CreateProcesserSState, EnterProcesserSState
+from ..s_states import AccountSState, MainComponentSState, CreateProcesserSState, EnterProcesserSState
 from model import ChatRoomDtoTable, ChatRoomDto, RELEASE_TYPE_TABLE, LoadedLottie, Database
 
 

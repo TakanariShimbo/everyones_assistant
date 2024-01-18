@@ -2,7 +2,7 @@ import streamlit as st
 
 from .sign_in_action_results import ActionResults
 from ...base import BaseComponent
-from ..management_s_states import ManagementComponentSState
+from ..s_states import ManagementComponentSState
 from model import LoadedEnv
 
 

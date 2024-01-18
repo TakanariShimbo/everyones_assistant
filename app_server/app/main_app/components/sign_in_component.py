@@ -3,7 +3,7 @@ from streamlit_lottie import st_lottie_spinner
 
 from .sign_in_action_results import ActionResults
 from ...base import BaseComponent
-from ..main_s_states import MainComponentSState, SignInProcesserSState
+from ..s_states import MainComponentSState, SignInProcesserSState
 from model import LoadedLottie
 
 

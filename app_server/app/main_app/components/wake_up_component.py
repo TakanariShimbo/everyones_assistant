@@ -4,7 +4,7 @@ import streamlit as st
 from streamlit_lottie import st_lottie
 
 from ...base import BaseComponent
-from ..main_s_states import MainComponentSState
+from ..s_states import MainComponentSState
 from model import LoadedLottie
 
 
