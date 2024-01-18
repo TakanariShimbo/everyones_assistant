@@ -9,7 +9,7 @@ class ChatRoomDtoColumnConfigs(BaseColumnConfigEnum):
     ROOM_ID = ColumnConfig(name="room_id", dtype=pd.StringDtype())
     ROOM_TITLE = ColumnConfig(name="room_title", dtype=pd.StringDtype())
     ROOM_CREATED_AT = ColumnConfig(name="room_created_at", dtype=pd.StringDtype())
-    ROOM_IS_DISABLED = ColumnConfig(name="is_disabled", dtype=pd.BooleanDtype())
+    ROOM_IS_DISABLED = ColumnConfig(name="room_is_disabled", dtype=pd.BooleanDtype())
 
     ACCOUNT_ID = ColumnConfig(name="account_id", dtype=pd.StringDtype())
     ACCOUNT_MAIL_ADDRESS = ColumnConfig(name="account_mail_address", dtype=pd.StringDtype())

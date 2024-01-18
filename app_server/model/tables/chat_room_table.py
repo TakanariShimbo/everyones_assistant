@@ -25,7 +25,7 @@ class ChatRoomTable(BaseDatabaseTable[ChatRoomConfig, ChatRoomEntity]):
         filter_conditions = [f"{account_id_name} = :{account_id_name}", f"{is_disabled_name} = :{is_disabled_name}"]
         order_condition = f"{created_at_name} DESC"
         statement, _ = cls._get_select_sql(filter_conditions=filter_conditions, order_condition=order_condition, limit=limit)
-        parameters = {account_id_name: account_id}
+        parameters = {account_id_name: account_id, is_disabled_name: False}
         return cls.load_from_database(database_engine=database_engine, statement=statement, parameters=parameters)
 
     @classmethod
