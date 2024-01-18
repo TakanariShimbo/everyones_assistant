@@ -34,7 +34,7 @@ class ChatMessageConfig(BaseDatabaseConfig):
                 sender_id VARCHAR(255) NOT NULL,
                 role_id VARCHAR(255) NOT NULL,
                 content TEXT NOT NULL,
-                sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
                 FOREIGN KEY (room_id) REFERENCES chat_rooms (room_id) ON DELETE CASCADE
             );
             """
