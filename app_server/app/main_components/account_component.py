@@ -80,7 +80,7 @@ class AccountComponent(BaseComponent):
                 )
 
             inputed_raw_password = st.text_input(
-                label="Password",
+                label="Current Password",
                 placeholder="Enter password here.",
                 key="PasswordTextInput",
                 type="password",
