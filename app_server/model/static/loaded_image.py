@@ -3,4 +3,4 @@ from .pathes import ImagePathes
 
 
 class LoadedImage:
-    WAKE_UP_LOGO = ImageHandler.read_image(image_path=ImagePathes.LOGO)
+    LOGO = ImageHandler.read_image(image_path=ImagePathes.LOGO)
