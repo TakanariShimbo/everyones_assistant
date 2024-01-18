@@ -19,6 +19,7 @@ class ChatRoomDtoColumnConfigs(BaseColumnConfigEnum):
     ACCOUNT_GIVEN_NAME_JP = ColumnConfig(name="account_given_name_jp", dtype=pd.StringDtype())
     ACCOUNT_HASHED_PASSWORD = ColumnConfig(name="account_hashed_password", dtype=pd.StringDtype())
     ACCOUNT_REGISTERED_AT = ColumnConfig(name="account_registered_at", dtype=pd.StringDtype())
+    ACCOUNT_IS_ADMINISTRATOR = ColumnConfig(name="account_is_administrator", dtype=pd.BooleanDtype())
     ACCOUNT_IS_DISABLED = ColumnConfig(name="account_is_disabled", dtype=pd.BooleanDtype())
 
     RELEASE_ID = ColumnConfig(name="release_id", dtype=pd.StringDtype())

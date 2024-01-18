@@ -19,6 +19,7 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
         given_name_jp: str,
         hashed_password: str,
         registered_at: Optional[Union[str, datetime]] = None,
+        is_administrator: Optional[bool] = None,
         is_disabled: Optional[bool] = None,
     ) -> None:
         self._account_id = account_id
@@ -29,6 +30,7 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
         self._given_name_jp = given_name_jp
         self._hashed_password = hashed_password
         self._registered_at = DateHandler.to_str_or_none(date=registered_at)
+        self._is_administrator = is_administrator
         self._is_disabled = is_disabled
 
     @classmethod
@@ -41,7 +43,6 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
         family_name_jp: str,
         given_name_jp: str,
         raw_password: str,
-        registered_at: Optional[Union[str, datetime]] = None
     ) -> "AccountEntity":
         return cls(
             account_id=account_id,
@@ -51,7 +52,6 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
             family_name_jp=family_name_jp,
             given_name_jp=given_name_jp,
             hashed_password=HashHandler.hash(raw_contents=raw_password),
-            registered_at=registered_at
         )
 
     @property
@@ -110,11 +110,18 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
         return registered_at
 
     @property
-    def is_disabled(self) -> bool:
-        disabled = self._is_disabled
-        if disabled == None:
+    def is_administrator(self) -> bool:
+        is_administrator = self._is_administrator
+        if is_administrator == None:
             raise ValueError("Not accessible due to have not constracted.")
-        return disabled
+        return is_administrator
+
+    @property
+    def is_disabled(self) -> bool:
+        is_disabled = self._is_disabled
+        if is_disabled == None:
+            raise ValueError("Not accessible due to have not constracted.")
+        return is_disabled
 
     @property
     def registered_at_short(self) -> str:

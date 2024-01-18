@@ -21,6 +21,7 @@ class ChatRoomDto(BaseDto[ChatRoomDtoConfig]):
         account_given_name_jp: str,
         account_hashed_password: str,
         account_registered_at: Union[str, datetime],
+        account_is_administrator: bool,
         account_is_disabled: bool,
         release_id: str,
         release_label_en: str,
@@ -39,6 +40,7 @@ class ChatRoomDto(BaseDto[ChatRoomDtoConfig]):
         self._account_given_name_jp = account_given_name_jp
         self._account_hashed_password = account_hashed_password
         self._account_registered_at = DateHandler.to_str(date=account_registered_at)
+        self._account_is_administrator = account_is_administrator
         self._account_is_disabled = account_is_disabled
 
         self._release_id = release_id
@@ -102,6 +104,10 @@ class ChatRoomDto(BaseDto[ChatRoomDtoConfig]):
     @property
     def account_is_disabled(self) -> bool:
         return self._account_is_disabled
+
+    @property
+    def account_is_administrator(self) -> bool:
+        return self._account_is_administrator
 
     @property
     def account_registered_at_short(self) -> str:
