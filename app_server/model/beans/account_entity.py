@@ -41,9 +41,6 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
         raw_password: str,
         registered_at: Optional[Union[str, datetime]] = None
     ) -> "AccountEntity":
-        
-        hashed_password = HashHandler.hash(raw_contents=raw_password)
-        
         return cls(
             account_id=account_id,
             mail_address=mail_address,
@@ -51,7 +48,7 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
             given_name_en=given_name_en,
             family_name_jp=family_name_jp,
             given_name_jp=given_name_jp,
-            hashed_password=hashed_password,
+            hashed_password=HashHandler.hash(raw_contents=raw_password),
             registered_at=registered_at
         )
 
@@ -127,3 +124,10 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
 
     def verify_password(self, raw_password: str) -> bool:
         return HashHandler.verify(raw_contents=raw_password, hashed_contents=self.hashed_password)
+
+    def set_new_password(self, raw_password: str, new_raw_password: str) -> bool:
+        if not self.verify_password(raw_password=raw_password):
+            return False
+
+        self._hashed_password = HashHandler.hash(raw_contents=new_raw_password)
+        return True
