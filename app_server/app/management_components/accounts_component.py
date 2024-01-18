@@ -29,7 +29,7 @@ class AccountsComponent(BaseComponent):
     def _display_sign_up_form_and_get_results() -> ActionResults:
         st.markdown("#### ➕ Sign up")
         with st.form(key="SignUpForm", border=True):
-            left_area, right_area = st.columns([1,1])
+            left_area, right_area = st.columns([1, 1])
             with left_area:
                 inputed_account_id = st.text_input(
                     label="Account ID",
@@ -43,7 +43,7 @@ class AccountsComponent(BaseComponent):
                     key="MailAddressTextInput",
                 )
 
-            left_area, right_area = st.columns([1,1])
+            left_area, right_area = st.columns([1, 1])
             with left_area:
                 inputed_family_name_en = st.text_input(
                     label="Family Name (English)",
@@ -57,7 +57,7 @@ class AccountsComponent(BaseComponent):
                     key="GivenNameEnTextInput",
                 )
 
-            left_area, right_area = st.columns([1,1])
+            left_area, right_area = st.columns([1, 1])
             with left_area:
                 inputed_family_name_jp = st.text_input(
                     label="Family Name (Japanese)",
@@ -71,7 +71,7 @@ class AccountsComponent(BaseComponent):
                     key="GivenNameJpTextInput",
                 )
 
-            left_area, right_area = st.columns([1,1])
+            left_area, right_area = st.columns([1, 1])
             with left_area:
                 inputed_raw_password = st.text_input(
                     label="Password",

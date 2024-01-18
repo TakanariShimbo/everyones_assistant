@@ -32,7 +32,7 @@ class AccountComponent(BaseComponent):
 
         st.markdown("#### 📝 Information")
         with st.form(key="EditForm", border=True):
-            left_area, right_area = st.columns([1,1])
+            left_area, right_area = st.columns([1, 1])
             with left_area:
                 st.text_input(
                     label="Account ID",
@@ -49,7 +49,7 @@ class AccountComponent(BaseComponent):
                     value=self_account_entity.mail_address,
                 )
 
-            left_area, right_area = st.columns([1,1])
+            left_area, right_area = st.columns([1, 1])
             with left_area:
                 inputed_family_name_en = st.text_input(
                     label="Family Name (English)",
@@ -65,7 +65,7 @@ class AccountComponent(BaseComponent):
                     value=self_account_entity.given_name_en,
                 )
 
-            left_area, right_area = st.columns([1,1])
+            left_area, right_area = st.columns([1, 1])
             with left_area:
                 inputed_family_name_jp = st.text_input(
                     label="Family Name (Japanese)",
