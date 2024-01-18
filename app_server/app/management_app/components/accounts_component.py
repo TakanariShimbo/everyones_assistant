@@ -4,7 +4,7 @@ from streamlit_lottie import st_lottie_spinner
 from .accounts_action_results import ActionResults
 from ...base import BaseComponent
 from ..s_states import ManagementComponentSState, SignUpProcesserSState
-from model import AccountTable, Database, LoadedLottie
+from model import AccountTable, Database, LoadedLottie, LoadedImage
 
 
 class AccountsComponent(BaseComponent):
@@ -16,10 +16,10 @@ class AccountsComponent(BaseComponent):
     def _display_titles() -> None:
         current_component_entity = ManagementComponentSState.get()
         st.markdown(f"### {current_component_entity.label_en}")
-        st.sidebar.markdown("## Menes")
 
     @classmethod
-    def _display_return_home_button(cls) -> None:
+    def _display_sidebar_titles(cls) -> None:
+        st.sidebar.image(image=LoadedImage.LOGO, use_column_width=True)
         st.sidebar.button(label="🏠 Home", key="ReturnHomeButton", on_click=cls._on_click_return_home, use_container_width=True)
 
     @staticmethod
@@ -138,7 +138,7 @@ class AccountsComponent(BaseComponent):
     @classmethod
     def main(cls) -> None:
         cls._display_titles()
-        cls._display_return_home_button()
+        cls._display_sidebar_titles()
         action_results = cls._display_sign_up_form_and_get_results()
         cls._execute_sign_up_process(action_results=action_results)
         cls._display_account_table()

@@ -4,6 +4,7 @@ import streamlit as st
 
 from ...base import BaseComponent
 from ..s_states import ManagementComponentSState
+from model import LoadedImage
 
 
 class HomeComponent(BaseComponent):
@@ -15,10 +16,10 @@ class HomeComponent(BaseComponent):
     def _display_titles() -> None:
         current_component_entity = ManagementComponentSState.get()
         st.markdown(f"### {current_component_entity.label_en}")
-        st.sidebar.markdown("## Menes")
 
     @classmethod
-    def _display_sign_out_button(cls) -> None:
+    def _display_sidebar_titles(cls) -> None:
+        st.sidebar.image(image=LoadedImage.LOGO, use_column_width=True)
         st.sidebar.button(label="🚪 Sign out", key="SignOutButton", on_click=cls._on_click_sign_out, use_container_width=True)
 
     @staticmethod
@@ -63,7 +64,7 @@ class HomeComponent(BaseComponent):
     @classmethod
     def main(cls) -> None:
         cls._display_titles()
-        cls._display_sign_out_button()
+        cls._display_sidebar_titles()
         cls._display_overview()
         cls._display_accounts()
 
