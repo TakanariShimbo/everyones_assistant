@@ -4,6 +4,9 @@ from model import Database, BaseResponse, AccountEntity
 class SignUpResponse(BaseResponse[None]):
     pass
 
+class EditInfoResponse(BaseResponse[AccountEntity]):
+    pass
+
 class SignInResponse(BaseResponse[AccountEntity]):
     pass
 
@@ -47,3 +50,34 @@ class AccountManager:
             return SignInResponse(is_success=False, message=f"Please input password correctly.")
         
         return SignInResponse(is_success=True, contents=target_account_entity)
+
+    @staticmethod
+    def edit_info(
+        account_id: str, 
+        mail_address: str,
+        family_name_en: str,
+        given_name_en: str,
+        family_name_jp: str,
+        given_name_jp: str,
+        raw_password: str,
+    ) -> EditInfoResponse:
+        try:
+            target_account_entity = AccountEntity.load_specified_id_from_database(database_engine=Database.ENGINE, account_id=account_id)
+        except:
+            return EditInfoResponse(is_success=False, message=f"Account ID '{account_id}' hasn't signed up yet.")
+
+        if not target_account_entity.verify_password(raw_password=raw_password):
+            return EditInfoResponse(is_success=False, message=f"Please input password correctly.")
+
+        target_account_entity.mail_address = mail_address
+        target_account_entity.family_name_en = family_name_en
+        target_account_entity.given_name_en = given_name_en
+        target_account_entity.family_name_jp = family_name_jp
+        target_account_entity.given_name_jp = given_name_jp
+
+        try:
+            target_account_entity.save_to_database(database_engine=Database.ENGINE, mode="update")
+        except:
+            return EditInfoResponse(is_success=False, message=f"Account ID '{account_id}' hasn't signed up yet.")
+
+        return EditInfoResponse(is_success=True, message=f"Infomation of account ID '{account_id}' updated correctly.", contents=target_account_entity)

@@ -63,21 +63,41 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
     def mail_address(self) -> str:
         return self._mail_address
 
+    @mail_address.setter
+    def mail_address(self, mail_address: str) -> None:
+        self._mail_address = mail_address
+
     @property
     def family_name_en(self) -> str:
         return self._family_name_en
+
+    @family_name_en.setter
+    def family_name_en(self, family_name_en: str) -> None:
+        self._family_name_en = family_name_en
 
     @property
     def given_name_en(self) -> str:
         return self._given_name_en
 
+    @given_name_en.setter
+    def given_name_en(self, given_name_en: str) -> None:
+        self._given_name_en = given_name_en
+
     @property
     def family_name_jp(self) -> str:
         return self._family_name_jp
 
+    @family_name_jp.setter
+    def family_name_jp(self, family_name_jp: str) -> None:
+        self._family_name_jp = family_name_jp
+
     @property
     def given_name_jp(self) -> str:
         return self._given_name_jp
+
+    @given_name_jp.setter
+    def given_name_jp(self, given_name_jp: str) -> None:
+        self._given_name_jp = given_name_jp
 
     @property
     def hashed_password(self) -> str:

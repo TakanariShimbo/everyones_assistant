@@ -11,7 +11,6 @@ class ActionResults:
         family_name_jp: str,
         given_name_jp: str,
         raw_password: str,
-        raw_password_confirm: str,
         message_area: DeltaGenerator,
         loading_area: DeltaGenerator,
         is_pushed: bool,
@@ -23,7 +22,6 @@ class ActionResults:
         self._family_name_jp = family_name_jp
         self._given_name_jp = given_name_jp
         self._raw_password = raw_password
-        self._raw_password_confirm = raw_password_confirm
         self._message_area = message_area
         self._loading_area = loading_area
         self._is_pushed = is_pushed
@@ -55,10 +53,6 @@ class ActionResults:
     @property
     def raw_password(self) -> str:
         return self._raw_password
-
-    @property
-    def raw_password_confirm(self) -> str:
-        return self._raw_password_confirm
 
     @property
     def message_area(self) -> DeltaGenerator:
