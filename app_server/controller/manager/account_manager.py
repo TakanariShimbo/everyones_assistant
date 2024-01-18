@@ -62,6 +62,9 @@ class AccountManager:
         if not target_account_entity.verify_password(raw_password=raw_password):
             return SignInResponse(is_success=False, message=f"Please input password correctly.")
 
+        if to_management and not target_account_entity.is_administrator:
+            return SignInResponse(is_success=False, message=f"Account ID '{account_id}' is not administrator.")
+
         return SignInResponse(is_success=True, contents=target_account_entity)
 
     @staticmethod
