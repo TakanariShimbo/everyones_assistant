@@ -12,6 +12,7 @@ class ChatRoomColumnConfigs(BaseColumnConfigEnum):
     TITLE = ColumnConfig(name="title", dtype=pd.StringDtype(), auto_assigned=False)
     RELEASE_ID = ColumnConfig(name="release_id", dtype=pd.StringDtype(), auto_assigned=False)
     CREATED_AT = ColumnConfig(name="created_at", dtype=pd.StringDtype(), auto_assigned=True)
+    IS_DISABLED = ColumnConfig(name="is_disabled", dtype=pd.BooleanDtype(), auto_assigned=True)
 
 
 class ChatRoomConfig(BaseDatabaseConfig):
@@ -32,7 +33,8 @@ class ChatRoomConfig(BaseDatabaseConfig):
                 account_id VARCHAR(255) NOT NULL,
                 title VARCHAR(255) NOT NULL,
                 release_id VARCHAR(255) NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                is_disabled BOOLEAN NOT NULL DEFAULT FALSE,
                 FOREIGN KEY (account_id) REFERENCES accounts (account_id) ON DELETE CASCADE
             );
             """

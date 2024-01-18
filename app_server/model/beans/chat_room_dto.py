@@ -12,6 +12,7 @@ class ChatRoomDto(BaseDto[ChatRoomDtoConfig]):
         room_id: str,
         room_title: str,
         room_created_at: Union[str, datetime],
+        room_is_disabled: bool,
         account_id: str,
         account_mail_address: str,
         account_family_name_en: str,
@@ -27,6 +28,7 @@ class ChatRoomDto(BaseDto[ChatRoomDtoConfig]):
         self._room_id = room_id
         self._room_title = room_title
         self._room_created_at = DateHandler.to_str(date=room_created_at)
+        self._room_is_disabled = room_is_disabled
         self._account_id = account_id
         self._account_mail_address = account_mail_address
         self._account_family_name_en = account_family_name_en
@@ -50,6 +52,10 @@ class ChatRoomDto(BaseDto[ChatRoomDtoConfig]):
     @property
     def room_created_at(self) -> str:
         return self._room_created_at
+
+    @property
+    def room_is_disabled(self) -> bool:
+        return self._room_is_disabled
 
     @property
     def room_created_at_short(self) -> str:

@@ -7,12 +7,21 @@ from ..configs import ChatRoomConfig
 
 
 class ChatRoomEntity(BaseDatabaseEntity[ChatRoomConfig]):
-    def __init__(self, room_id: str, account_id: str, title: str, release_id: str, created_at: Optional[Union[str, datetime]] = None) -> None:
+    def __init__(
+        self,
+        room_id: str,
+        account_id: str,
+        title: str,
+        release_id: str,
+        created_at: Optional[Union[str, datetime]] = None,
+        is_disabled: Optional[bool] = None,
+    ) -> None:
         self._room_id = room_id
         self._account_id = account_id
         self._title = title
         self._release_id = release_id
         self._created_at = DateHandler.to_str_or_none(date=created_at)
+        self._is_disabled = is_disabled
 
     @property
     def room_id(self) -> str:
@@ -36,6 +45,13 @@ class ChatRoomEntity(BaseDatabaseEntity[ChatRoomConfig]):
         if created_at == None:
             raise ValueError("Not accessible due to have not constracted.")
         return created_at
+
+    @property
+    def is_disabled(self) -> bool:
+        disabled = self._is_disabled
+        if disabled == None:
+            raise ValueError("Not accessible due to have not constracted.")
+        return disabled
 
     @property
     def created_at_short(self) -> str:

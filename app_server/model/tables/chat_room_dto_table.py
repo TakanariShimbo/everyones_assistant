@@ -30,8 +30,8 @@ class ChatRoomDtoTable(BaseDtoTable[ChatRoomDtoConfig, ChatRoomDto]):
         return cls(df=merged_df)
 
     @classmethod
-    def load_specified_account_from_database(cls, database_engine: Engine, account_id: str, limit: int = 5) -> "ChatRoomDtoTable":
-        chat_room_table = ChatRoomTable.load_specified_account_from_database(
+    def load_not_disabled_and_specified_account_from_database(cls, database_engine: Engine, account_id: str, limit: int = 5) -> "ChatRoomDtoTable":
+        chat_room_table = ChatRoomTable.load_not_disabled_and_specified_account_from_database(
             database_engine=database_engine,
             account_id=account_id,
             limit=limit,
@@ -45,8 +45,8 @@ class ChatRoomDtoTable(BaseDtoTable[ChatRoomDtoConfig, ChatRoomDto]):
         return cls.init_from_tables(chat_room_table=chat_room_table, account_table=account_table)
 
     @classmethod
-    def load_public_unspecified_account_from_database(cls, database_engine: Engine, account_id: str, limit: int = 5) -> "ChatRoomDtoTable":
-        chat_room_table = ChatRoomTable.load_public_unspecified_account_from_database(
+    def load_public_and_not_disabled_and_unspecified_account_from_database(cls, database_engine: Engine, account_id: str, limit: int = 5) -> "ChatRoomDtoTable":
+        chat_room_table = ChatRoomTable.load_public_and_not_disabled_and_unspecified_account_from_database(
             database_engine=database_engine,
             account_id=account_id,
             limit=limit,

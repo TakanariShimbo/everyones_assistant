@@ -104,7 +104,7 @@ class HomeComponent(BaseComponent):
         with left_area:
             st.markdown("#### 🧍 Yours")
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                your_room_table = ChatRoomDtoTable.load_specified_account_from_database(
+                your_room_table = ChatRoomDtoTable.load_not_disabled_and_specified_account_from_database(
                     database_engine=Database.ENGINE,
                     account_id=AccountSState.get().account_id,
                 )
@@ -121,7 +121,7 @@ class HomeComponent(BaseComponent):
         with right_area:
             st.markdown("#### 🧑‍🤝‍🧑 Everyone")
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                everyone_room_table = ChatRoomDtoTable.load_public_unspecified_account_from_database(
+                everyone_room_table = ChatRoomDtoTable.load_public_and_not_disabled_and_unspecified_account_from_database(
                     database_engine=Database.ENGINE,
                     account_id=AccountSState.get().account_id,
                 )
