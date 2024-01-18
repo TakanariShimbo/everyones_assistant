@@ -23,7 +23,7 @@ class HomeComponent(BaseComponent):
 
     @classmethod
     def _display_accounts_button(cls) -> None:
-        st.sidebar.button(label="👤 Accounts", key="AccountsButton", on_click=cls._on_click_accounts, use_container_width=True)
+        st.sidebar.button(label="👤 Account", key="AccountsButton", on_click=cls._on_click_accounts, use_container_width=True)
 
     @staticmethod
     def _display_title() -> None:
