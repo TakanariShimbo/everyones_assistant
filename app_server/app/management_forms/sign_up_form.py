@@ -13,7 +13,7 @@ class SignUpForm(BaseModel):
     raw_password: str = Field(min_length=4)
 
     @classmethod
-    def init_from_dict_after_compare_passwords(cls, kwargs: Dict[str, Any]):
+    def init_from_dict_after_compare_passwords(cls, kwargs: Dict[str, Any]) -> "SignUpForm":
         if kwargs["raw_password"] != kwargs["raw_password_confirm"]:
             raise ValidationError("Passwords do not match.")
         required_dict = {name: kwargs[name] for name in cls.model_fields.keys()}
