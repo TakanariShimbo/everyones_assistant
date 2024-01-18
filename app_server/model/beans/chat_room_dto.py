@@ -21,6 +21,7 @@ class ChatRoomDto(BaseDto[ChatRoomDtoConfig]):
         account_given_name_jp: str,
         account_hashed_password: str,
         account_registered_at: Union[str, datetime],
+        account_is_disabled: bool,
         release_id: str,
         release_label_en: str,
         release_label_jp: str,
@@ -29,6 +30,7 @@ class ChatRoomDto(BaseDto[ChatRoomDtoConfig]):
         self._room_title = room_title
         self._room_created_at = DateHandler.to_str(date=room_created_at)
         self._room_is_disabled = room_is_disabled
+
         self._account_id = account_id
         self._account_mail_address = account_mail_address
         self._account_family_name_en = account_family_name_en
@@ -37,9 +39,12 @@ class ChatRoomDto(BaseDto[ChatRoomDtoConfig]):
         self._account_given_name_jp = account_given_name_jp
         self._account_hashed_password = account_hashed_password
         self._account_registered_at = DateHandler.to_str(date=account_registered_at)
+        self._account_is_disabled = account_is_disabled
+
         self._release_id = release_id
         self._release_label_en = release_label_en
         self._release_label_jp = release_label_jp
+
 
     @property
     def room_id(self) -> str:
@@ -60,6 +65,7 @@ class ChatRoomDto(BaseDto[ChatRoomDtoConfig]):
     @property
     def room_created_at_short(self) -> str:
         return self.room_created_at.split(sep=" ")[0]
+
 
     @property
     def account_id(self) -> str:
@@ -94,8 +100,13 @@ class ChatRoomDto(BaseDto[ChatRoomDtoConfig]):
         return self._account_registered_at
 
     @property
+    def account_is_disabled(self) -> bool:
+        return self._account_is_disabled
+
+    @property
     def account_registered_at_short(self) -> str:
         return self.account_registered_at.split(sep=" ")[0]
+
 
     @property
     def release_id(self) -> str:
@@ -108,6 +119,7 @@ class ChatRoomDto(BaseDto[ChatRoomDtoConfig]):
     @property
     def release_label_jp(self) -> str:
         return self._release_label_jp
+
 
     def _check_is_same(self, other: Any) -> bool:
         return False
