@@ -18,11 +18,10 @@ class ChatRoomComponent(BaseComponent):
     def _display_titles() -> None:
         current_component_entity = MainComponentSState.get()
         st.markdown(f"### {current_component_entity.label_en}")
-        st.sidebar.image(image=LoadedImage.LOGO, use_column_width=True)
-        st.sidebar.markdown("## Menes")
 
     @classmethod
-    def _display_return_home_button(cls) -> None:
+    def _display_sidebar_titles(cls) -> None:
+        st.sidebar.image(image=LoadedImage.LOGO, use_column_width=True)
         st.sidebar.button(label="🏠 Home", key="ReturnHomeButton", on_click=cls._on_click_return_home, use_container_width=True)
 
     @staticmethod
@@ -97,7 +96,7 @@ class ChatRoomComponent(BaseComponent):
     @classmethod
     def main(cls) -> None:
         cls._display_titles()
-        cls._display_return_home_button()
+        cls._display_sidebar_titles()
 
         is_created_user = ChatRoomSState.get().account_id == AccountSState.get().account_id
         if is_created_user:

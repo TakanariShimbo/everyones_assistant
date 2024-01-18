@@ -18,11 +18,10 @@ class AccountComponent(BaseComponent):
     def _display_titles() -> None:
         current_component_entity = MainComponentSState.get()
         st.markdown(f"### {current_component_entity.label_en}")
-        st.sidebar.image(image=LoadedImage.LOGO, use_column_width=True)
-        st.sidebar.markdown("## Menes")
 
     @classmethod
-    def _display_return_home_button(cls) -> None:
+    def _display_sidebar_titles(cls) -> None:
+        st.sidebar.image(image=LoadedImage.LOGO, use_column_width=True)
         st.sidebar.button(label="🏠 Home", key="ReturnHomeButton", on_click=cls._on_click_return_home, use_container_width=True)
 
     @staticmethod
@@ -194,7 +193,7 @@ class AccountComponent(BaseComponent):
     @classmethod
     def main(cls) -> None:
         cls._display_titles()
-        cls._display_return_home_button()
+        cls._display_sidebar_titles()
 
         update_info_action_results = cls._display_update_info_form_and_get_results()
         change_pass_action_results = cls._display_change_pass_form_and_get_results()
