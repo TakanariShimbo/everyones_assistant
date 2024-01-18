@@ -1,13 +1,13 @@
 import streamlit as st
 from streamlit_lottie import st_lottie_spinner
 
-from .accounts_action_results import ActionResults
+from .account_action_results import ActionResults
 from ..base import BaseComponent
 from ..main_s_states import MainComponentSState, AccountSState, EditAccountInfoProcesserSState
 from model import LoadedLottie
 
 
-class AccountsComponent(BaseComponent):
+class AccountComponent(BaseComponent):
     @staticmethod
     def init() -> None:
         AccountSState.init()

@@ -24,5 +24,5 @@ class MainComponentSState(BaseSState[MainComponentTypeEntity]):
         cls.set(value=MAIN_COMPONENT_TYPE_TABLE.CHAT_ROOM_ENTITY)
 
     @classmethod
-    def set_accounts_entity(cls) -> None:
-        cls.set(value=MAIN_COMPONENT_TYPE_TABLE.ACCOUNTS_ENTITY)
+    def set_account_entity(cls) -> None:
+        cls.set(value=MAIN_COMPONENT_TYPE_TABLE.ACCOUNT_ENTITY)
