@@ -11,14 +11,15 @@ class HomeComponent(BaseComponent):
     def init() -> None:
         pass
 
+    @staticmethod
+    def _display_titles() -> None:
+        current_component_entity = ManagementComponentSState.get()
+        st.markdown(f"### {current_component_entity.label_en}")
+        st.sidebar.markdown("## Menes")
+
     @classmethod
     def _display_sign_out_button(cls) -> None:
         st.sidebar.button(label="🚪 Sign out", key="SignOutButton", on_click=cls._on_click_sign_out, use_container_width=True)
-
-    @staticmethod
-    def _display_title() -> None:
-        current_component_entity = ManagementComponentSState.get()
-        st.markdown(f"### {current_component_entity.label_en}")
 
     @staticmethod
     def _display_overview() -> None:
@@ -61,8 +62,8 @@ class HomeComponent(BaseComponent):
 
     @classmethod
     def main(cls) -> None:
+        cls._display_titles()
         cls._display_sign_out_button()
-        cls._display_title()
         cls._display_overview()
         cls._display_accounts()
 

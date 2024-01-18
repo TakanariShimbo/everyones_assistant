@@ -13,14 +13,15 @@ class AccountComponent(BaseComponent):
         AccountSState.init()
         EditAccountInfoProcesserSState.init()
 
+    @staticmethod
+    def _display_titles() -> None:
+        current_component_entity = MainComponentSState.get()
+        st.markdown(f"### {current_component_entity.label_en}")
+        st.sidebar.markdown("## Menes")
+
     @classmethod
     def _display_return_home_button(cls) -> None:
         st.sidebar.button(label="🏠 Home", key="ReturnHomeButton", on_click=cls._on_click_return_home, use_container_width=True)
-
-    @staticmethod
-    def _display_title() -> None:
-        current_component_entity = MainComponentSState.get()
-        st.markdown(f"### {current_component_entity.label_en}")
 
     @staticmethod
     def _display_edit_form_and_get_results() -> ActionResults:
@@ -129,8 +130,8 @@ class AccountComponent(BaseComponent):
 
     @classmethod
     def main(cls) -> None:
+        cls._display_titles()
         cls._display_return_home_button()
-        cls._display_title()
         action_results = cls._display_edit_form_and_get_results()
         cls._execute_edit_process(action_results=action_results)
 

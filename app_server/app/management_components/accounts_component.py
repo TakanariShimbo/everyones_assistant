@@ -12,18 +12,15 @@ class AccountsComponent(BaseComponent):
     def init() -> None:
         SignUpProcesserSState.init()
 
-    @classmethod
-    def _display_sign_out_button(cls) -> None:
-        st.sidebar.button(label="🚪 Sign out", key="SignOutButton", on_click=cls._on_click_sign_out, use_container_width=True)
+    @staticmethod
+    def _display_titles() -> None:
+        current_component_entity = ManagementComponentSState.get()
+        st.markdown(f"### {current_component_entity.label_en}")
+        st.sidebar.markdown("## Menes")
 
     @classmethod
     def _display_return_home_button(cls) -> None:
         st.sidebar.button(label="🏠 Home", key="ReturnHomeButton", on_click=cls._on_click_return_home, use_container_width=True)
-
-    @staticmethod
-    def _display_title() -> None:
-        current_component_entity = ManagementComponentSState.get()
-        st.markdown(f"### {current_component_entity.label_en}")
 
     @staticmethod
     def _display_sign_up_form_and_get_results() -> ActionResults:
@@ -134,20 +131,14 @@ class AccountsComponent(BaseComponent):
         st.dataframe(account_table.df, use_container_width=True)
 
     @classmethod
-    def _on_click_sign_out(cls):
-        ManagementComponentSState.set_sign_in_entity()
-        cls.deinit()
-
-    @classmethod
     def _on_click_return_home(cls):
         ManagementComponentSState.set_home_entity()
         cls.deinit()
 
     @classmethod
     def main(cls) -> None:
-        cls._display_sign_out_button()
+        cls._display_titles()
         cls._display_return_home_button()
-        cls._display_title()
         action_results = cls._display_sign_up_form_and_get_results()
         cls._execute_sign_up_process(action_results=action_results)
         cls._display_account_table()

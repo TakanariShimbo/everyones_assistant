@@ -17,6 +17,12 @@ class HomeComponent(BaseComponent):
         CreateProcesserSState.init()
         EnterProcesserSState.init()
 
+    @staticmethod
+    def _display_titles() -> None:
+        current_component_entity = MainComponentSState.get()
+        st.markdown(f"### {current_component_entity.label_en}")
+        st.sidebar.markdown("## Menes")
+
     @classmethod
     def _display_accounts_button(cls) -> None:
         st.sidebar.button(label="👤 Account", key="AccountsButton", on_click=cls._on_click_accounts, use_container_width=True)
@@ -24,11 +30,6 @@ class HomeComponent(BaseComponent):
     @classmethod
     def _display_sign_out_button(cls) -> None:
         st.sidebar.button(label="🚪 Sign out", key="SignOutButton", on_click=cls._on_click_sign_out, use_container_width=True)
-
-    @staticmethod
-    def _display_title() -> None:
-        current_component_entity = MainComponentSState.get()
-        st.markdown(f"### {current_component_entity.label_en}")
 
     @staticmethod
     def _display_overview() -> None:
@@ -187,9 +188,9 @@ class HomeComponent(BaseComponent):
 
     @classmethod
     def main(cls) -> None:
+        cls._display_titles()
         cls._display_accounts_button()
         cls._display_sign_out_button()
-        cls._display_title()
         cls._display_overview()
 
         create_action_results = cls._display_create_form_and_get_results()
