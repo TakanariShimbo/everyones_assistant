@@ -46,7 +46,10 @@ class AccountManager:
         return SignUpResponse(is_success=True, message=f"Account ID '{account_id}' signed up correctly.")
 
     @staticmethod
-    def sign_in(account_id: str, raw_password: str) -> SignInResponse:
+    def sign_in(
+        account_id: str,
+        raw_password: str,
+    ) -> SignInResponse:
         try:
             target_account_entity = AccountEntity.load_specified_id_from_database(database_engine=Database.ENGINE, account_id=account_id)
         except ValueError:
