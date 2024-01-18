@@ -6,3 +6,4 @@ from .enter_processer_s_states import EnterProcesserSState
 from .query_processer_s_states import QueryProcesserSState
 from .chat_room_s_states import ChatRoomSState
 from .edit_account_info_processer_s_states import EditAccountInfoProcesserSState
+from .change_account_pass_processer_s_states import ChangeAccountPassProcesserSState

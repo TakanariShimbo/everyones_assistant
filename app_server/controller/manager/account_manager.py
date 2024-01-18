@@ -85,7 +85,7 @@ class AccountManager:
         return EditInfoResponse(is_success=True, message=f"Infomation of account ID '{account_id}' updated correctly.", contents=target_account_entity)
 
     @staticmethod
-    def edit_password(
+    def change_password(
         account_id: str,
         current_raw_password: str,
         new_raw_password: str,
@@ -103,4 +103,4 @@ class AccountManager:
         except:
             return EditInfoResponse(is_success=False, message=f"Account ID '{account_id}' hasn't signed up yet.")
 
-        return EditInfoResponse(is_success=True, message=f"Infomation of account ID '{account_id}' updated correctly.", contents=target_account_entity)
+        return EditInfoResponse(is_success=True, message=f"Password of account ID '{account_id}' updated correctly.", contents=target_account_entity)
