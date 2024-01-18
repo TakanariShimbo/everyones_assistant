@@ -1,7 +1,6 @@
 from typing import Dict, Any, Tuple
 
-from .account_s_states import AccountSState
-from .main_component_s_states import MainComponentSState
+from .management_component_s_states import ManagementComponentSState
 from ..forms import SignInForm
 from ...base import BaseProcesser, BaseProcessersManager, EarlyStopProcessException
 from controller import AccountManager
@@ -13,7 +12,7 @@ class SignInProcesser(BaseProcesser[None]):
         inner_dict["response"] = AccountManager.sign_in(
             account_id=sign_in_form.account_id,
             raw_password=sign_in_form.raw_password,
-            to_management=False,
+            to_management=True,
         )
 
     def pre_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
@@ -51,7 +50,6 @@ class SignInProcesserManager(BaseProcessersManager):
             outer_dict["message_area"].warning(inner_dict["response"].message)
             return False
 
-        AccountSState.set(value=inner_dict["response"].contents)
-        MainComponentSState.set_home_entity()
+        ManagementComponentSState.set_home_entity()
         outer_dict["message_area"].empty()
         return True

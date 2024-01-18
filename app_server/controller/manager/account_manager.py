@@ -49,6 +49,7 @@ class AccountManager:
     def sign_in(
         account_id: str,
         raw_password: str,
+        to_management: bool = False,
     ) -> SignInResponse:
         try:
             target_account_entity = AccountEntity.load_specified_id_from_database(database_engine=Database.ENGINE, account_id=account_id)
