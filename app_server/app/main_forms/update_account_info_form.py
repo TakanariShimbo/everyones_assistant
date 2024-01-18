@@ -3,7 +3,7 @@ from typing import Any, Dict
 from pydantic import BaseModel, EmailStr, Field
 
 
-class EditAccountInfoForm(BaseModel):
+class UpdateAccountInfoForm(BaseModel):
     account_id: str = Field(min_length=4)
     mail_address: EmailStr
     family_name_en: str = Field(min_length=1)
@@ -13,6 +13,6 @@ class EditAccountInfoForm(BaseModel):
     raw_password: str = Field(min_length=4)
 
     @classmethod
-    def init_from_dict(cls, kwargs: Dict[str, Any]) -> "EditAccountInfoForm":
+    def init_from_dict(cls, kwargs: Dict[str, Any]) -> "UpdateAccountInfoForm":
         required_dict = {name: kwargs[name] for name in cls.model_fields.keys()}
         return cls(**required_dict)

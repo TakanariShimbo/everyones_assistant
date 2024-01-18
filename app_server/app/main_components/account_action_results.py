@@ -1,7 +1,7 @@
 from streamlit.delta_generator import DeltaGenerator
 
 
-class EditInfoActionResults:
+class UpdateInfoActionResults:
     def __init__(
         self,
         account_id: str,

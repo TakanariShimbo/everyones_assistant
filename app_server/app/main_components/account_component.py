@@ -1,9 +1,9 @@
 import streamlit as st
 from streamlit_lottie import st_lottie_spinner
 
-from .account_action_results import EditInfoActionResults, ChangePassActionResults
+from .account_action_results import UpdateInfoActionResults, ChangePassActionResults
 from ..base import BaseComponent
-from ..main_s_states import MainComponentSState, AccountSState, EditAccountInfoProcesserSState, ChangeAccountPassProcesserSState
+from ..main_s_states import MainComponentSState, AccountSState, UpdateAccountInfoProcesserSState, ChangeAccountPassProcesserSState
 from model import LoadedLottie
 
 
@@ -11,7 +11,7 @@ class AccountComponent(BaseComponent):
     @staticmethod
     def init() -> None:
         AccountSState.init()
-        EditAccountInfoProcesserSState.init()
+        UpdateAccountInfoProcesserSState.init()
         ChangeAccountPassProcesserSState.init()
 
     @staticmethod
@@ -25,11 +25,11 @@ class AccountComponent(BaseComponent):
         st.sidebar.button(label="🏠 Home", key="ReturnHomeButton", on_click=cls._on_click_return_home, use_container_width=True)
 
     @staticmethod
-    def _display_edit_info_form_and_get_results() -> EditInfoActionResults:
+    def _display_update_info_form_and_get_results() -> UpdateInfoActionResults:
         self_account_entity = AccountSState.get()
 
         st.markdown("#### 📝 Information")
-        with st.form(key="EditInfoForm", border=True):
+        with st.form(key="UpdateInfoForm", border=True):
             left_area, right_area = st.columns([1, 1])
             with left_area:
                 st.text_input(
@@ -92,7 +92,7 @@ class AccountComponent(BaseComponent):
                 is_pushed = st.form_submit_button(label="Update", type="primary", use_container_width=True)
             _, loading_area, _ = st.columns([1, 1, 1])
 
-        return EditInfoActionResults(
+        return UpdateInfoActionResults(
             account_id=self_account_entity.account_id,
             mail_address=inputed_mail_address,
             family_name_en=inputed_family_name_en,
@@ -151,13 +151,13 @@ class AccountComponent(BaseComponent):
         )
 
     @staticmethod
-    def _execute_edit_info_process(action_results: EditInfoActionResults) -> None:
+    def _execute_update_info_process(action_results: UpdateInfoActionResults) -> None:
         if not action_results.is_pushed:
             return
 
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processers_manager = EditAccountInfoProcesserSState.get()
+                processers_manager = UpdateAccountInfoProcesserSState.get()
                 processers_manager.run_all(
                     message_area=action_results.message_area,
                     account_id=action_results.account_id,
@@ -195,12 +195,12 @@ class AccountComponent(BaseComponent):
         cls._display_titles()
         cls._display_return_home_button()
 
-        edit_info_action_results = cls._display_edit_info_form_and_get_results()
+        update_info_action_results = cls._display_update_info_form_and_get_results()
         change_pass_action_results = cls._display_change_pass_form_and_get_results()
-        cls._execute_edit_info_process(action_results=edit_info_action_results)
+        cls._execute_update_info_process(action_results=update_info_action_results)
         cls._execute_change_pass_process(action_results=change_pass_action_results)
 
     @staticmethod
     def deinit() -> None:
-        EditAccountInfoProcesserSState.deinit()
+        UpdateAccountInfoProcesserSState.deinit()
         ChangeAccountPassProcesserSState.deinit()
