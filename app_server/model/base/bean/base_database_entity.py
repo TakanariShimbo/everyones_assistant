@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import Any, Dict, Literal, Tuple, TypeVar, Type
+from typing import Any, Dict, Tuple, TypeVar, Type
 
 from sqlalchemy import Engine
 
