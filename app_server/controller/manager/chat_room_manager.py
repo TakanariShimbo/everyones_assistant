@@ -23,7 +23,7 @@ class ChatRoomManager:
     def init_as_new(cls, title: str, account_id: str, release_id: str) -> "ChatRoomManager":
         room_id = str(uuid4())
         new_chat_room_entity = ChatRoomEntity(room_id=room_id, account_id=account_id, title=title, release_id=release_id)
-        new_chat_room_entity.save_to_database(database_engine=Database.ENGINE)
+        new_chat_room_entity.insert_record_to_database(database_engine=Database.ENGINE)
 
         chat_message_table = ChatMessageTable.create_empty_table()
         return cls(chat_message_table=chat_message_table, room_id=room_id, account_id=account_id, release_id=release_id)
@@ -39,7 +39,7 @@ class ChatRoomManager:
             ChatMessageEntity(room_id=self._room_id, role_id=ROLE_TYPE_TABLE.ASSISTANT_ID, sender_id=assistant_id, content=answer),
         ]
         appended_table = ChatMessageTable.load_from_beans(beans=prompt_and_answer_entitys)
-        appended_table.save_to_database(database_engine=Database.ENGINE)
+        appended_table.insert_records_to_database(database_engine=Database.ENGINE)
         self._table = ChatMessageTable.append_b_to_a(self._table, appended_table)
 
     def get_all_message_entities(self) -> List[ChatMessageEntity]:

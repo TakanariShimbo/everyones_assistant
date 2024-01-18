@@ -59,21 +59,14 @@ class BaseDatabaseTable(BaseTable[C, B], ABC):
             record_dicts=record_dicts,
         )
 
-    def _insert_to_database(self, database_engine: Engine) -> None:
+    def insert_records_to_database(self, database_engine: Engine) -> None:
         column_names = self._get_column_names(ignore_auto_assigned=True)
         self._df.loc[:, column_names].to_sql(name=self._get_database_table_name(), con=database_engine, if_exists="append", index=False)
 
-    def _upsert_to_database(self, database_engine: Engine) -> None:
+    def upsert_records_to_database(self, database_engine: Engine) -> None:
         column_names = self._get_column_names(ignore_auto_assigned=True)
         record_dicts = self._df.loc[:, column_names].to_dict(orient='records')
 
         statement, parameters = self._get_upsert_sql(record_dicts=record_dicts)   # type: ignore
         DatabaseHandler.execute_sql(database_engine=database_engine, statement=statement, parameters=parameters)
 
-    def save_to_database(self, database_engine: Engine, mode: Literal["insert", "upsert"] = "insert") -> None:
-        if mode == "insert":
-            self._insert_to_database(database_engine=database_engine)
-        elif mode == "upsert":
-            self._upsert_to_database(database_engine=database_engine)
-        else:
-            raise NotImplementedError("Not implemented")

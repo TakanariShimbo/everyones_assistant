@@ -71,14 +71,12 @@ class BaseDatabaseEntity(BaseBean[C], ABC):
         )
         return statement, parameters
 
-    def save_to_database(self, database_engine: Engine, mode: Literal["insert", "update"] = "insert") -> None:
-        if mode == "insert":
-            statement, parameters = self._get_insert_sql()
-        elif mode == "update":
-            statement, parameters = self._get_update_sql()
-        else:
-            raise NotImplementedError("Not implemented")
+    def insert_record_to_database(self, database_engine: Engine) -> None:
+        statement, parameters = self._get_insert_sql()
+        DatabaseHandler.execute_sql(database_engine=database_engine, statement=statement, parameters=parameters)
 
+    def update_record_of_database(self, database_engine: Engine) -> None:
+        statement, parameters = self._get_update_sql()
         DatabaseHandler.execute_sql(database_engine=database_engine, statement=statement, parameters=parameters)
 
     def remove_from_database(self, database_engine: Engine) -> None:

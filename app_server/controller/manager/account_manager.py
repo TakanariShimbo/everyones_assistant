@@ -39,7 +39,7 @@ class AccountManager:
         )
 
         try:
-            new_account_entity.save_to_database(database_engine=Database.ENGINE)
+            new_account_entity.insert_record_to_database(database_engine=Database.ENGINE)
         except:
             return SignUpResponse(is_success=False, message=f"Account ID '{account_id}' has already signed up.")
 
@@ -88,7 +88,7 @@ class AccountManager:
         target_account_entity.given_name_jp = given_name_jp
 
         try:
-            target_account_entity.save_to_database(database_engine=Database.ENGINE, mode="update")
+            target_account_entity.update_record_of_database(database_engine=Database.ENGINE)
         except:
             return UpdateInfoResponse(is_success=False, message=f"Account ID '{account_id}' hasn't signed up yet.")
 
@@ -109,7 +109,7 @@ class AccountManager:
             return ChangePassResponse(is_success=False, message=f"Please input current password correctly.")
 
         try:
-            target_account_entity.save_to_database(database_engine=Database.ENGINE, mode="update")
+            target_account_entity.update_record_of_database(database_engine=Database.ENGINE)
         except:
             return ChangePassResponse(is_success=False, message=f"Account ID '{account_id}' hasn't signed up yet.")
 
