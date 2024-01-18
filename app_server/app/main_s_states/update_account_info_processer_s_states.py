@@ -1,4 +1,4 @@
-from .edit_account_info_processers import UpdateAccountInfoProcesser, UpdateAccountInfoProcesserManager
+from .update_account_info_processers import UpdateAccountInfoProcesser, UpdateAccountInfoProcesserManager
 from ..base import BaseSState
 
 
