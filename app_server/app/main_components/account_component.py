@@ -14,10 +14,6 @@ class AccountComponent(BaseComponent):
         EditAccountInfoProcesserSState.init()
 
     @classmethod
-    def _display_sign_out_button(cls) -> None:
-        st.sidebar.button(label="🚪 Sign out", key="SignOutButton", on_click=cls._on_click_sign_out, use_container_width=True)
-
-    @classmethod
     def _display_return_home_button(cls) -> None:
         st.sidebar.button(label="🏠 Home", key="ReturnHomeButton", on_click=cls._on_click_return_home, use_container_width=True)
 
@@ -127,18 +123,12 @@ class AccountComponent(BaseComponent):
                 )
 
     @classmethod
-    def _on_click_sign_out(cls):
-        MainComponentSState.set_sign_in_entity()
-        cls.deinit()
-
-    @classmethod
     def _on_click_return_home(cls):
         MainComponentSState.set_home_entity()
         cls.deinit()
 
     @classmethod
     def main(cls) -> None:
-        cls._display_sign_out_button()
         cls._display_return_home_button()
         cls._display_title()
         action_results = cls._display_edit_form_and_get_results()

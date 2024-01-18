@@ -18,12 +18,12 @@ class HomeComponent(BaseComponent):
         EnterProcesserSState.init()
 
     @classmethod
-    def _display_sign_out_button(cls) -> None:
-        st.sidebar.button(label="🚪 Sign out", key="SignOutButton", on_click=cls._on_click_sign_out, use_container_width=True)
-
-    @classmethod
     def _display_accounts_button(cls) -> None:
         st.sidebar.button(label="👤 Account", key="AccountsButton", on_click=cls._on_click_accounts, use_container_width=True)
+
+    @classmethod
+    def _display_sign_out_button(cls) -> None:
+        st.sidebar.button(label="🚪 Sign out", key="SignOutButton", on_click=cls._on_click_sign_out, use_container_width=True)
 
     @staticmethod
     def _display_title() -> None:
@@ -175,20 +175,20 @@ class HomeComponent(BaseComponent):
         return is_success
 
     @classmethod
+    def _on_click_accounts(cls) -> None:
+        MainComponentSState.set_account_entity()
+        cls.deinit()
+
+    @classmethod
     def _on_click_sign_out(cls) -> None:
         MainComponentSState.set_sign_in_entity()
         cls.deinit()
         AccountSState.deinit()
 
     @classmethod
-    def _on_click_accounts(cls) -> None:
-        MainComponentSState.set_account_entity()
-        cls.deinit()
-
-    @classmethod
     def main(cls) -> None:
-        cls._display_sign_out_button()
         cls._display_accounts_button()
+        cls._display_sign_out_button()
         cls._display_title()
         cls._display_overview()
 
