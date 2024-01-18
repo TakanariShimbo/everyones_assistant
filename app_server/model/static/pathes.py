@@ -16,11 +16,16 @@ class PathBuilder:
 base_dir = os.path.dirname(__file__)
 base_builder = PathBuilder(base_dir=base_dir)
 
+image_builder = base_builder.generate_child_builder("images")
 lottie_builder = base_builder.generate_child_builder("lotties")
 table_builder = base_builder.generate_child_builder("tables")
 
 
 ENV_PATH = base_builder.generate_path("env", ".env")
+
+
+class ImagePathes:
+    LOGO = image_builder.generate_path("logo_streamlit.png")
 
 
 class LottiePathes:
