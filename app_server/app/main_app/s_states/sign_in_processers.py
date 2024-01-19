@@ -1,10 +1,9 @@
-from typing import Dict, Any, Tuple
+from typing import Dict, Any, Tuple, Type
 
-from .account_s_states import AccountSState
-from .main_component_s_states import MainComponentSState
 from ..forms import SignInForm
 from ...base import BaseProcesser, BaseProcessersManager, EarlyStopProcessException
 from controller import AccountManager
+from model import BaseResponse, AccountEntity
 
 
 class SignInProcesser(BaseProcesser[None]):
@@ -26,7 +25,11 @@ class SignInProcesser(BaseProcesser[None]):
         pass
 
 
-class SignInProcesserManager(BaseProcessersManager):
+class SignInProcesserResponse(BaseResponse[AccountEntity]):
+    pass
+
+
+class SignInProcesserManager(BaseProcessersManager[SignInProcesserResponse]):
     def _pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         outer_dict = {}
         outer_dict["message_area"] = kwargs["message_area"]
@@ -35,8 +38,7 @@ class SignInProcesserManager(BaseProcessersManager):
             inner_dict = {}
             inner_dict["form"] = SignInForm.init(kwargs=kwargs)
         except:
-            outer_dict["message_area"].warning("Please input form corectly.")
-            raise EarlyStopProcessException()
+            raise EarlyStopProcessException(message="Please input form corectly.")
         return outer_dict, inner_dict
 
     def _pre_process_for_running(self, **kwargs) -> Dict[str, Any]:
@@ -46,12 +48,13 @@ class SignInProcesserManager(BaseProcessersManager):
         kwargs["message_area"].warning("Running.")
         return outer_dict
 
-    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> bool:
-        if not inner_dict["response"].is_success:
-            outer_dict["message_area"].warning(inner_dict["response"].message)
-            return False
+    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> SignInProcesserResponse:
+        response = inner_dict["response"]
+        if not response.is_success:
+            return SignInProcesserResponse(is_success=False, message=response.message)
 
-        AccountSState.set(value=inner_dict["response"].contents)
-        MainComponentSState.set_home_entity()
-        outer_dict["message_area"].empty()
-        return True
+        return SignInProcesserResponse(is_success=True, contents=response.contents)
+
+    @staticmethod
+    def _get_response_class() -> Type[SignInProcesserResponse]:
+        return SignInProcesserResponse

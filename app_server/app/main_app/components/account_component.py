@@ -158,7 +158,7 @@ class AccountComponent(BaseComponent):
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
                 processers_manager = UpdateAccountInfoProcesserSState.get()
-                processers_manager.run_all(
+                response = processers_manager.run_all(
                     message_area=action_results.message_area,
                     account_id=action_results.account_id,
                     mail_address=action_results.mail_address,
@@ -169,6 +169,12 @@ class AccountComponent(BaseComponent):
                     raw_password=action_results.raw_password,
                 )
 
+        if not response.is_success:
+            action_results.message_area.warning(response.message)
+            return
+
+        action_results.message_area.success(response.message)
+
     @staticmethod
     def _execute_change_pass_process(action_results: ChangePassActionResults) -> None:
         if not action_results.is_pushed:
@@ -177,13 +183,19 @@ class AccountComponent(BaseComponent):
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
                 processers_manager = ChangeAccountPassProcesserSState.get()
-                processers_manager.run_all(
+                response = processers_manager.run_all(
                     message_area=action_results.message_area,
                     account_id=action_results.account_id,
                     current_raw_password=action_results.current_raw_password,
                     new_raw_password=action_results.new_raw_password,
                     new_raw_password_confirm=action_results.new_raw_password_confirm,
                 )
+
+        if not response.is_success:
+            action_results.message_area.warning(response.message)
+            return
+
+        action_results.message_area.success(response.message)
 
     @classmethod
     def _on_click_return_home(cls):

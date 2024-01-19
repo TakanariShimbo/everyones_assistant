@@ -1,11 +1,10 @@
-from typing import Dict, Any, Tuple
+from typing import Dict, Any, Tuple, Type
 
 from ..forms import CreateForm
-from .main_component_s_states import MainComponentSState
 from .account_s_states import AccountSState
-from .chat_room_s_states import ChatRoomSState
 from ...base import BaseProcesser, BaseProcessersManager, EarlyStopProcessException
 from controller import ChatRoomManager
+from model import BaseResponse
 
 
 class CreateProcesser(BaseProcesser[None]):
@@ -27,7 +26,11 @@ class CreateProcesser(BaseProcesser[None]):
         pass
 
 
-class CreateProcesserManager(BaseProcessersManager):
+class CreateProcesserResponse(BaseResponse[ChatRoomManager]):
+    pass
+
+
+class CreateProcesserManager(BaseProcessersManager[CreateProcesserResponse]):
     def _pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         outer_dict = {}
         outer_dict["message_area"] = kwargs["message_area"]
@@ -40,8 +43,7 @@ class CreateProcesserManager(BaseProcessersManager):
                 release_entity=kwargs["release_entity"]
             )
         except:
-            outer_dict["message_area"].warning("Please input form corectly.")
-            raise EarlyStopProcessException()
+            raise EarlyStopProcessException(message="Please input form corectly.")
         return outer_dict, inner_dict
 
     def _pre_process_for_running(self, **kwargs) -> Dict[str, Any]:
@@ -51,8 +53,9 @@ class CreateProcesserManager(BaseProcessersManager):
         kwargs["message_area"].warning("Running.")
         return outer_dict
 
-    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> bool:
-        outer_dict["message_area"].empty()
-        ChatRoomSState.set(value=inner_dict["chat_message_manager"])
-        MainComponentSState.set_chat_room_entity()
-        return True
+    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> CreateProcesserResponse:
+        return CreateProcesserResponse(is_success=True, contents=inner_dict["chat_message_manager"])
+
+    @staticmethod
+    def _get_response_class() -> Type[CreateProcesserResponse]:
+        return CreateProcesserResponse

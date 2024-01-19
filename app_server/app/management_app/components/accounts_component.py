@@ -112,7 +112,7 @@ class AccountsComponent(BaseComponent):
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
                 processers_manager = SignUpProcesserSState.get()
-                processers_manager.run_all(
+                response = processers_manager.run_all(
                     message_area=action_results.message_area,
                     account_id=action_results.account_id,
                     mail_address=action_results.mail_address,
@@ -123,6 +123,11 @@ class AccountsComponent(BaseComponent):
                     raw_password=action_results.raw_password,
                     raw_password_confirm=action_results.raw_password_confirm,
                 )
+
+        if not response.is_success:
+            action_results.message_area.warning(response.message)
+            return
+        action_results.message_area.success(response.message)
 
     @staticmethod
     def _display_account_table() -> None:

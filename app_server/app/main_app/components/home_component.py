@@ -6,7 +6,7 @@ from streamlit_lottie import st_lottie_spinner
 
 from .home_action_results import CreateActionResults, EnterActionResults, RoomContainerActionResults
 from ...base import BaseComponent
-from ..s_states import AccountSState, MainComponentSState, CreateProcesserSState, EnterProcesserSState
+from ..s_states import AccountSState, MainComponentSState, CreateProcesserSState, EnterProcesserSState, ChatRoomSState
 from model import ChatRoomDtoTable, ChatRoomDto, RELEASE_TYPE_TABLE, LoadedLottie, LoadedImage, Database
 
 
@@ -151,12 +151,20 @@ class HomeComponent(BaseComponent):
         with create_action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
                 processers_manager = CreateProcesserSState.get()
-                is_success = processers_manager.run_all(
+                response = processers_manager.run_all(
                     message_area=create_action_results.message_area,
                     title=create_action_results.title,
                     release_entity=create_action_results.release_entity,
                 )
-        return is_success
+
+        if not response.is_success:
+            create_action_results.message_area.warning(response.message)
+            return False
+
+        create_action_results.message_area.empty()
+        ChatRoomSState.set(value=response.contents)
+        MainComponentSState.set_chat_room_entity()
+        return True
 
     @staticmethod
     def _execute_enter_process(enter_action_results: Optional[EnterActionResults]) -> bool:
@@ -166,12 +174,17 @@ class HomeComponent(BaseComponent):
         with enter_action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
                 processers_manager = EnterProcesserSState.get()
-                is_success = processers_manager.run_all(
+                response = processers_manager.run_all(
                     room_id=enter_action_results.chat_room_dto.room_id,
                     account_id=enter_action_results.chat_room_dto.account_id,
                     release_id=enter_action_results.chat_room_dto.release_id,
                 )
-        return is_success
+        if not response.is_success:
+            return False
+
+        ChatRoomSState.set(value=response.contents)
+        MainComponentSState.set_chat_room_entity()
+        return True
 
     @classmethod
     def _on_click_accounts(cls) -> None:

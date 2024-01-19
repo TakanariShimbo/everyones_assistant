@@ -20,5 +20,8 @@ class BaseResponse(Generic[T], ABC):
         return self._message
 
     @property
-    def contents(self) -> Optional[T]:
-        return self._contents
+    def contents(self) -> T:
+        contents = self._contents
+        if contents == None:
+            raise ValueError("Not accessible due to have not constracted.")
+        return contents

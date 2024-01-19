@@ -81,12 +81,15 @@ class ChatRoomComponent(BaseComponent):
             processer_manager.init_processers()
 
         if action_results.is_run_pushed or action_results.is_rerun_pushed:
-            processer_manager.run_all(
+            response = processer_manager.run_all(
                 message_area=action_results.message_area,
                 history_area=history_area,
                 assistant_entity=action_results.assistant_entity,
                 prompt=action_results.prompt,
             )
+            if not response.is_success:
+                action_results.message_area.warning(response.message)
+            action_results.message_area.empty()
 
     @classmethod
     def _on_click_return_home(cls):

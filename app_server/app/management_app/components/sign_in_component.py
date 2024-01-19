@@ -53,12 +53,19 @@ class SignInComponent(BaseComponent):
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
                 processers_manager = SignInProcesserSState.get()
-                is_success = processers_manager.run_all(
+                response = processers_manager.run_all(
                     message_area=action_results.message_area,
                     account_id=action_results.account_id,
                     raw_password=action_results.raw_password,
                 )
-        return is_success
+
+        if not response.is_success:
+            action_results.message_area.warning(response.message)
+            return False
+
+        ManagementComponentSState.set_home_entity()
+        action_results.message_area.empty()
+        return True
 
     @classmethod
     def main(cls) -> None:

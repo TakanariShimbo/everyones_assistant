@@ -1,4 +1,4 @@
-from typing import Dict, Any, Tuple
+from typing import Dict, Any, Tuple, Type
 
 import streamlit as st
 
@@ -7,7 +7,7 @@ from .account_s_states import AccountSState
 from .chat_room_s_states import ChatRoomSState
 from ...base import BaseProcesser, BaseProcessersManager, EarlyStopProcessException
 from controller import AssistantManager, ChatRoomManager
-from model import ROLE_TYPE_TABLE, AccountEntity
+from model import ROLE_TYPE_TABLE, BaseResponse, AccountEntity
 
 
 class QueryProcesser(BaseProcesser[str]):
@@ -45,7 +45,11 @@ class QueryProcesser(BaseProcesser[str]):
         outer_dict["answer_area"].write(content)
 
 
-class QueryProcesserManager(BaseProcessersManager):
+class QueryProcesserResponse(BaseResponse[None]):
+    pass
+
+
+class QueryProcesserManager(BaseProcessersManager[QueryProcesserResponse]):
     def _pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         outer_dict = {}
         outer_dict["message_area"] = kwargs["message_area"]
@@ -57,8 +61,7 @@ class QueryProcesserManager(BaseProcessersManager):
             inner_dict["manager"] = ChatRoomSState.get()
             inner_dict["account"] = AccountSState.get()
         except:
-            outer_dict["message_area"].warning("Please input form corectly.")
-            raise EarlyStopProcessException()
+            raise EarlyStopProcessException(message="Please input form corectly.")
         return outer_dict, inner_dict
 
     def _pre_process_for_running(self, **kwargs) -> Dict[str, Any]:
@@ -69,6 +72,9 @@ class QueryProcesserManager(BaseProcessersManager):
         kwargs["message_area"].warning("Running.")
         return outer_dict
 
-    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> bool:
-        outer_dict["message_area"].empty()
-        return True
+    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> QueryProcesserResponse:
+        return QueryProcesserResponse(is_success=True)
+
+    @staticmethod
+    def _get_response_class() -> Type[QueryProcesserResponse]:
+        return QueryProcesserResponse

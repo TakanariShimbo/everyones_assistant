@@ -1,8 +1,9 @@
-from typing import Dict, Any, Tuple
+from typing import Dict, Any, Tuple, Type
 
 from ..forms import SignUpForm
 from ...base import BaseProcesser, BaseProcessersManager, EarlyStopProcessException
 from controller import AccountManager
+from model import BaseResponse
 
 
 class SignUpProcesser(BaseProcesser[None]):
@@ -28,7 +29,11 @@ class SignUpProcesser(BaseProcesser[None]):
         pass
 
 
-class SignUpProcesserManager(BaseProcessersManager):
+class SignUpProcesserResponse(BaseResponse[None]):
+    pass
+
+
+class SignUpProcesserManager(BaseProcessersManager[SignUpProcesserResponse]):
     def _pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         outer_dict = {}
         outer_dict["message_area"] = kwargs["message_area"]
@@ -37,8 +42,7 @@ class SignUpProcesserManager(BaseProcessersManager):
             inner_dict = {}
             inner_dict["form"] = SignUpForm.init_from_dict_after_compare_passwords(kwargs=kwargs)
         except:
-            outer_dict["message_area"].warning("Please input form corectly.")
-            raise EarlyStopProcessException()
+            raise EarlyStopProcessException(message="Please input form corectly.")
         return outer_dict, inner_dict
 
     def _pre_process_for_running(self, **kwargs) -> Dict[str, Any]:
@@ -48,10 +52,10 @@ class SignUpProcesserManager(BaseProcessersManager):
         kwargs["message_area"].warning("Running.")
         return outer_dict
 
-    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> bool:
-        if not inner_dict["response"].is_success:
-            outer_dict["message_area"].warning(inner_dict["response"].message)
-            return False
+    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> SignUpProcesserResponse:
+        response = inner_dict["response"]
+        return SignUpProcesserResponse(is_success=response.is_success, message=response.message)
 
-        outer_dict["message_area"].success(inner_dict["response"].message)
-        return True
+    @staticmethod
+    def _get_response_class() -> Type[SignUpProcesserResponse]:
+        return SignUpProcesserResponse
