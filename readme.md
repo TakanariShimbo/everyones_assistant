@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
 5. create_table
 ```
-python create_tables.py
+python initialize_database.py
 ```
 
 6. build management server
