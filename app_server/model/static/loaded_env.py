@@ -9,6 +9,8 @@ load_dotenv(dotenv_path=ENV_PATH)
 
 
 class LoadedEnv:
+    ADMIN_ID = os.environ["ADMIN_ID"]
+    ADMIN_PASSWORD = os.environ["ADMIN_PASSWORD"]
     DATABASE_TYPE = os.environ["DATABASE_TYPE"]
     DATABASE_USER = os.environ["DATABASE_USER"]
     DATABASE_PASSWORD = os.environ["DATABASE_PASSWORD"]

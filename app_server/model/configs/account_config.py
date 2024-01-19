@@ -42,7 +42,7 @@ class AccountConfig(BaseDatabaseConfig):
                 hashed_password VARCHAR(255) NOT NULL,
                 registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
                 is_administrator BOOLEAN DEFAULT FALSE NOT NULL,
-                is_disabled BOOLEAN DEFAULT FALSE NOT NULL,
+                is_disabled BOOLEAN DEFAULT FALSE NOT NULL
             );
             """
         )

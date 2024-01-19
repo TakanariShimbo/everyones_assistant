@@ -116,12 +116,20 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
             raise ValueError("Not accessible due to have not constracted.")
         return is_administrator
 
+    @is_administrator.setter
+    def is_administrator(self, is_administrator: bool) -> None:
+        self._is_administrator = is_administrator
+
     @property
     def is_disabled(self) -> bool:
         is_disabled = self._is_disabled
         if is_disabled == None:
             raise ValueError("Not accessible due to have not constracted.")
         return is_disabled
+
+    @is_disabled.setter
+    def is_disabled(self, is_disabled: bool) -> None:
+        self._is_disabled = is_disabled
 
     @property
     def registered_at_short(self) -> str:
