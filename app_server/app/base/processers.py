@@ -3,6 +3,8 @@ from queue import Queue, Empty
 from threading import Thread
 from typing import Any, Dict, Generic, List, Optional, Tuple, Type, TypeVar
 
+from model import BaseResponse
+
 
 T = TypeVar("T")
 
@@ -55,7 +57,7 @@ class BaseProcesser(Generic[T], Thread, ABC):
             self._inner_dict = inner_dict
             self._has_inner_dict = True
 
-        self.pre_process(self._outer_dict, self._inner_dict)
+        self._pre_process(self._outer_dict, self._inner_dict)
 
         try:
             self.start()
@@ -68,30 +70,30 @@ class BaseProcesser(Generic[T], Thread, ABC):
                 response = self._queue_handler.receive()
                 if response is None:
                     continue
-                self.callback_process(response.content, self._outer_dict, self._inner_dict)
+                self._callback_process(response.content, self._outer_dict, self._inner_dict)
                 if response.is_finish:
                     break
             self.join()
 
-        self.post_process(self._outer_dict, self._inner_dict)
+        self._post_process(self._outer_dict, self._inner_dict)
 
     def run(self) -> None:
-        self.main_process(self._inner_dict)
+        self._main_process(self._inner_dict)
 
     @abstractmethod
-    def main_process(self, inner_dict: Dict[str, Any]) -> None:
+    def _main_process(self, inner_dict: Dict[str, Any]) -> None:
         raise NotImplementedError("Subclasses must implement this method")
 
     @abstractmethod
-    def pre_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
+    def _pre_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
         raise NotImplementedError("Subclasses must implement this method")
 
     @abstractmethod
-    def post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
+    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
         raise NotImplementedError("Subclasses must implement this method")
 
     @abstractmethod
-    def callback_process(self, content: T, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
+    def _callback_process(self, content: T, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
         raise NotImplementedError("Subclasses must implement this method")
 
 
@@ -100,20 +102,15 @@ class EarlyStopProcessException(Exception):
         super().__init__(message)
 
 
-class BaseProcessersManager(ABC):
+R = TypeVar("R", bound=BaseResponse)
+
+
+class BaseProcessersManager(Generic[R], ABC):
     def __init__(self, processer_classes: List[Type[BaseProcesser]]) -> None:
         self._processer_classes = processer_classes
         self._is_running = False
         self._inner_dict = {}
         self._outer_dict = {}
-
-    @property
-    def inner_dict(self) -> Dict[str, Any]:
-        return self._inner_dict
-
-    @property
-    def outer_dict(self) -> Dict[str, Any]:
-        return self._outer_dict
 
     def init_processers(self, init_is_running=True) -> None:
         self._processers = [processer_class() for processer_class in self._processer_classes]
@@ -122,7 +119,7 @@ class BaseProcessersManager(ABC):
         if init_is_running:
             self._is_running = False
 
-    def run_all(self, **kwargs) -> bool:
+    def run_all(self, **kwargs) -> R:
         is_running = self._is_running
         self._is_running = True
 
@@ -130,31 +127,36 @@ class BaseProcessersManager(ABC):
         if not is_running:
             self.init_processers(init_is_running=False)
             try:
-                self._outer_dict, self._inner_dict = self.pre_process_for_starting(**kwargs)
-            except EarlyStopProcessException:
+                self._outer_dict, self._inner_dict = self._pre_process_for_starting(**kwargs)
+            except EarlyStopProcessException as e:
                 self._is_running = False
-                return False
+                return self._get_response_class()(is_success=False, message=str(e))
         else:
-            self._outer_dict = self.pre_process_for_running(**kwargs)
+            self._outer_dict = self._pre_process_for_running(**kwargs)
 
         # run main-processes
         for processer in self._processers:
             processer.start_and_wait_to_complete(self._outer_dict, self._inner_dict)
 
         # run post-process
-        is_success = self.post_process(self._outer_dict, self._inner_dict)
+        response = self._post_process(self._outer_dict, self._inner_dict)
 
         self._is_running = False
-        return is_success
+        return response
 
     @abstractmethod
-    def pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+    def _pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         raise NotImplementedError("Subclasses must implement this method")
 
     @abstractmethod
-    def pre_process_for_running(self, **kwargs) -> Dict[str, Any]:
+    def _pre_process_for_running(self, **kwargs) -> Dict[str, Any]:
         raise NotImplementedError("Subclasses must implement this method")
 
     @abstractmethod
-    def post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> bool:
+    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> R:
+        raise NotImplementedError("Subclasses must implement this method")
+
+    @staticmethod
+    @abstractmethod
+    def _get_response_class() -> Type[R]:
         raise NotImplementedError("Subclasses must implement this method")

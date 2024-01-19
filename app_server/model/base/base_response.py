@@ -2,7 +2,7 @@ from abc import ABC
 from typing import TypeVar, Generic, Optional
 
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class BaseResponse(Generic[T], ABC):
@@ -22,5 +22,3 @@ class BaseResponse(Generic[T], ABC):
     @property
     def contents(self) -> Optional[T]:
         return self._contents
-
-

@@ -11,7 +11,7 @@ from model import ROLE_TYPE_TABLE, AccountEntity
 
 
 class QueryProcesser(BaseProcesser[str]):
-    def main_process(self, inner_dict: Dict[str, Any]) -> None:
+    def _main_process(self, inner_dict: Dict[str, Any]) -> None:
         form: QueryForm = inner_dict["form"]
         manager: ChatRoomManager = inner_dict["manager"]
         account: AccountEntity = inner_dict["account"]
@@ -30,7 +30,7 @@ class QueryProcesser(BaseProcesser[str]):
         )
         inner_dict["answer"] = answer
 
-    def pre_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
+    def _pre_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
         form: QueryForm = inner_dict["form"]
         with outer_dict["history_area"]:
             with st.chat_message(name=ROLE_TYPE_TABLE.USER_ID):
@@ -38,15 +38,15 @@ class QueryProcesser(BaseProcesser[str]):
             with st.chat_message(name=ROLE_TYPE_TABLE.ASSISTANT_ID):
                 outer_dict["answer_area"] = st.empty()
 
-    def post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
+    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
         outer_dict["answer_area"].write(inner_dict["answer"])
 
-    def callback_process(self, content: str, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
+    def _callback_process(self, content: str, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
         outer_dict["answer_area"].write(content)
 
 
 class QueryProcesserManager(BaseProcessersManager):
-    def pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+    def _pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         outer_dict = {}
         outer_dict["message_area"] = kwargs["message_area"]
         outer_dict["history_area"] = kwargs["history_area"]
@@ -61,7 +61,7 @@ class QueryProcesserManager(BaseProcessersManager):
             raise EarlyStopProcessException()
         return outer_dict, inner_dict
 
-    def pre_process_for_running(self, **kwargs) -> Dict[str, Any]:
+    def _pre_process_for_running(self, **kwargs) -> Dict[str, Any]:
         outer_dict = {}
         outer_dict["message_area"] = kwargs["message_area"]
         outer_dict["history_area"] = kwargs["history_area"]
@@ -69,6 +69,6 @@ class QueryProcesserManager(BaseProcessersManager):
         kwargs["message_area"].warning("Running.")
         return outer_dict
 
-    def post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> bool:
+    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> bool:
         outer_dict["message_area"].empty()
         return True
