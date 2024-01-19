@@ -23,7 +23,7 @@ class CreateActionResults:
     @property
     def title(self) -> str:
         return self._title
-    
+
     @property
     def release_entity(self) -> Optional[ReleaseTypeEntity]:
         return self._release_entity
