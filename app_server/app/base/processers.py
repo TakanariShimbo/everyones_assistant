@@ -107,6 +107,14 @@ class BaseProcessersManager(ABC):
         self._inner_dict = {}
         self._outer_dict = {}
 
+    @property
+    def inner_dict(self) -> Dict[str, Any]:
+        return self._inner_dict
+
+    @property
+    def outer_dict(self) -> Dict[str, Any]:
+        return self._outer_dict
+
     def init_processers(self, init_is_running=True) -> None:
         self._processers = [processer_class() for processer_class in self._processer_classes]
         self._inner_dict = {}
