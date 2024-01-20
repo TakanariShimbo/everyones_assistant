@@ -5,7 +5,7 @@ from ....base import BaseProcesser
 from controller import AccountManager
 
 
-class SignUpProcesser(BaseProcesser[None]):
+class Processer(BaseProcesser[None]):
     def _main_process(self, inner_dict: Dict[str, Any]) -> None:
         form: SignUpForm = inner_dict["form"]
         inner_dict["response"] = AccountManager.sign_up(

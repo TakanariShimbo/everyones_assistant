@@ -4,7 +4,7 @@ from ....base import BaseProcesser
 from model import Database, AccountTable
 
 
-class LoadAccountTableProcesser(BaseProcesser[None]):
+class Processer(BaseProcesser[None]):
     def _main_process(self, inner_dict: Dict[str, Any]) -> None:
         inner_dict["table"] = AccountTable.load_from_database(database_engine=Database.ENGINE)
 

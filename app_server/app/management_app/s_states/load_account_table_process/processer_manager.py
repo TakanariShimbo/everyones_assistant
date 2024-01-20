@@ -4,11 +4,11 @@ from ....base import BaseProcessersManager
 from model import BaseResponse, AccountTable
 
 
-class LoadAccountTableProcesserResponse(BaseResponse[AccountTable]):
+class ProcesserResponse(BaseResponse[AccountTable]):
     pass
 
 
-class LoadAccountTableProcesserManager(BaseProcessersManager[LoadAccountTableProcesserResponse]):
+class ProcesserManager(BaseProcessersManager[ProcesserResponse]):
     def _pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         outer_dict = {}
         inner_dict = {}
@@ -18,10 +18,10 @@ class LoadAccountTableProcesserManager(BaseProcessersManager[LoadAccountTablePro
         outer_dict = {}
         return outer_dict
 
-    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> LoadAccountTableProcesserResponse:
+    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> ProcesserResponse:
         table = inner_dict["table"]
-        return LoadAccountTableProcesserResponse(is_success=True, contents=table)
+        return ProcesserResponse(is_success=True, contents=table)
 
     @staticmethod
-    def _get_response_class() -> Type[LoadAccountTableProcesserResponse]:
-        return LoadAccountTableProcesserResponse
+    def _get_response_class() -> Type[ProcesserResponse]:
+        return ProcesserResponse
