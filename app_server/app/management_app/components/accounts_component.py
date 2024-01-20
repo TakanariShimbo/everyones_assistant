@@ -3,7 +3,7 @@ from streamlit_lottie import st_lottie_spinner
 
 from .accounts_action_results import ActionResults
 from ...base import BaseComponent
-from ..s_states import ManagementComponentSState, SignUpProcesserSState
+from ..s_states import ManagementComponentSState, SignUpProcesserSState, AccountTableSState
 from model import AccountTable, Database, LoadedLottie, LoadedImage
 
 
@@ -11,6 +11,7 @@ class AccountsComponent(BaseComponent):
     @staticmethod
     def init() -> None:
         SignUpProcesserSState.init()
+        AccountTableSState.init()
 
     @staticmethod
     def _display_titles() -> None:
@@ -131,8 +132,8 @@ class AccountsComponent(BaseComponent):
 
     @staticmethod
     def _display_account_table() -> None:
-        account_table = AccountTable.load_from_database(database_engine=Database.ENGINE)
         st.markdown("#### 👀 View")
+        account_table = AccountTableSState.get()
         st.dataframe(account_table.df, use_container_width=True)
 
     @classmethod
@@ -151,3 +152,4 @@ class AccountsComponent(BaseComponent):
     @staticmethod
     def deinit() -> None:
         SignUpProcesserSState.deinit()
+        AccountTableSState.deinit()

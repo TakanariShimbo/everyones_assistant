@@ -1,16 +1,18 @@
 from textwrap import dedent
 
 import streamlit as st
+from streamlit_lottie import st_lottie_spinner
 
 from ...base import BaseComponent
 from ..s_states import ManagementComponentSState
-from model import LoadedImage
+from .accounts_pre_component import AccountsPreComponent
+from model import LoadedImage, LoadedLottie
 
 
 class HomeComponent(BaseComponent):
     @staticmethod
     def init() -> None:
-        pass
+        AccountsPreComponent.init()
 
     @staticmethod
     def _display_titles() -> None:
@@ -49,16 +51,19 @@ class HomeComponent(BaseComponent):
             st.markdown(content)
             _, button_area, _ = st.columns([5, 3, 5])
             with button_area:
-                st.button(label="Enter", type="primary", on_click=cls._on_click_accounts, use_container_width=True)
+                is_pushed = st.button(label="Enter", type="primary", use_container_width=True)
+            _, loading_area, _ = st.columns([1, 1, 1])
+
+        if is_pushed:
+            with loading_area:
+                with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
+                    AccountsPreComponent.prepare()
+            cls.deinit()
+            st.rerun()
 
     @classmethod
     def _on_click_sign_out(cls) -> None:
         ManagementComponentSState.set_sign_in_entity()
-        cls.deinit()
-
-    @classmethod
-    def _on_click_accounts(cls) -> None:
-        ManagementComponentSState.set_accounts_entity()
         cls.deinit()
 
     @classmethod
@@ -70,4 +75,4 @@ class HomeComponent(BaseComponent):
 
     @staticmethod
     def deinit() -> None:
-        pass
+        AccountsPreComponent.deinit()
