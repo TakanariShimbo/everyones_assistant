@@ -18,7 +18,8 @@ class BaseSState(Generic[T], ABC):
 
     @classmethod
     def deinit(cls) -> None:
-        del st.session_state[cls.get_name()]
+        if not cls.get_name() in st.session_state:
+            del st.session_state[cls.get_name()]
 
     @staticmethod
     @abstractmethod

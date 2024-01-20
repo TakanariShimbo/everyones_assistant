@@ -5,6 +5,7 @@ from streamlit_lottie import st_lottie_spinner
 
 from ...base import BaseComponent
 from .. import s_states as SStates
+from .sign_in_pre_component import SignInPreComponent
 from .accounts_pre_component import AccountsPreComponent
 from model import LoadedImage, LoadedLottie
 
@@ -12,6 +13,8 @@ from model import LoadedImage, LoadedLottie
 class HomeComponent(BaseComponent):
     @staticmethod
     def init() -> None:
+        SStates.CurrentComponentEnity.init()
+        SignInPreComponent.init()
         AccountsPreComponent.init()
 
     @staticmethod
@@ -63,7 +66,7 @@ class HomeComponent(BaseComponent):
 
     @classmethod
     def _on_click_sign_out(cls) -> None:
-        SStates.CurrentComponentEnity.set_sign_in_entity()
+        SignInPreComponent.prepare()
         cls.deinit()
 
     @classmethod
@@ -75,4 +78,5 @@ class HomeComponent(BaseComponent):
 
     @staticmethod
     def deinit() -> None:
+        SignInPreComponent.deinit()
         AccountsPreComponent.deinit()
