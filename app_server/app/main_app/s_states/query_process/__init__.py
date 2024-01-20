@@ -1,1 +1,1 @@
-from .s_state import QueryProcessSState
+from .s_state import QueryProcess

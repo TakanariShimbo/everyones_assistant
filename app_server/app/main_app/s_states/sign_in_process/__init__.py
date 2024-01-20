@@ -1,1 +1,1 @@
-from .s_state import SignInProcessSState
+from .s_state import SignInProcess

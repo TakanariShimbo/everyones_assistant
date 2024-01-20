@@ -1,1 +1,1 @@
-from .s_state import ChangeAccountPassProcessSState
+from .s_state import ChangeAccountPassProcess

@@ -1,1 +1,1 @@
-from .s_state import UpdateAccountInfoProcessSState
+from .s_state import UpdateAccountInfoProcess

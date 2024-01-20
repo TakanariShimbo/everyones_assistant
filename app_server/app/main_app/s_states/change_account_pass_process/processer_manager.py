@@ -1,6 +1,6 @@
 from typing import Dict, Any, Tuple, Type
 
-from ..signed_in_account_entity import SignedInAccountEntitySState
+from ..signed_in_account_entity import SignedInAccountEntity
 from ...forms import ChangeAccountPassForm
 from ....base import BaseProcessersManager, EarlyStopProcessException
 from model import BaseResponse
@@ -32,7 +32,7 @@ class ChangeAccountPassProcesserManager(BaseProcessersManager[ChangeAccountPassP
     def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> ChangeAccountPassProcesserResponse:
         response = inner_dict["response"]
         if response.is_success:
-            SignedInAccountEntitySState.set(value=response.contents)
+            SignedInAccountEntity.set(value=response.contents)
         return ChangeAccountPassProcesserResponse(is_success=response.is_success, message=response.message)
 
     @staticmethod

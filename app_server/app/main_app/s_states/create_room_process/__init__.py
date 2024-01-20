@@ -1,1 +1,1 @@
-from .s_state import CreateRoomProcessSState
+from .s_state import CreateRoomProcess

@@ -3,20 +3,20 @@ from streamlit_lottie import st_lottie_spinner
 
 from .account_action_results import UpdateInfoActionResults, ChangePassActionResults
 from ...base import BaseComponent
-from ..s_states import CurrentComponentEntitySState, SignedInAccountEntitySState, UpdateAccountInfoProcessSState, ChangeAccountPassProcessSState
+from .. import s_states as SStates
 from model import LoadedLottie, LoadedImage
 
 
 class AccountComponent(BaseComponent):
     @staticmethod
     def init() -> None:
-        SignedInAccountEntitySState.init()
-        UpdateAccountInfoProcessSState.init()
-        ChangeAccountPassProcessSState.init()
+        SStates.SignedInAccountEntity.init()
+        SStates.UpdateAccountInfoProcess.init()
+        SStates.ChangeAccountPassProcess.init()
 
     @staticmethod
     def _display_titles() -> None:
-        current_component_entity = CurrentComponentEntitySState.get()
+        current_component_entity = SStates.CurrentComponentEntity.get()
         st.markdown(f"### {current_component_entity.label_en}")
 
     @classmethod
@@ -26,7 +26,7 @@ class AccountComponent(BaseComponent):
 
     @staticmethod
     def _display_update_info_form_and_get_results() -> UpdateInfoActionResults:
-        self_account_entity = SignedInAccountEntitySState.get()
+        self_account_entity = SStates.SignedInAccountEntity.get()
 
         st.markdown("#### 📝 Information")
         with st.form(key="UpdateInfoForm", border=True):
@@ -107,7 +107,7 @@ class AccountComponent(BaseComponent):
 
     @staticmethod
     def _display_change_pass_form_and_get_results() -> ChangePassActionResults:
-        self_account_entity = SignedInAccountEntitySState.get()
+        signed_in_account_entity = SStates.SignedInAccountEntity.get()
 
         st.markdown("#### 🔑 Password")
         with st.form(key="ChangePassForm", border=True):
@@ -141,7 +141,7 @@ class AccountComponent(BaseComponent):
             _, loading_area, _ = st.columns([1, 1, 1])
 
         return ChangePassActionResults(
-            account_id=self_account_entity.account_id,
+            account_id=signed_in_account_entity.account_id,
             current_raw_password=inputed_current_raw_password,
             new_raw_password=inputed_new_raw_password,
             new_raw_password_confirm=inputed_new_raw_password_confirm,
@@ -157,7 +157,7 @@ class AccountComponent(BaseComponent):
 
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processers_manager = UpdateAccountInfoProcessSState.get()
+                processers_manager = SStates.UpdateAccountInfoProcess.get()
                 response = processers_manager.run_all(
                     message_area=action_results.message_area,
                     account_id=action_results.account_id,
@@ -182,7 +182,7 @@ class AccountComponent(BaseComponent):
 
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processers_manager = ChangeAccountPassProcessSState.get()
+                processers_manager = SStates.ChangeAccountPassProcess.get()
                 response = processers_manager.run_all(
                     message_area=action_results.message_area,
                     account_id=action_results.account_id,
@@ -199,7 +199,7 @@ class AccountComponent(BaseComponent):
 
     @classmethod
     def _on_click_return_home(cls):
-        CurrentComponentEntitySState.set_home_entity()
+        SStates.CurrentComponentEntity.set_home_entity()
         cls.deinit()
 
     @classmethod
@@ -214,5 +214,5 @@ class AccountComponent(BaseComponent):
 
     @staticmethod
     def deinit() -> None:
-        UpdateAccountInfoProcessSState.deinit()
-        ChangeAccountPassProcessSState.deinit()
+        SStates.UpdateAccountInfoProcess.deinit()
+        SStates.ChangeAccountPassProcess.deinit()

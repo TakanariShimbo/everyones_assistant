@@ -1,5 +1,5 @@
 from ..base import BasePage
-from .s_states import CurrentComponentEntitySState
+from .s_states import CurrentComponentEntity
 from .components import WakeupComponent, SignInComponent, HomeComponent, ChatRoomComponent, AccountComponent
 from model import MAIN_COMPONENT_TYPE_TABLE
 
@@ -15,11 +15,11 @@ class MainPage(BasePage):
 
     @staticmethod
     def init() -> None:
-        CurrentComponentEntitySState.init()
+        CurrentComponentEntity.init()
 
     @staticmethod
     def main() -> None:
-        current_component_entity = CurrentComponentEntitySState.get()
+        current_component_entity = CurrentComponentEntity.get()
         if current_component_entity == MAIN_COMPONENT_TYPE_TABLE.WAKE_UP_ENTITY:
             WakeupComponent.run()
         elif current_component_entity == MAIN_COMPONENT_TYPE_TABLE.SIGN_IN_ENTITY:

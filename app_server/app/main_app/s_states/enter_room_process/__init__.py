@@ -1,1 +1,1 @@
-from .s_state import EnterRoomProcessSState
+from .s_state import EnterRoomProcess

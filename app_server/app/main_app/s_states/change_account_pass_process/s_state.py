@@ -3,7 +3,7 @@ from .processer_manager import ChangeAccountPassProcesserManager
 from ....base import BaseSState
 
 
-class ChangeAccountPassProcessSState(BaseSState[ChangeAccountPassProcesserManager]):
+class ChangeAccountPassProcess(BaseSState[ChangeAccountPassProcesserManager]):
     @staticmethod
     def get_name() -> str:
         return "CHANGE_ACCOUNT_PASS_PROCESS"

@@ -3,7 +3,7 @@ from .processer_manager import SignInProcesserManager
 from ....base import BaseSState
 
 
-class SignInProcessSState(BaseSState[SignInProcesserManager]):
+class SignInProcess(BaseSState[SignInProcesserManager]):
     @staticmethod
     def get_name() -> str:
         return "SIGN_IN_PROCESS"

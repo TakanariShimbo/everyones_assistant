@@ -6,20 +6,20 @@ from streamlit_lottie import st_lottie_spinner
 
 from .home_action_results import CreateActionResults, EnterActionResults, RoomContainerActionResults
 from ...base import BaseComponent
-from ..s_states import SignedInAccountEntitySState, CurrentComponentEntitySState, CreateRoomProcessSState, EnterRoomProcessSState, EnteredRoomManagerSState
+from .. import s_states as SStates
 from model import ChatRoomDtoTable, ChatRoomDto, RELEASE_TYPE_TABLE, LoadedLottie, LoadedImage, Database
 
 
 class HomeComponent(BaseComponent):
     @staticmethod
     def init() -> None:
-        SignedInAccountEntitySState.init()
-        CreateRoomProcessSState.init()
-        EnterRoomProcessSState.init()
+        SStates.SignedInAccountEntity.init()
+        SStates.CreateRoomProcess.init()
+        SStates.EnterRoomProcess.init()
 
     @staticmethod
     def _display_titles() -> None:
-        current_component_entity = CurrentComponentEntitySState.get()
+        current_component_entity = SStates.CurrentComponentEntity.get()
         st.markdown(f"### {current_component_entity.label_en}")
 
     @classmethod
@@ -104,7 +104,7 @@ class HomeComponent(BaseComponent):
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
                 your_room_table = ChatRoomDtoTable.load_not_disabled_and_specified_account_from_database(
                     database_engine=Database.ENGINE,
-                    account_id=SignedInAccountEntitySState.get().account_id,
+                    account_id=SStates.SignedInAccountEntity.get().account_id,
                 )
             for container_id, chat_room_dto in enumerate(your_room_table.get_all_beans()):
                 action_results = cls._display_room_container_and_get_results(
@@ -121,7 +121,7 @@ class HomeComponent(BaseComponent):
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
                 everyone_room_table = ChatRoomDtoTable.load_public_and_not_disabled_and_unspecified_account_from_database(
                     database_engine=Database.ENGINE,
-                    account_id=SignedInAccountEntitySState.get().account_id,
+                    account_id=SStates.SignedInAccountEntity.get().account_id,
                 )
             for container_id, chat_room_dto in enumerate(everyone_room_table.get_all_beans()):
                 action_results = cls._display_room_container_and_get_results(
@@ -150,7 +150,7 @@ class HomeComponent(BaseComponent):
 
         with create_action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processers_manager = CreateRoomProcessSState.get()
+                processers_manager = SStates.CreateRoomProcess.get()
                 response = processers_manager.run_all(
                     message_area=create_action_results.message_area,
                     title=create_action_results.title,
@@ -162,8 +162,8 @@ class HomeComponent(BaseComponent):
             return False
 
         create_action_results.message_area.empty()
-        EnteredRoomManagerSState.set(value=response.contents)
-        CurrentComponentEntitySState.set_chat_room_entity()
+        SStates.EnteredRoomManager.set(value=response.contents)
+        SStates.CurrentComponentEntity.set_chat_room_entity()
         return True
 
     @staticmethod
@@ -173,7 +173,7 @@ class HomeComponent(BaseComponent):
 
         with enter_action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processers_manager = EnterRoomProcessSState.get()
+                processers_manager = SStates.EnterRoomProcess.get()
                 response = processers_manager.run_all(
                     room_id=enter_action_results.chat_room_dto.room_id,
                     account_id=enter_action_results.chat_room_dto.account_id,
@@ -182,20 +182,20 @@ class HomeComponent(BaseComponent):
         if not response.is_success:
             return False
 
-        EnteredRoomManagerSState.set(value=response.contents)
-        CurrentComponentEntitySState.set_chat_room_entity()
+        SStates.EnteredRoomManager.set(value=response.contents)
+        SStates.CurrentComponentEntity.set_chat_room_entity()
         return True
 
     @classmethod
     def _on_click_accounts(cls) -> None:
-        CurrentComponentEntitySState.set_account_entity()
+        SStates.CurrentComponentEntity.set_account_entity()
         cls.deinit()
 
     @classmethod
     def _on_click_sign_out(cls) -> None:
-        CurrentComponentEntitySState.set_sign_in_entity()
+        SStates.CurrentComponentEntity.set_sign_in_entity()
         cls.deinit()
-        SignedInAccountEntitySState.deinit()
+        SStates.SignedInAccountEntity.deinit()
 
     @classmethod
     def main(cls) -> None:
@@ -218,5 +218,5 @@ class HomeComponent(BaseComponent):
 
     @staticmethod
     def deinit() -> None:
-        CreateRoomProcessSState.deinit()
-        EnterRoomProcessSState.deinit()
+        SStates.CreateRoomProcess.deinit()
+        SStates.EnterRoomProcess.deinit()

@@ -4,7 +4,7 @@ import streamlit as st
 from streamlit_lottie import st_lottie
 
 from ...base import BaseComponent
-from ..s_states import CurrentComponentEntitySState
+from .. import s_states as SStates
 from model import LoadedLottie
 
 
@@ -17,7 +17,7 @@ class WakeupComponent(BaseComponent):
     def main(cls) -> None:
         st_lottie(animation_source=LoadedLottie.WAKE_UP_LOGO, speed=1.2, reverse=False, loop=False)
         sleep(4)
-        CurrentComponentEntitySState.set_sign_in_entity()
+        SStates.CurrentComponentEntity.set_sign_in_entity()
         st.rerun()
 
     @staticmethod

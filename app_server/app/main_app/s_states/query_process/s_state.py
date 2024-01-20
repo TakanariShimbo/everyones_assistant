@@ -3,7 +3,7 @@ from .processer_manager import QueryProcesserManager
 from ....base import BaseSState
 
 
-class QueryProcessSState(BaseSState[QueryProcesserManager]):
+class QueryProcess(BaseSState[QueryProcesserManager]):
     @staticmethod
     def get_name() -> str:
         return "QUERY_PROCESS"

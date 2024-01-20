@@ -3,7 +3,7 @@ from .processer_manager import EnterRoomProcesserManager
 from ....base import BaseSState
 
 
-class EnterRoomProcessSState(BaseSState[EnterRoomProcesserManager]):
+class EnterRoomProcess(BaseSState[EnterRoomProcesserManager]):
     @staticmethod
     def get_name() -> str:
         return "ENTER_ROOM_PROCESS"

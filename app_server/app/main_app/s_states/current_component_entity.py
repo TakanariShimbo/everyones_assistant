@@ -2,7 +2,7 @@ from ...base import BaseSState
 from model import MAIN_COMPONENT_TYPE_TABLE, MainComponentTypeEntity
 
 
-class CurrentComponentEntitySState(BaseSState[MainComponentTypeEntity]):
+class CurrentComponentEntity(BaseSState[MainComponentTypeEntity]):
     @staticmethod
     def get_name() -> str:
         return "CURRENT_COMPONENT_ENTITY"

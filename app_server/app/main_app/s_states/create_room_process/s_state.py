@@ -3,7 +3,7 @@ from .processer_manager import CreateRoomProcesserManager
 from ....base import BaseSState
 
 
-class CreateRoomProcessSState(BaseSState[CreateRoomProcesserManager]):
+class CreateRoomProcess(BaseSState[CreateRoomProcesserManager]):
     @staticmethod
     def get_name() -> str:
         return "CREATE_ROOM_PROCESS"

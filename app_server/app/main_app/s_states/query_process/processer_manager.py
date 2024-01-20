@@ -1,8 +1,8 @@
 from typing import Dict, Any, Tuple, Type
 
 from ...forms import QueryForm
-from ..signed_in_account_entity import SignedInAccountEntitySState
-from ..entered_room_manager import EnteredRoomManagerSState
+from ..signed_in_account_entity import SignedInAccountEntity
+from ..entered_room_manager import EnteredRoomManager
 from ....base import BaseProcessersManager, EarlyStopProcessException
 from model import BaseResponse
 
@@ -20,8 +20,8 @@ class QueryProcesserManager(BaseProcessersManager[QueryProcesserResponse]):
         try:
             inner_dict = {}
             inner_dict["form"] = QueryForm.from_entity(assistant_entity=kwargs["assistant_entity"], prompt=kwargs["prompt"])
-            inner_dict["manager"] = EnteredRoomManagerSState.get()
-            inner_dict["account"] = SignedInAccountEntitySState.get()
+            inner_dict["manager"] = EnteredRoomManager.get()
+            inner_dict["account"] = SignedInAccountEntity.get()
         except:
             raise EarlyStopProcessException(message="Please input form corectly.")
         return outer_dict, inner_dict
