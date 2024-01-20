@@ -1,7 +1,7 @@
 from typing import Dict, Any, Tuple, Type
 
-from ...forms import SignUpForm
 from ....base import BaseProcessersManager, EarlyStopProcessException
+from ...forms import SignUpForm
 from model import BaseResponse
 
 

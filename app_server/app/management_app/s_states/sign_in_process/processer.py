@@ -1,7 +1,7 @@
 from typing import Dict, Any
 
-from ...forms import SignInForm
 from ....base import BaseProcesser
+from ...forms import SignInForm
 from controller import AccountManager
 
 

@@ -1,7 +1,7 @@
 from typing import Dict, Any
 
-from ...forms import SignUpForm
 from ....base import BaseProcesser
+from ...forms import SignUpForm
 from controller import AccountManager
 
 
