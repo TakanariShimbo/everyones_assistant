@@ -4,7 +4,7 @@ import streamlit as st
 from streamlit_lottie import st_lottie_spinner
 
 from ...base import BaseComponent
-from ..s_states import CurrentComponentEnity
+from .. import s_states as SStates
 from .accounts_pre_component import AccountsPreComponent
 from model import LoadedImage, LoadedLottie
 
@@ -16,7 +16,7 @@ class HomeComponent(BaseComponent):
 
     @staticmethod
     def _display_titles() -> None:
-        current_component_entity = CurrentComponentEnity.get()
+        current_component_entity = SStates.CurrentComponentEnity.get()
         st.markdown(f"### {current_component_entity.label_en}")
 
     @classmethod
@@ -63,7 +63,7 @@ class HomeComponent(BaseComponent):
 
     @classmethod
     def _on_click_sign_out(cls) -> None:
-        CurrentComponentEnity.set_sign_in_entity()
+        SStates.CurrentComponentEnity.set_sign_in_entity()
         cls.deinit()
 
     @classmethod

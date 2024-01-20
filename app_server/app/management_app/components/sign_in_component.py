@@ -3,18 +3,18 @@ from streamlit_lottie import st_lottie_spinner
 
 from .sign_in_action_results import ActionResults
 from ...base import BaseComponent
-from ..s_states import CurrentComponentEnity, SignInProcesserSState
+from .. import s_states as SStates
 from model import LoadedLottie
 
 
 class SignInComponent(BaseComponent):
     @staticmethod
     def init() -> None:
-        SignInProcesserSState.init()
+        SStates.SignInProcess.init()
 
     @staticmethod
     def _display_title() -> None:
-        current_component_entity = CurrentComponentEnity.get()
+        current_component_entity = SStates.CurrentComponentEnity.get()
         st.markdown(f"### {current_component_entity.label_en}")
 
     @staticmethod
@@ -52,7 +52,7 @@ class SignInComponent(BaseComponent):
 
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processers_manager = SignInProcesserSState.get()
+                processers_manager = SStates.SignInProcess.get()
                 response = processers_manager.run_all(
                     message_area=action_results.message_area,
                     account_id=action_results.account_id,
@@ -63,7 +63,7 @@ class SignInComponent(BaseComponent):
             action_results.message_area.warning(response.message)
             return False
 
-        CurrentComponentEnity.set_home_entity()
+        SStates.CurrentComponentEnity.set_home_entity()
         action_results.message_area.empty()
         return True
 
@@ -78,4 +78,4 @@ class SignInComponent(BaseComponent):
 
     @staticmethod
     def deinit() -> None:
-        SignInProcesserSState.deinit()
+        SStates.SignInProcess.deinit()

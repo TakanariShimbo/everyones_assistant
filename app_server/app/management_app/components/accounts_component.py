@@ -3,19 +3,19 @@ from streamlit_lottie import st_lottie_spinner
 
 from .accounts_action_results import ActionResults
 from ...base import BaseComponent
-from ..s_states import CurrentComponentEnity, SignUpProcess, LoadedAccountTable
+from .. import s_states as SStates
 from model import AccountTable, Database, LoadedLottie, LoadedImage
 
 
 class AccountsComponent(BaseComponent):
     @staticmethod
     def init() -> None:
-        SignUpProcess.init()
-        LoadedAccountTable.init()
+        SStates.SignUpProcess.init()
+        SStates.LoadedAccountTable.init()
 
     @staticmethod
     def _display_titles() -> None:
-        current_component_entity = CurrentComponentEnity.get()
+        current_component_entity = SStates.CurrentComponentEnity.get()
         st.markdown(f"### {current_component_entity.label_en}")
 
     @classmethod
@@ -112,7 +112,7 @@ class AccountsComponent(BaseComponent):
 
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processers_manager = SignUpProcess.get()
+                processers_manager = SStates.SignUpProcess.get()
                 response = processers_manager.run_all(
                     message_area=action_results.message_area,
                     account_id=action_results.account_id,
@@ -133,12 +133,12 @@ class AccountsComponent(BaseComponent):
     @staticmethod
     def _display_account_table() -> None:
         st.markdown("#### 👀 View")
-        account_table = LoadedAccountTable.get()
+        account_table = SStates.LoadedAccountTable.get()
         st.dataframe(account_table.df, use_container_width=True)
 
     @classmethod
     def _on_click_return_home(cls):
-        CurrentComponentEnity.set_home_entity()
+        SStates.CurrentComponentEnity.set_home_entity()
         cls.deinit()
 
     @classmethod
@@ -151,5 +151,5 @@ class AccountsComponent(BaseComponent):
 
     @staticmethod
     def deinit() -> None:
-        SignUpProcess.deinit()
-        LoadedAccountTable.deinit()
+        SStates.SignUpProcess.deinit()
+        SStates.LoadedAccountTable.deinit()
