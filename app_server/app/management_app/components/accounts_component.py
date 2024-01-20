@@ -3,19 +3,19 @@ from streamlit_lottie import st_lottie_spinner
 
 from .accounts_action_results import ActionResults
 from ...base import BaseComponent
-from ..s_states import ManagementComponentSState, SignUpProcesserSState, AccountTableSState
+from ..s_states import CurrentComponentEnity, SignUpProcess, LoadedAccountTable
 from model import AccountTable, Database, LoadedLottie, LoadedImage
 
 
 class AccountsComponent(BaseComponent):
     @staticmethod
     def init() -> None:
-        SignUpProcesserSState.init()
-        AccountTableSState.init()
+        SignUpProcess.init()
+        LoadedAccountTable.init()
 
     @staticmethod
     def _display_titles() -> None:
-        current_component_entity = ManagementComponentSState.get()
+        current_component_entity = CurrentComponentEnity.get()
         st.markdown(f"### {current_component_entity.label_en}")
 
     @classmethod
@@ -112,7 +112,7 @@ class AccountsComponent(BaseComponent):
 
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processers_manager = SignUpProcesserSState.get()
+                processers_manager = SignUpProcess.get()
                 response = processers_manager.run_all(
                     message_area=action_results.message_area,
                     account_id=action_results.account_id,
@@ -133,12 +133,12 @@ class AccountsComponent(BaseComponent):
     @staticmethod
     def _display_account_table() -> None:
         st.markdown("#### 👀 View")
-        account_table = AccountTableSState.get()
+        account_table = LoadedAccountTable.get()
         st.dataframe(account_table.df, use_container_width=True)
 
     @classmethod
     def _on_click_return_home(cls):
-        ManagementComponentSState.set_home_entity()
+        CurrentComponentEnity.set_home_entity()
         cls.deinit()
 
     @classmethod
@@ -151,5 +151,5 @@ class AccountsComponent(BaseComponent):
 
     @staticmethod
     def deinit() -> None:
-        SignUpProcesserSState.deinit()
-        AccountTableSState.deinit()
+        SignUpProcess.deinit()
+        LoadedAccountTable.deinit()

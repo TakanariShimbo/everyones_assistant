@@ -1,5 +1,5 @@
 from ..base import BasePage
-from .s_states import ManagementComponentSState
+from .s_states import CurrentComponentEnity
 from .components import SignInComponent, HomeComponent, AccountsComponent
 from model import MANAGEMENT_COMPONENT_TYPE_TABLE
 
@@ -15,11 +15,11 @@ class ManagementPage(BasePage):
 
     @staticmethod
     def init() -> None:
-        ManagementComponentSState.init()
+        CurrentComponentEnity.init()
 
     @staticmethod
     def main() -> None:
-        current_component_entity = ManagementComponentSState.get()
+        current_component_entity = CurrentComponentEnity.get()
         if current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.SIGN_IN_ENTITY:
             SignInComponent.run()
         elif current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.HOME_ENTITY:

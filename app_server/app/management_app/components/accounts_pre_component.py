@@ -1,18 +1,18 @@
-from ..s_states import LoadAccountsProcesserSState, AccountTableSState, ManagementComponentSState
+from ..s_states import LoadAccountTableProcess, LoadedAccountTable, CurrentComponentEnity
 
 
 class AccountsPreComponent:
     @staticmethod
     def init():
-        LoadAccountsProcesserSState.init()
+        LoadAccountTableProcess.init()
 
     @staticmethod
     def prepare():
-        processer_manager = LoadAccountsProcesserSState.get()
+        processer_manager = LoadAccountTableProcess.get()
         response = processer_manager.run_all()
-        AccountTableSState.set(value=response.contents)
-        ManagementComponentSState.set_accounts_entity()
+        LoadedAccountTable.set(value=response.contents)
+        CurrentComponentEnity.set_accounts_entity()
 
     @staticmethod
     def deinit():
-        LoadAccountsProcesserSState.deinit()
+        LoadAccountTableProcess.deinit()

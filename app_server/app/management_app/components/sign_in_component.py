@@ -3,7 +3,7 @@ from streamlit_lottie import st_lottie_spinner
 
 from .sign_in_action_results import ActionResults
 from ...base import BaseComponent
-from ..s_states import ManagementComponentSState, SignInProcesserSState
+from ..s_states import CurrentComponentEnity, SignInProcesserSState
 from model import LoadedLottie
 
 
@@ -14,7 +14,7 @@ class SignInComponent(BaseComponent):
 
     @staticmethod
     def _display_title() -> None:
-        current_component_entity = ManagementComponentSState.get()
+        current_component_entity = CurrentComponentEnity.get()
         st.markdown(f"### {current_component_entity.label_en}")
 
     @staticmethod
@@ -63,7 +63,7 @@ class SignInComponent(BaseComponent):
             action_results.message_area.warning(response.message)
             return False
 
-        ManagementComponentSState.set_home_entity()
+        CurrentComponentEnity.set_home_entity()
         action_results.message_area.empty()
         return True
 
