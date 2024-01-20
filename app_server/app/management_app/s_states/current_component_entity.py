@@ -5,7 +5,7 @@ from model import MANAGEMENT_COMPONENT_TYPE_TABLE, ManagementComponentTypeEntity
 class CurrentComponentEnity(BaseSState[ManagementComponentTypeEntity]):
     @staticmethod
     def get_name() -> str:
-        return "ACTIVE_MANAGEMENT_COMPONENT"
+        return "CURRENT_COMPONENT_ENTITY"
 
     @staticmethod
     def get_default() -> ManagementComponentTypeEntity:
