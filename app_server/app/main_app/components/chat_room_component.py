@@ -3,20 +3,20 @@ from streamlit.delta_generator import DeltaGenerator
 
 from .chat_room_action_results import ActionResults
 from ...base import BaseComponent
-from ..s_states import AccountSState, MainComponentSState, QueryProcesserSState, ChatRoomSState
+from ..s_states import SignedInAccountEntitySState, CurrentComponentEntitySState, QueryProcessSState, EnteredRoomManagerSState
 from model import ASSISTANT_TYPE_TABLE, LoadedImage
 
 
 class ChatRoomComponent(BaseComponent):
     @staticmethod
     def init() -> None:
-        AccountSState.init()
-        ChatRoomSState.init()
-        QueryProcesserSState.init()
+        SignedInAccountEntitySState.init()
+        EnteredRoomManagerSState.init()
+        QueryProcessSState.init()
 
     @staticmethod
     def _display_titles() -> None:
-        current_component_entity = MainComponentSState.get()
+        current_component_entity = CurrentComponentEntitySState.get()
         st.markdown(f"### {current_component_entity.label_en}")
 
     @classmethod
@@ -66,7 +66,7 @@ class ChatRoomComponent(BaseComponent):
         history_area = st.container(border=False)
         with history_area:
             st.markdown("#### 📝 History")
-            chat_room_manager = ChatRoomSState.get()
+            chat_room_manager = EnteredRoomManagerSState.get()
             for message_entity in chat_room_manager.get_all_message_entities():
                 if message_entity.role_id == "system":
                     continue
@@ -76,7 +76,7 @@ class ChatRoomComponent(BaseComponent):
 
     @staticmethod
     def _execute_query_process(action_results: ActionResults, history_area: DeltaGenerator) -> None:
-        processer_manager = QueryProcesserSState.get()
+        processer_manager = QueryProcessSState.get()
         if action_results.is_rerun_pushed or action_results.is_cancel_pushed:
             processer_manager.init_processers()
 
@@ -93,7 +93,7 @@ class ChatRoomComponent(BaseComponent):
 
     @classmethod
     def _on_click_return_home(cls):
-        MainComponentSState.set_home_entity()
+        CurrentComponentEntitySState.set_home_entity()
         cls.deinit()
 
     @classmethod
@@ -101,7 +101,7 @@ class ChatRoomComponent(BaseComponent):
         cls._display_titles()
         cls._display_sidebar_titles()
 
-        is_created_user = ChatRoomSState.get().account_id == AccountSState.get().account_id
+        is_created_user = EnteredRoomManagerSState.get().account_id == SignedInAccountEntitySState.get().account_id
         if is_created_user:
             action_results = cls._display_query_form_and_get_results()
             history_area = cls._display_history()
@@ -112,5 +112,5 @@ class ChatRoomComponent(BaseComponent):
 
     @staticmethod
     def deinit() -> None:
-        ChatRoomSState.deinit()
-        QueryProcesserSState.deinit()
+        EnteredRoomManagerSState.deinit()
+        QueryProcessSState.deinit()

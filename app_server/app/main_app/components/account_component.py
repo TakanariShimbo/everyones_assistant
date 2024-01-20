@@ -3,20 +3,20 @@ from streamlit_lottie import st_lottie_spinner
 
 from .account_action_results import UpdateInfoActionResults, ChangePassActionResults
 from ...base import BaseComponent
-from ..s_states import MainComponentSState, AccountSState, UpdateAccountInfoProcesserSState, ChangeAccountPassProcesserSState
+from ..s_states import CurrentComponentEntitySState, SignedInAccountEntitySState, UpdateAccountInfoProcessSState, ChangeAccountPassProcessSState
 from model import LoadedLottie, LoadedImage
 
 
 class AccountComponent(BaseComponent):
     @staticmethod
     def init() -> None:
-        AccountSState.init()
-        UpdateAccountInfoProcesserSState.init()
-        ChangeAccountPassProcesserSState.init()
+        SignedInAccountEntitySState.init()
+        UpdateAccountInfoProcessSState.init()
+        ChangeAccountPassProcessSState.init()
 
     @staticmethod
     def _display_titles() -> None:
-        current_component_entity = MainComponentSState.get()
+        current_component_entity = CurrentComponentEntitySState.get()
         st.markdown(f"### {current_component_entity.label_en}")
 
     @classmethod
@@ -26,7 +26,7 @@ class AccountComponent(BaseComponent):
 
     @staticmethod
     def _display_update_info_form_and_get_results() -> UpdateInfoActionResults:
-        self_account_entity = AccountSState.get()
+        self_account_entity = SignedInAccountEntitySState.get()
 
         st.markdown("#### 📝 Information")
         with st.form(key="UpdateInfoForm", border=True):
@@ -107,7 +107,7 @@ class AccountComponent(BaseComponent):
 
     @staticmethod
     def _display_change_pass_form_and_get_results() -> ChangePassActionResults:
-        self_account_entity = AccountSState.get()
+        self_account_entity = SignedInAccountEntitySState.get()
 
         st.markdown("#### 🔑 Password")
         with st.form(key="ChangePassForm", border=True):
@@ -157,7 +157,7 @@ class AccountComponent(BaseComponent):
 
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processers_manager = UpdateAccountInfoProcesserSState.get()
+                processers_manager = UpdateAccountInfoProcessSState.get()
                 response = processers_manager.run_all(
                     message_area=action_results.message_area,
                     account_id=action_results.account_id,
@@ -182,7 +182,7 @@ class AccountComponent(BaseComponent):
 
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processers_manager = ChangeAccountPassProcesserSState.get()
+                processers_manager = ChangeAccountPassProcessSState.get()
                 response = processers_manager.run_all(
                     message_area=action_results.message_area,
                     account_id=action_results.account_id,
@@ -199,7 +199,7 @@ class AccountComponent(BaseComponent):
 
     @classmethod
     def _on_click_return_home(cls):
-        MainComponentSState.set_home_entity()
+        CurrentComponentEntitySState.set_home_entity()
         cls.deinit()
 
     @classmethod
@@ -214,5 +214,5 @@ class AccountComponent(BaseComponent):
 
     @staticmethod
     def deinit() -> None:
-        UpdateAccountInfoProcesserSState.deinit()
-        ChangeAccountPassProcesserSState.deinit()
+        UpdateAccountInfoProcessSState.deinit()
+        ChangeAccountPassProcessSState.deinit()

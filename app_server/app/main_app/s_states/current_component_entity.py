@@ -2,10 +2,10 @@ from ...base import BaseSState
 from model import MAIN_COMPONENT_TYPE_TABLE, MainComponentTypeEntity
 
 
-class MainComponentSState(BaseSState[MainComponentTypeEntity]):
+class CurrentComponentEntitySState(BaseSState[MainComponentTypeEntity]):
     @staticmethod
     def get_name() -> str:
-        return "ACTIVE_MAIN_COMPONENT"
+        return "CURRENT_COMPONENT_ENTITY"
 
     @staticmethod
     def get_default() -> MainComponentTypeEntity:
