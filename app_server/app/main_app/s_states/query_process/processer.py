@@ -8,7 +8,7 @@ from controller import AssistantManager, ChatRoomManager
 from model import ROLE_TYPE_TABLE, AccountEntity
 
 
-class QueryProcesser(BaseProcesser[str]):
+class Processer(BaseProcesser[str]):
     def _main_process(self, inner_dict: Dict[str, Any]) -> None:
         form: QueryForm = inner_dict["form"]
         manager: ChatRoomManager = inner_dict["manager"]

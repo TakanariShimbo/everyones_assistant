@@ -4,9 +4,9 @@ from ....base import BaseProcesser
 from controller import ChatRoomManager
 
 
-class EnterRoomProcesser(BaseProcesser[None]):
+class Processer(BaseProcesser[None]):
     def _main_process(self, inner_dict: Dict[str, Any]) -> None:
-        inner_dict["chat_message_manager"] = ChatRoomManager.init_as_continue(
+        inner_dict["manager"] = ChatRoomManager.init_as_continue(
             room_id=inner_dict["room_id"],
             account_id=inner_dict["account_id"],
             release_id=inner_dict["release_id"],

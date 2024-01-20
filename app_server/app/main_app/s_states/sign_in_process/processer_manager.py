@@ -1,15 +1,15 @@
 from typing import Dict, Any, Tuple, Type
 
-from ...forms import SignInForm
 from ....base import BaseProcessersManager, EarlyStopProcessException
+from ...forms import SignInForm
 from model import BaseResponse, AccountEntity
 
 
-class SignInProcesserResponse(BaseResponse[AccountEntity]):
+class ProcesserResponse(BaseResponse[AccountEntity]):
     pass
 
 
-class SignInProcesserManager(BaseProcessersManager[SignInProcesserResponse]):
+class ProcesserManager(BaseProcessersManager[ProcesserResponse]):
     def _pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         outer_dict = {}
         outer_dict["message_area"] = kwargs["message_area"]
@@ -28,13 +28,13 @@ class SignInProcesserManager(BaseProcessersManager[SignInProcesserResponse]):
         kwargs["message_area"].warning("Running.")
         return outer_dict
 
-    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> SignInProcesserResponse:
+    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> ProcesserResponse:
         response = inner_dict["response"]
         if not response.is_success:
-            return SignInProcesserResponse(is_success=False, message=response.message)
+            return ProcesserResponse(is_success=False, message=response.message)
 
-        return SignInProcesserResponse(is_success=True, contents=response.contents)
+        return ProcesserResponse(is_success=True, contents=response.contents)
 
     @staticmethod
-    def _get_response_class() -> Type[SignInProcesserResponse]:
-        return SignInProcesserResponse
+    def _get_response_class() -> Type[ProcesserResponse]:
+        return ProcesserResponse

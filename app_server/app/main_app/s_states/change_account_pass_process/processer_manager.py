@@ -1,16 +1,16 @@
 from typing import Dict, Any, Tuple, Type
 
-from ..signed_in_account_entity import SignedInAccountEntity
-from ...forms import ChangeAccountPassForm
 from ....base import BaseProcessersManager, EarlyStopProcessException
+from ...forms import ChangeAccountPassForm
+from ..signed_in_account_entity import SignedInAccountEntity
 from model import BaseResponse
 
 
-class ChangeAccountPassProcesserResponse(BaseResponse[None]):
+class ProcesserResponse(BaseResponse[None]):
     pass
 
 
-class ChangeAccountPassProcesserManager(BaseProcessersManager[ChangeAccountPassProcesserResponse]):
+class ProcesserManager(BaseProcessersManager[ProcesserResponse]):
     def _pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         outer_dict = {}
         outer_dict["message_area"] = kwargs["message_area"]
@@ -29,12 +29,12 @@ class ChangeAccountPassProcesserManager(BaseProcessersManager[ChangeAccountPassP
         kwargs["message_area"].warning("Running.")
         return outer_dict
 
-    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> ChangeAccountPassProcesserResponse:
+    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> ProcesserResponse:
         response = inner_dict["response"]
         if response.is_success:
             SignedInAccountEntity.set(value=response.contents)
-        return ChangeAccountPassProcesserResponse(is_success=response.is_success, message=response.message)
+        return ProcesserResponse(is_success=response.is_success, message=response.message)
 
     @staticmethod
-    def _get_response_class() -> Type[ChangeAccountPassProcesserResponse]:
-        return ChangeAccountPassProcesserResponse
+    def _get_response_class() -> Type[ProcesserResponse]:
+        return ProcesserResponse

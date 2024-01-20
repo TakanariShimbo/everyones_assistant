@@ -1,13 +1,13 @@
-from .processer import UpdateAccountInfoProcesser
-from .processer_manager import UpdateAccountInfoProcesserManager
+from .processer import Processer
+from .processer_manager import ProcesserManager
 from ....base import BaseSState
 
 
-class UpdateAccountInfoProcess(BaseSState[UpdateAccountInfoProcesserManager]):
+class UpdateAccountInfoProcess(BaseSState[ProcesserManager]):
     @staticmethod
     def get_name() -> str:
         return "UPDATE_ACCOUNT_INFO_PROCESS"
 
     @staticmethod
-    def get_default() -> UpdateAccountInfoProcesserManager:
-        return UpdateAccountInfoProcesserManager([UpdateAccountInfoProcesser])
+    def get_default() -> ProcesserManager:
+        return ProcesserManager([Processer])

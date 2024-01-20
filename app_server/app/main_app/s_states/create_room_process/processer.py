@@ -1,14 +1,14 @@
 from typing import Dict, Any
 
-from ...forms import CreateForm
 from ....base import BaseProcesser
+from ...forms import CreateForm
 from controller import ChatRoomManager
 
 
-class CreateRoomProcesser(BaseProcesser[None]):
+class Processer(BaseProcesser[None]):
     def _main_process(self, inner_dict: Dict[str, Any]) -> None:
         form: CreateForm = inner_dict["form"]
-        inner_dict["chat_message_manager"] = ChatRoomManager.init_as_new(
+        inner_dict["manager"] = ChatRoomManager.init_as_new(
             account_id=form.account_id,
             title=form.title,
             release_id=form.release_id,

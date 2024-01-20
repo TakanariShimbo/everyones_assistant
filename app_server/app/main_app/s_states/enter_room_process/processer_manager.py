@@ -5,11 +5,11 @@ from controller import ChatRoomManager
 from model import BaseResponse
 
 
-class EnterProcesserResponse(BaseResponse[ChatRoomManager]):
+class ProcesserResponse(BaseResponse[ChatRoomManager]):
     pass
 
 
-class EnterRoomProcesserManager(BaseProcessersManager[EnterProcesserResponse]):
+class ProcesserManager(BaseProcessersManager[ProcesserResponse]):
     def _pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         outer_dict = {}
         inner_dict = {}
@@ -22,9 +22,9 @@ class EnterRoomProcesserManager(BaseProcessersManager[EnterProcesserResponse]):
         outer_dict = {}
         return outer_dict
 
-    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> EnterProcesserResponse:
-        return EnterProcesserResponse(is_success=True, contents=inner_dict["chat_message_manager"])
+    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> ProcesserResponse:
+        return ProcesserResponse(is_success=True, contents=inner_dict["manager"])
 
     @staticmethod
-    def _get_response_class() -> Type[EnterProcesserResponse]:
-        return EnterProcesserResponse
+    def _get_response_class() -> Type[ProcesserResponse]:
+        return ProcesserResponse

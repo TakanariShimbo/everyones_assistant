@@ -1,11 +1,11 @@
 from typing import Dict, Any
 
-from ...forms import ChangeAccountPassForm
 from ....base import BaseProcesser
+from ...forms import ChangeAccountPassForm
 from controller import AccountManager
 
 
-class ChangeAccountPassProcesser(BaseProcesser[None]):
+class Processer(BaseProcesser[None]):
     def _main_process(self, inner_dict: Dict[str, Any]) -> None:
         form: ChangeAccountPassForm = inner_dict["form"]
         inner_dict["response"] = AccountManager.change_password(

@@ -5,7 +5,7 @@ from ....base import BaseProcesser
 from controller import AccountManager
 
 
-class UpdateAccountInfoProcesser(BaseProcesser[None]):
+class Processer(BaseProcesser[None]):
     def _main_process(self, inner_dict: Dict[str, Any]) -> None:
         form: UpdateAccountInfoForm = inner_dict["form"]
         inner_dict["response"] = AccountManager.update_info(

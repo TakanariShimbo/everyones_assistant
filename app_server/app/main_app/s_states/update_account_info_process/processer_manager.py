@@ -6,11 +6,11 @@ from ....base import BaseProcessersManager, EarlyStopProcessException
 from model import BaseResponse
 
 
-class UpdateAccountInfoProcesserResponse(BaseResponse[None]):
+class ProcesserResponse(BaseResponse[None]):
     pass
 
 
-class UpdateAccountInfoProcesserManager(BaseProcessersManager[UpdateAccountInfoProcesserResponse]):
+class ProcesserManager(BaseProcessersManager[ProcesserResponse]):
     def _pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         outer_dict = {}
         outer_dict["message_area"] = kwargs["message_area"]
@@ -29,12 +29,12 @@ class UpdateAccountInfoProcesserManager(BaseProcessersManager[UpdateAccountInfoP
         kwargs["message_area"].warning("Running.")
         return outer_dict
 
-    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> UpdateAccountInfoProcesserResponse:
+    def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> ProcesserResponse:
         response = inner_dict["response"]
         if response.is_success:
             SignedInAccountEntity.set(value=response.contents)
-        return UpdateAccountInfoProcesserResponse(is_success=response.is_success, message=response.message)
+        return ProcesserResponse(is_success=response.is_success, message=response.message)
 
     @staticmethod
-    def _get_response_class() -> Type[UpdateAccountInfoProcesserResponse]:
-        return UpdateAccountInfoProcesserResponse
+    def _get_response_class() -> Type[ProcesserResponse]:
+        return ProcesserResponse

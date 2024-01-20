@@ -1,11 +1,11 @@
 from typing import Dict, Any
 
-from ...forms import SignInForm
 from ....base import BaseProcesser
+from ...forms import SignInForm
 from controller import AccountManager
 
 
-class SignInProcesser(BaseProcesser[None]):
+class Processer(BaseProcesser[None]):
     def _main_process(self, inner_dict: Dict[str, Any]) -> None:
         sign_in_form: SignInForm = inner_dict["form"]
         inner_dict["response"] = AccountManager.sign_in(

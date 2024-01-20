@@ -1,8 +1,8 @@
 from typing import Dict, Any, Tuple, Type
 
-from ...forms import QueryForm
 from ..signed_in_account_entity import SignedInAccountEntity
 from ..entered_room_manager import EnteredRoomManager
+from ...forms import QueryForm
 from ....base import BaseProcessersManager, EarlyStopProcessException
 from model import BaseResponse
 
@@ -11,7 +11,7 @@ class QueryProcesserResponse(BaseResponse[None]):
     pass
 
 
-class QueryProcesserManager(BaseProcessersManager[QueryProcesserResponse]):
+class ProcesserManager(BaseProcessersManager[QueryProcesserResponse]):
     def _pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         outer_dict = {}
         outer_dict["message_area"] = kwargs["message_area"]
