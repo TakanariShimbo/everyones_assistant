@@ -36,4 +36,4 @@ class BaseSState(Generic[T], ABC):
 
     @staticmethod
     def get_default() -> T:
-        raise NotImplementedError("Subclasses must implement this method")
+        raise NotImplementedError()
