@@ -1,4 +1,4 @@
-from .current_component_entity import CurrentComponentEnity
+from .current_component_entity import CurrentComponentEntity
 from .loaded_account_table import LoadedAccountTable
 
 from .load_account_table_process import LoadAccountTableProcess

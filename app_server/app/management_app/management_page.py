@@ -15,11 +15,11 @@ class ManagementPage(BasePage):
 
     @staticmethod
     def init() -> None:
-        SStates.CurrentComponentEnity.init()
+        SStates.CurrentComponentEntity.init()
 
     @staticmethod
     def main() -> None:
-        current_component_entity = SStates.CurrentComponentEnity.get()
+        current_component_entity = SStates.CurrentComponentEntity.get()
         if current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.SIGN_IN_ENTITY:
             Components.SignInComponent.run()
         elif current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.HOME_ENTITY:

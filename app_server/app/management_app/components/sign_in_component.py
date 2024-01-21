@@ -11,13 +11,13 @@ from model import LoadedLottie
 class SignInComponent(BaseComponent):
     @staticmethod
     def init() -> None:
-        SStates.CurrentComponentEnity.init()
+        SStates.CurrentComponentEntity.init()
         SStates.SignInProcess.init()
         HomePreComponent.init()
 
     @staticmethod
     def _display_title() -> None:
-        current_component_entity = SStates.CurrentComponentEnity.get()
+        current_component_entity = SStates.CurrentComponentEntity.get()
         st.markdown(f"### {current_component_entity.label_en}")
 
     @staticmethod

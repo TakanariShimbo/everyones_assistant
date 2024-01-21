@@ -2,7 +2,7 @@ from ...base import BaseSState
 from model import MANAGEMENT_COMPONENT_TYPE_TABLE, ManagementComponentTypeEntity
 
 
-class CurrentComponentEnity(BaseSState[ManagementComponentTypeEntity]):
+class CurrentComponentEntity(BaseSState[ManagementComponentTypeEntity]):
     @staticmethod
     def get_name() -> str:
         return "CURRENT_COMPONENT_ENTITY"

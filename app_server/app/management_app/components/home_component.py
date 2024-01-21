@@ -13,13 +13,13 @@ from model import LoadedImage, LoadedLottie
 class HomeComponent(BaseComponent):
     @staticmethod
     def init() -> None:
-        SStates.CurrentComponentEnity.init()
+        SStates.CurrentComponentEntity.init()
         SignInPreComponent.init()
         AccountsPreComponent.init()
 
     @staticmethod
     def _display_titles() -> None:
-        current_component_entity = SStates.CurrentComponentEnity.get()
+        current_component_entity = SStates.CurrentComponentEntity.get()
         st.markdown(f"### {current_component_entity.label_en}")
 
     @classmethod

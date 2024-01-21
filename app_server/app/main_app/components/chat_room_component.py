@@ -10,6 +10,7 @@ from model import ASSISTANT_TYPE_TABLE, LoadedImage
 class ChatRoomComponent(BaseComponent):
     @staticmethod
     def init() -> None:
+        SStates.CurrentComponentEntity.init()
         SStates.SignedInAccountEntity.init()
         SStates.EnteredRoomManager.init()
         SStates.QueryProcess.init()

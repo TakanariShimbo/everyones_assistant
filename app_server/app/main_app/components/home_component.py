@@ -13,6 +13,7 @@ from model import ChatRoomDtoTable, ChatRoomDto, RELEASE_TYPE_TABLE, LoadedLotti
 class HomeComponent(BaseComponent):
     @staticmethod
     def init() -> None:
+        SStates.CurrentComponentEntity.init()
         SStates.SignedInAccountEntity.init()
         SStates.CreateRoomProcess.init()
         SStates.EnterRoomProcess.init()
