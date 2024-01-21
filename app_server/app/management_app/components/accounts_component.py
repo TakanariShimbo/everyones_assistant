@@ -115,8 +115,8 @@ class AccountsComponent(BaseComponent):
 
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processers_manager = SStates.SignUpProcess.get()
-                response = processers_manager.run_all(
+                processer_manager = SStates.SignUpProcess.get()
+                response = processer_manager.run_all(
                     message_area=action_results.message_area,
                     account_id=action_results.account_id,
                     mail_address=action_results.mail_address,

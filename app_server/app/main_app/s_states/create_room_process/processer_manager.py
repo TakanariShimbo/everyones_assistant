@@ -1,6 +1,6 @@
 from typing import Dict, Any, Tuple, Type
 
-from ....base import BaseProcessersManager, EarlyStopProcessException
+from ....base import BaseProcesserManager, EarlyStopProcessException
 from ..signed_in_account_entity import SignedInAccountEntity
 from .form import Form
 from controller import ChatRoomManager
@@ -11,7 +11,7 @@ class ProcesserResponse(BaseResponse[ChatRoomManager]):
     pass
 
 
-class ProcesserManager(BaseProcessersManager[ProcesserResponse]):
+class ProcesserManager(BaseProcesserManager[ProcesserResponse]):
     def _pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         outer_dict = {}
         outer_dict["message_area"] = kwargs["message_area"]

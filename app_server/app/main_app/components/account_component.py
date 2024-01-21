@@ -160,8 +160,8 @@ class AccountComponent(BaseComponent):
 
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processers_manager = SStates.UpdateAccountInfoProcess.get()
-                response = processers_manager.run_all(
+                processer_manager = SStates.UpdateAccountInfoProcess.get()
+                response = processer_manager.run_all(
                     message_area=action_results.message_area,
                     account_id=action_results.account_id,
                     mail_address=action_results.mail_address,
@@ -185,8 +185,8 @@ class AccountComponent(BaseComponent):
 
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processers_manager = SStates.ChangeAccountPassProcess.get()
-                response = processers_manager.run_all(
+                processer_manager = SStates.ChangeAccountPassProcess.get()
+                response = processer_manager.run_all(
                     message_area=action_results.message_area,
                     account_id=action_results.account_id,
                     current_raw_password=action_results.current_raw_password,

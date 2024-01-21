@@ -1,6 +1,6 @@
 from typing import Dict, Any, Tuple, Type
 
-from ....base import BaseProcessersManager
+from ....base import BaseProcesserManager
 from model import BaseResponse, AccountTable
 
 
@@ -8,7 +8,7 @@ class ProcesserResponse(BaseResponse[AccountTable]):
     pass
 
 
-class ProcesserManager(BaseProcessersManager[ProcesserResponse]):
+class ProcesserManager(BaseProcesserManager[ProcesserResponse]):
     def _pre_process_for_starting(self, **kwargs) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         outer_dict = {}
         inner_dict = {}

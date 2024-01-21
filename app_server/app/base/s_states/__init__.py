@@ -1,2 +1,2 @@
-from .processers import BaseProcesser, BaseProcessersManager, EarlyStopProcessException
+from .processers import BaseProcesser, BaseProcesserManager, EarlyStopProcessException
 from .s_state import BaseSState

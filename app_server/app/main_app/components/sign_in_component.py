@@ -54,8 +54,8 @@ class SignInComponent(BaseComponent):
 
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processers_manager = SStates.SignInProcess.get()
-                response = processers_manager.run_all(
+                processer_manager = SStates.SignInProcess.get()
+                response = processer_manager.run_all(
                     message_area=action_results.message_area,
                     account_id=action_results.account_id,
                     raw_password=action_results.raw_password,

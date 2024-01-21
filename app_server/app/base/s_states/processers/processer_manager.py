@@ -13,7 +13,7 @@ class EarlyStopProcessException(Exception):
 R = TypeVar("R", bound=BaseResponse)
 
 
-class BaseProcessersManager(Generic[R], ABC):
+class BaseProcesserManager(Generic[R], ABC):
     def __init__(self, processer_classes: List[Type[BaseProcesser]]) -> None:
         self._processer_classes = processer_classes
         self._is_running = False

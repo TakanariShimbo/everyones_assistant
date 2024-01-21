@@ -1,3 +1,3 @@
 from .page import BasePage
 from .component import BaseComponent
-from .s_states import BaseSState, BaseProcesser, BaseProcessersManager, EarlyStopProcessException
+from .s_states import BaseSState, BaseProcesser, BaseProcesserManager, EarlyStopProcessException

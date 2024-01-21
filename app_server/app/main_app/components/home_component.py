@@ -157,8 +157,8 @@ class HomeComponent(BaseComponent):
 
         with create_action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processers_manager = SStates.CreateRoomProcess.get()
-                response = processers_manager.run_all(
+                processer_manager = SStates.CreateRoomProcess.get()
+                response = processer_manager.run_all(
                     message_area=create_action_results.message_area,
                     title=create_action_results.title,
                     release_entity=create_action_results.release_entity,
@@ -179,8 +179,8 @@ class HomeComponent(BaseComponent):
 
         with enter_action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processers_manager = SStates.EnterRoomProcess.get()
-                response = processers_manager.run_all(
+                processer_manager = SStates.EnterRoomProcess.get()
+                response = processer_manager.run_all(
                     room_id=enter_action_results.chat_room_dto.room_id,
                     account_id=enter_action_results.chat_room_dto.account_id,
                     release_id=enter_action_results.chat_room_dto.release_id,
