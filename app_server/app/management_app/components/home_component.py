@@ -7,6 +7,7 @@ from ...base import BaseComponent
 from .. import s_states as SStates
 from .sign_in_pre_component import SignInPreComponent
 from .accounts_pre_component import AccountsPreComponent
+from .home_action_results import ActionResults
 from model import LoadedImage, LoadedLottie
 
 
@@ -40,8 +41,8 @@ class HomeComponent(BaseComponent):
             )
             st.markdown(content)
 
-    @classmethod
-    def _display_accounts(cls) -> None:
+    @staticmethod
+    def _display_accounts_and_get_results() -> ActionResults:
         st.markdown("#### 👤 Accounts")
         with st.container(border=True):
             content = dedent(
@@ -56,13 +57,17 @@ class HomeComponent(BaseComponent):
             with button_area:
                 is_pushed = st.button(label="Enter", type="primary", use_container_width=True)
             _, loading_area, _ = st.columns([1, 1, 1])
+        return ActionResults(loading_area=loading_area, is_pushed=is_pushed)
 
-        if is_pushed:
-            with loading_area:
-                with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                    AccountsPreComponent.prepare()
-            cls.deinit()
-            st.rerun()
+    @staticmethod
+    def _execute_accounts_pre_process(action_results: ActionResults) -> bool:
+        if not action_results.is_pushed:
+            return False
+
+        with action_results.loading_area:
+            with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
+                AccountsPreComponent.prepare()
+        return True
 
     @classmethod
     def _on_click_sign_out(cls) -> None:
@@ -74,7 +79,11 @@ class HomeComponent(BaseComponent):
         cls._display_titles()
         cls._display_sidebar_titles()
         cls._display_overview()
-        cls._display_accounts()
+        action_results = cls._display_accounts_and_get_results()
+        is_success = cls._execute_accounts_pre_process(action_results=action_results)
+        if is_success:
+            cls.deinit()
+            st.rerun()
 
     @staticmethod
     def deinit() -> None:
