@@ -1,7 +1,7 @@
 from typing import Dict, Any, Tuple, Type
 
 from ....base import BaseProcessersManager, EarlyStopProcessException
-from ...forms import SignInForm
+from .form import Form
 from model import BaseResponse
 
 
@@ -16,7 +16,7 @@ class ProcesserManager(BaseProcessersManager[ProcesserResponse]):
 
         try:
             inner_dict = {}
-            inner_dict["form"] = SignInForm.init(kwargs=kwargs)
+            inner_dict["form"] = Form.init(kwargs=kwargs)
         except:
             raise EarlyStopProcessException(message="Please input form corectly.")
         return outer_dict, inner_dict

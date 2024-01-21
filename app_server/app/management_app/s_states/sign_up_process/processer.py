@@ -1,13 +1,13 @@
 from typing import Dict, Any
 
 from ....base import BaseProcesser
-from ...forms import SignUpForm
+from .form import Form
 from controller import AccountManager
 
 
 class Processer(BaseProcesser[None]):
     def _main_process(self, inner_dict: Dict[str, Any]) -> None:
-        form: SignUpForm = inner_dict["form"]
+        form: Form = inner_dict["form"]
         inner_dict["response"] = AccountManager.sign_up(
             account_id=form.account_id,
             mail_address=form.mail_address,
