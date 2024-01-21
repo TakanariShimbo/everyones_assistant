@@ -9,7 +9,7 @@ class ChatRoomPreComponent:
 
     @staticmethod
     def prepare(chat_room_manager: ChatRoomManager) -> None:
-        SStates.EnteredRoomManager.set(value=chat_room_manager)
+        SStates.EnteredChatRoomManager.set(value=chat_room_manager)
         SStates.CurrentComponentEntity.set_chat_room_entity()
 
     @staticmethod

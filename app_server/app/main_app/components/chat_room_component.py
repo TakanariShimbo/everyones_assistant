@@ -13,7 +13,7 @@ class ChatRoomComponent(BaseComponent):
     def init() -> None:
         SStates.CurrentComponentEntity.init()
         SStates.SignedInAccountEntity.init()
-        SStates.EnteredRoomManager.init()
+        SStates.EnteredChatRoomManager.init()
         SStates.QueryProcess.init()
         HomePreComponent.init()
 
@@ -69,7 +69,7 @@ class ChatRoomComponent(BaseComponent):
         history_area = st.container(border=False)
         with history_area:
             st.markdown("#### 📝 History")
-            chat_room_manager = SStates.EnteredRoomManager.get()
+            chat_room_manager = SStates.EnteredChatRoomManager.get()
             for message_entity in chat_room_manager.get_all_message_entities():
                 if message_entity.role_id == "system":
                     continue
@@ -104,7 +104,7 @@ class ChatRoomComponent(BaseComponent):
         cls._display_titles()
         cls._display_sidebar_titles()
 
-        is_created_user = SStates.EnteredRoomManager.get().account_id == SStates.SignedInAccountEntity.get().account_id
+        is_created_user = SStates.EnteredChatRoomManager.get().account_id == SStates.SignedInAccountEntity.get().account_id
         if is_created_user:
             action_results = cls._display_query_form_and_get_results()
             history_area = cls._display_history()
@@ -115,6 +115,6 @@ class ChatRoomComponent(BaseComponent):
 
     @staticmethod
     def deinit() -> None:
-        SStates.EnteredRoomManager.deinit()
+        SStates.EnteredChatRoomManager.deinit()
         SStates.QueryProcess.deinit()
         HomePreComponent.deinit()

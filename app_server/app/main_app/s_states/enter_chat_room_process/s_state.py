@@ -3,10 +3,10 @@ from .processer_manager import ProcesserManager
 from ....base import BaseSState
 
 
-class EnterRoomProcess(BaseSState[ProcesserManager]):
+class EnterChatRoomProcess(BaseSState[ProcesserManager]):
     @staticmethod
     def get_name() -> str:
-        return "ENTER_ROOM_PROCESS"
+        return "ENTER_CHAT_ROOM_PROCESS"
 
     @staticmethod
     def get_default() -> ProcesserManager:

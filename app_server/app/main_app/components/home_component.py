@@ -18,8 +18,8 @@ class HomeComponent(BaseComponent):
     def init() -> None:
         SStates.CurrentComponentEntity.init()
         SStates.SignedInAccountEntity.init()
-        SStates.CreateRoomProcess.init()
-        SStates.EnterRoomProcess.init()
+        SStates.CreateChatRoomProcess.init()
+        SStates.EnterChatRoomProcess.init()
         SignInPreComponent.init()
         ChatRoomPreComponent.init()
         AccountPreComponent.init()
@@ -157,7 +157,7 @@ class HomeComponent(BaseComponent):
 
         with create_action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processer_manager = SStates.CreateRoomProcess.get()
+                processer_manager = SStates.CreateChatRoomProcess.get()
                 response = processer_manager.run_all(
                     message_area=create_action_results.message_area,
                     title=create_action_results.title,
@@ -179,7 +179,7 @@ class HomeComponent(BaseComponent):
 
         with enter_action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                processer_manager = SStates.EnterRoomProcess.get()
+                processer_manager = SStates.EnterChatRoomProcess.get()
                 response = processer_manager.run_all(
                     room_id=enter_action_results.chat_room_dto.room_id,
                     account_id=enter_action_results.chat_room_dto.account_id,
@@ -222,8 +222,8 @@ class HomeComponent(BaseComponent):
 
     @staticmethod
     def deinit() -> None:
-        SStates.CreateRoomProcess.deinit()
-        SStates.EnterRoomProcess.deinit()
+        SStates.CreateChatRoomProcess.deinit()
+        SStates.EnterChatRoomProcess.deinit()
         SignInPreComponent.deinit()
         ChatRoomPreComponent.deinit()
         AccountPreComponent.deinit()

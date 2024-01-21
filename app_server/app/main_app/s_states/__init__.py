@@ -1,10 +1,10 @@
 from .current_component_entity import CurrentComponentEntity
 from .signed_in_account_entity import SignedInAccountEntity
-from .entered_room_manager import EnteredRoomManager
+from .entered_chat_room_manager import EnteredChatRoomManager
 
 from .change_account_pass_process import ChangeAccountPassProcess
-from .create_room_process import CreateRoomProcess
-from .enter_room_process import EnterRoomProcess
+from .create_chat_room_process import CreateChatRoomProcess
+from .enter_chat_room_process import EnterChatRoomProcess
 from .query_process import QueryProcess
 from .sign_in_process import SignInProcess
 from .update_account_info_process import UpdateAccountInfoProcess

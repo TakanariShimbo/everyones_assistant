@@ -2,7 +2,7 @@ from ...base import BaseSState
 from controller import ChatRoomManager
 
 
-class EnteredRoomManager(BaseSState[ChatRoomManager]):
+class EnteredChatRoomManager(BaseSState[ChatRoomManager]):
     @staticmethod
     def get_name() -> str:
-        return "ENTERED_ROOM_MANAGER"
+        return "ENTERED_CHAT_ROOM_MANAGER"
