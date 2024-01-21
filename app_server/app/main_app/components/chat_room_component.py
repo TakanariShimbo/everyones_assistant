@@ -1,11 +1,12 @@
 import streamlit as st
+from streamlit_lottie import st_lottie_spinner
 from streamlit.delta_generator import DeltaGenerator
 
 from ...base import BaseComponent
 from .. import s_states as SStates
 from .home_pre_component import HomePreComponent
-from .chat_room_action_results import ActionResults
-from model import ASSISTANT_TYPE_TABLE, LoadedImage
+from .chat_room_action_results import QueryActionResults, ReturnHomeActionResults
+from model import ASSISTANT_TYPE_TABLE, LoadedLottie, LoadedImage
 
 
 class ChatRoomComponent(BaseComponent):
@@ -23,12 +24,14 @@ class ChatRoomComponent(BaseComponent):
         st.markdown(f"### {current_component_entity.label_en}")
 
     @classmethod
-    def _display_sidebar_titles(cls) -> None:
+    def _display_sidebar_titles_and_get_results(cls) -> ReturnHomeActionResults:
         st.sidebar.image(image=LoadedImage.LOGO, use_column_width=True)
-        st.sidebar.button(label="🏠 Home", key="ReturnHomeButton", on_click=cls._on_click_return_home, use_container_width=True)
+        is_pushed = st.sidebar.button(label="🏠 Home", key="ReturnHomeButton", use_container_width=True)
+        _, loading_area, _ = st.sidebar.columns([1, 2, 1])
+        return ReturnHomeActionResults(loading_area=loading_area, is_pushed=is_pushed)
 
     @staticmethod
-    def _display_query_form_and_get_results() -> ActionResults:
+    def _display_query_form_and_get_results() -> QueryActionResults:
         st.markdown("#### ❔ Query")
         form_area = st.form(key="QueryForm")
         with form_area:
@@ -55,7 +58,7 @@ class ChatRoomComponent(BaseComponent):
             with right_area:
                 is_cancel_pushed = st.form_submit_button(label="Cancel", type="secondary", use_container_width=True)
 
-        return ActionResults(
+        return QueryActionResults(
             assistant_entity=selected_assistant_entity,
             prompt=inputed_prompt,
             message_area=message_area,
@@ -78,7 +81,17 @@ class ChatRoomComponent(BaseComponent):
         return history_area
 
     @staticmethod
-    def _execute_query_process(action_results: ActionResults, history_area: DeltaGenerator) -> None:
+    def _execute_return_home_process(action_results: ReturnHomeActionResults) -> bool:
+        if not action_results.is_pushed:
+            return False
+
+        with action_results.loading_area:
+            with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
+                HomePreComponent.prepare()
+        return True
+
+    @staticmethod
+    def _execute_query_process(action_results: QueryActionResults, history_area: DeltaGenerator) -> None:
         processer_manager = SStates.QueryProcess.get()
         if action_results.is_rerun_pushed or action_results.is_cancel_pushed:
             processer_manager.init_processers()
@@ -95,23 +108,28 @@ class ChatRoomComponent(BaseComponent):
             action_results.message_area.empty()
 
     @classmethod
-    def _on_click_return_home(cls):
-        HomePreComponent.prepare()
-        cls.deinit()
-
-    @classmethod
     def main(cls) -> None:
         cls._display_titles()
-        cls._display_sidebar_titles()
-
         is_created_user = SStates.EnteredChatRoomManager.get().account_id == SStates.SignedInAccountEntity.get().account_id
         if is_created_user:
+            return_home_action_results = cls._display_sidebar_titles_and_get_results()
             action_results = cls._display_query_form_and_get_results()
             history_area = cls._display_history()
+
+            is_success = cls._execute_return_home_process(action_results=return_home_action_results)
+            if is_success:
+                cls.deinit()
+                st.rerun()
             cls._execute_query_process(action_results=action_results, history_area=history_area)
+
         else:
+            return_home_action_results = cls._display_sidebar_titles_and_get_results()
             history_area = cls._display_history()
-            return
+
+            is_success = cls._execute_return_home_process(action_results=return_home_action_results)
+            if is_success:
+                cls.deinit()
+                st.rerun()
 
     @staticmethod
     def deinit() -> None:

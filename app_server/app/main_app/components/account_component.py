@@ -4,7 +4,7 @@ from streamlit_lottie import st_lottie_spinner
 from ...base import BaseComponent
 from .. import s_states as SStates
 from .home_pre_component import HomePreComponent
-from .account_action_results import UpdateInfoActionResults, ChangePassActionResults
+from .account_action_results import UpdateInfoActionResults, ChangePassActionResults, ReturnHomeActionResults
 from model import LoadedLottie, LoadedImage
 
 
@@ -23,9 +23,11 @@ class AccountComponent(BaseComponent):
         st.markdown(f"### {current_component_entity.label_en}")
 
     @classmethod
-    def _display_sidebar_titles(cls) -> None:
+    def _display_sidebar_titles_and_get_results(cls) -> ReturnHomeActionResults:
         st.sidebar.image(image=LoadedImage.LOGO, use_column_width=True)
-        st.sidebar.button(label="🏠 Home", key="ReturnHomeButton", on_click=cls._on_click_return_home, use_container_width=True)
+        is_pushed = st.sidebar.button(label="🏠 Home", key="ReturnHomeButton", use_container_width=True)
+        _, loading_area, _ = st.sidebar.columns([1, 2, 1])
+        return ReturnHomeActionResults(loading_area=loading_area, is_pushed=is_pushed)
 
     @staticmethod
     def _display_update_info_form_and_get_results() -> UpdateInfoActionResults:
@@ -179,6 +181,16 @@ class AccountComponent(BaseComponent):
         action_results.message_area.success(response.message)
 
     @staticmethod
+    def _execute_return_home_process(action_results: ReturnHomeActionResults) -> bool:
+        if not action_results.is_pushed:
+            return False
+
+        with action_results.loading_area:
+            with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
+                HomePreComponent.prepare()
+        return True
+
+    @staticmethod
     def _execute_change_pass_process(action_results: ChangePassActionResults) -> None:
         if not action_results.is_pushed:
             return
@@ -201,17 +213,16 @@ class AccountComponent(BaseComponent):
         action_results.message_area.success(response.message)
 
     @classmethod
-    def _on_click_return_home(cls):
-        HomePreComponent.prepare()
-        cls.deinit()
-
-    @classmethod
     def main(cls) -> None:
         cls._display_titles()
-        cls._display_sidebar_titles()
-
+        return_home_action_results = cls._display_sidebar_titles_and_get_results()
         update_info_action_results = cls._display_update_info_form_and_get_results()
         change_pass_action_results = cls._display_change_pass_form_and_get_results()
+
+        is_success = cls._execute_return_home_process(action_results=return_home_action_results)
+        if is_success:
+            cls.deinit()
+            st.rerun()
         cls._execute_update_info_process(action_results=update_info_action_results)
         cls._execute_change_pass_process(action_results=change_pass_action_results)
 
