@@ -1,6 +1,6 @@
 from ..base import BasePage
-from .s_states import CurrentComponentEnity
-from .components import SignInComponent, HomeComponent, AccountsComponent
+from . import s_states as SStates
+from . import components as Components
 from model import MANAGEMENT_COMPONENT_TYPE_TABLE
 
 
@@ -15,16 +15,16 @@ class ManagementPage(BasePage):
 
     @staticmethod
     def init() -> None:
-        CurrentComponentEnity.init()
+        SStates.CurrentComponentEnity.init()
 
     @staticmethod
     def main() -> None:
-        current_component_entity = CurrentComponentEnity.get()
+        current_component_entity = SStates.CurrentComponentEnity.get()
         if current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.SIGN_IN_ENTITY:
-            SignInComponent.run()
+            Components.SignInComponent.run()
         elif current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.HOME_ENTITY:
-            HomeComponent.run()
+            Components.HomeComponent.run()
         elif current_component_entity == MANAGEMENT_COMPONENT_TYPE_TABLE.ACCOUNTS_ENTITY:
-            AccountsComponent.run()
+            Components.AccountsComponent.run()
         else:
             raise ValueError("ComponentSState Value Error")
