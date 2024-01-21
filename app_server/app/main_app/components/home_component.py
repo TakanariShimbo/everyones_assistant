@@ -6,6 +6,9 @@ from streamlit_lottie import st_lottie_spinner
 
 from ...base import BaseComponent
 from .. import s_states as SStates
+from .sign_in_pre_component import SignInPreComponent
+from .chat_room_pre_component import ChatRoomPreComponent
+from .account_pre_component import AccountPreComponent
 from .home_action_results import CreateActionResults, EnterActionResults, RoomContainerActionResults
 from model import ChatRoomDtoTable, ChatRoomDto, RELEASE_TYPE_TABLE, LoadedLottie, LoadedImage, Database
 
@@ -17,6 +20,9 @@ class HomeComponent(BaseComponent):
         SStates.SignedInAccountEntity.init()
         SStates.CreateRoomProcess.init()
         SStates.EnterRoomProcess.init()
+        SignInPreComponent.init()
+        ChatRoomPreComponent.init()
+        AccountPreComponent.init()
 
     @staticmethod
     def _display_titles() -> None:
@@ -163,8 +169,7 @@ class HomeComponent(BaseComponent):
             return False
 
         create_action_results.message_area.empty()
-        SStates.EnteredRoomManager.set(value=response.contents)
-        SStates.CurrentComponentEntity.set_chat_room_entity()
+        ChatRoomPreComponent.prepare(chat_room_manager=response.contents)
         return True
 
     @staticmethod
@@ -183,20 +188,18 @@ class HomeComponent(BaseComponent):
         if not response.is_success:
             return False
 
-        SStates.EnteredRoomManager.set(value=response.contents)
-        SStates.CurrentComponentEntity.set_chat_room_entity()
+        ChatRoomPreComponent.prepare(chat_room_manager=response.contents)
         return True
 
     @classmethod
     def _on_click_accounts(cls) -> None:
-        SStates.CurrentComponentEntity.set_account_entity()
+        AccountPreComponent.prepare()
         cls.deinit()
 
     @classmethod
     def _on_click_sign_out(cls) -> None:
-        SStates.CurrentComponentEntity.set_sign_in_entity()
+        SignInPreComponent.prepare()
         cls.deinit()
-        SStates.SignedInAccountEntity.deinit()
 
     @classmethod
     def main(cls) -> None:
@@ -221,3 +224,6 @@ class HomeComponent(BaseComponent):
     def deinit() -> None:
         SStates.CreateRoomProcess.deinit()
         SStates.EnterRoomProcess.deinit()
+        SignInPreComponent.deinit()
+        ChatRoomPreComponent.deinit()
+        AccountPreComponent.deinit()

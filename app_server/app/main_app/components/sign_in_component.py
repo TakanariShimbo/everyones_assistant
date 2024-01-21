@@ -3,6 +3,7 @@ from streamlit_lottie import st_lottie_spinner
 
 from ...base import BaseComponent
 from .. import s_states as SStates
+from .home_pre_component import HomePreComponent
 from .sign_in_action_results import ActionResults
 from model import LoadedLottie
 
@@ -11,6 +12,7 @@ class SignInComponent(BaseComponent):
     @staticmethod
     def init() -> None:
         SStates.SignInProcess.init()
+        HomePreComponent.init()
 
     @staticmethod
     def _display_title() -> None:
@@ -63,9 +65,8 @@ class SignInComponent(BaseComponent):
             action_results.message_area.warning(response.message)
             return False
 
-        SStates.SignedInAccountEntity.set(value=response.contents)
-        SStates.CurrentComponentEntity.set_home_entity()
         action_results.message_area.empty()
+        HomePreComponent.prepare_for_sign_in(signed_in_account_entity=response.contents)
         return True
 
     @classmethod
@@ -80,3 +81,4 @@ class SignInComponent(BaseComponent):
     @staticmethod
     def deinit() -> None:
         SStates.SignInProcess.deinit()
+        HomePreComponent.deinit()

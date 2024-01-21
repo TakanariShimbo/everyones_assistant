@@ -3,6 +3,7 @@ from streamlit_lottie import st_lottie_spinner
 
 from ...base import BaseComponent
 from .. import s_states as SStates
+from .home_pre_component import HomePreComponent
 from .account_action_results import UpdateInfoActionResults, ChangePassActionResults
 from model import LoadedLottie, LoadedImage
 
@@ -14,6 +15,7 @@ class AccountComponent(BaseComponent):
         SStates.SignedInAccountEntity.init()
         SStates.UpdateAccountInfoProcess.init()
         SStates.ChangeAccountPassProcess.init()
+        HomePreComponent.init()
 
     @staticmethod
     def _display_titles() -> None:
@@ -200,7 +202,7 @@ class AccountComponent(BaseComponent):
 
     @classmethod
     def _on_click_return_home(cls):
-        SStates.CurrentComponentEntity.set_home_entity()
+        HomePreComponent.prepare()
         cls.deinit()
 
     @classmethod
@@ -217,3 +219,4 @@ class AccountComponent(BaseComponent):
     def deinit() -> None:
         SStates.UpdateAccountInfoProcess.deinit()
         SStates.ChangeAccountPassProcess.deinit()
+        HomePreComponent.deinit()

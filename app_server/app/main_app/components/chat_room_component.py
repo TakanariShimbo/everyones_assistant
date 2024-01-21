@@ -3,6 +3,7 @@ from streamlit.delta_generator import DeltaGenerator
 
 from ...base import BaseComponent
 from .. import s_states as SStates
+from .home_pre_component import HomePreComponent
 from .chat_room_action_results import ActionResults
 from model import ASSISTANT_TYPE_TABLE, LoadedImage
 
@@ -14,6 +15,7 @@ class ChatRoomComponent(BaseComponent):
         SStates.SignedInAccountEntity.init()
         SStates.EnteredRoomManager.init()
         SStates.QueryProcess.init()
+        HomePreComponent.init()
 
     @staticmethod
     def _display_titles() -> None:
@@ -94,7 +96,7 @@ class ChatRoomComponent(BaseComponent):
 
     @classmethod
     def _on_click_return_home(cls):
-        SStates.CurrentComponentEntity.set_home_entity()
+        HomePreComponent.prepare()
         cls.deinit()
 
     @classmethod
@@ -115,3 +117,4 @@ class ChatRoomComponent(BaseComponent):
     def deinit() -> None:
         SStates.EnteredRoomManager.deinit()
         SStates.QueryProcess.deinit()
+        HomePreComponent.deinit()
