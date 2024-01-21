@@ -2,24 +2,12 @@ from typing import Dict, Any, Tuple, Type
 
 from ....base import BaseProcesserManager
 from ..signed_in_account_entity import SignedInAccountEntity
-from model import BaseResponse, ChatRoomDtoTable
+from ..loaded_yours_chat_room_dto_table import LoadedYoursChatRoomDtoTable
+from ..loaded_everyone_chat_room_dto_table import LoadedEveryoneChatRoomDtoTable
+from model import BaseResponse
 
 
-class ChatRoomDtoTables:
-    def __init__(self, yours_chat_room_table: ChatRoomDtoTable, everyone_chat_room_table: ChatRoomDtoTable):
-        self._yours_chat_room_table = yours_chat_room_table
-        self._everyone_chat_room_table = everyone_chat_room_table
-
-    @property
-    def yours_chat_room_table(self) -> ChatRoomDtoTable:
-        return self._yours_chat_room_table
-
-    @property
-    def everyone_chat_room_table(self) -> ChatRoomDtoTable:
-        return self._everyone_chat_room_table
-
-
-class ProcesserResponse(BaseResponse[ChatRoomDtoTables]):
+class ProcesserResponse(BaseResponse[None]):
     pass
 
 
@@ -35,13 +23,9 @@ class ProcesserManager(BaseProcesserManager[ProcesserResponse]):
         return outer_dict
 
     def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> ProcesserResponse:
-        return ProcesserResponse(
-            is_success=True,
-            contents=ChatRoomDtoTables(
-                yours_chat_room_table=inner_dict["yours_table"],
-                everyone_chat_room_table=inner_dict["everyone_table"],
-            ),
-        )
+        LoadedYoursChatRoomDtoTable.set(value=inner_dict["yours_table"])
+        LoadedEveryoneChatRoomDtoTable.set(value=inner_dict["everyone_table"])
+        return ProcesserResponse(is_success=True)
 
     @staticmethod
     def _get_response_class() -> Type[ProcesserResponse]:

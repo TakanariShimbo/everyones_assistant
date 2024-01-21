@@ -163,7 +163,7 @@ class HomeComponent(BaseComponent):
             return False
 
         create_action_results.message_area.empty()
-        ChatRoomPreComponent.prepare(chat_room_manager=response.contents)
+        ChatRoomPreComponent.prepare()
         return True
 
     @staticmethod
@@ -182,7 +182,7 @@ class HomeComponent(BaseComponent):
         if not response.is_success:
             return False
 
-        ChatRoomPreComponent.prepare(chat_room_manager=response.contents)
+        ChatRoomPreComponent.prepare()
         return True
 
     @classmethod

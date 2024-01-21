@@ -1,11 +1,11 @@
 from typing import Dict, Any, Tuple, Type
 
 from ....base import BaseProcesserManager
-from controller import ChatRoomManager
+from ..entered_chat_room_manager import EnteredChatRoomManager
 from model import BaseResponse
 
 
-class ProcesserResponse(BaseResponse[ChatRoomManager]):
+class ProcesserResponse(BaseResponse[None]):
     pass
 
 
@@ -23,7 +23,8 @@ class ProcesserManager(BaseProcesserManager[ProcesserResponse]):
         return outer_dict
 
     def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> ProcesserResponse:
-        return ProcesserResponse(is_success=True, contents=inner_dict["manager"])
+        EnteredChatRoomManager.set(value=inner_dict["manager"])
+        return ProcesserResponse(is_success=True)
 
     @staticmethod
     def _get_response_class() -> Type[ProcesserResponse]:

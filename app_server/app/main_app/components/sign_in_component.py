@@ -66,7 +66,7 @@ class SignInComponent(BaseComponent):
                     return False
 
                 action_results.message_area.empty()
-                HomePreComponent.prepare_for_sign_in(signed_in_account_entity=response.contents)
+                HomePreComponent.prepare()
                 return True
 
     @classmethod

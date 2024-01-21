@@ -1,11 +1,12 @@
 from typing import Dict, Any, Tuple, Type
 
 from ....base import BaseProcesserManager, EarlyStopProcessException
+from ..signed_in_account_entity import SignedInAccountEntity
 from .form import Form
-from model import BaseResponse, AccountEntity
+from model import BaseResponse
 
 
-class ProcesserResponse(BaseResponse[AccountEntity]):
+class ProcesserResponse(BaseResponse[None]):
     pass
 
 
@@ -33,7 +34,8 @@ class ProcesserManager(BaseProcesserManager[ProcesserResponse]):
         if not response.is_success:
             return ProcesserResponse(is_success=False, message=response.message)
 
-        return ProcesserResponse(is_success=True, contents=response.contents)
+        SignedInAccountEntity.set(value=response.contents)
+        return ProcesserResponse(is_success=True)
 
     @staticmethod
     def _get_response_class() -> Type[ProcesserResponse]:
