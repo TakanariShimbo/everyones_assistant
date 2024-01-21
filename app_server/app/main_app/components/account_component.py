@@ -1,9 +1,9 @@
 import streamlit as st
 from streamlit_lottie import st_lottie_spinner
 
-from .account_action_results import UpdateInfoActionResults, ChangePassActionResults
 from ...base import BaseComponent
 from .. import s_states as SStates
+from .account_action_results import UpdateInfoActionResults, ChangePassActionResults
 from model import LoadedLottie, LoadedImage
 
 
