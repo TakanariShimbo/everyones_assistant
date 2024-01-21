@@ -1,16 +1,16 @@
 from typing import Dict, Any
 
 from ....base import BaseProcesser
-from ...forms import SignInForm
+from .form import Form
 from controller import AccountManager
 
 
 class Processer(BaseProcesser[None]):
     def _main_process(self, inner_dict: Dict[str, Any]) -> None:
-        sign_in_form: SignInForm = inner_dict["form"]
+        form: Form = inner_dict["form"]
         inner_dict["response"] = AccountManager.sign_in(
-            account_id=sign_in_form.account_id,
-            raw_password=sign_in_form.raw_password,
+            account_id=form.account_id,
+            raw_password=form.raw_password,
             to_management=False,
         )
 

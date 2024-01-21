@@ -1,9 +1,9 @@
 from typing import Dict, Any, Tuple, Type
 
+from ....base import BaseProcessersManager, EarlyStopProcessException
 from ..signed_in_account_entity import SignedInAccountEntity
 from ..entered_room_manager import EnteredRoomManager
-from ...forms import QueryForm
-from ....base import BaseProcessersManager, EarlyStopProcessException
+from .form import Form
 from model import BaseResponse
 
 
@@ -19,7 +19,7 @@ class ProcesserManager(BaseProcessersManager[QueryProcesserResponse]):
 
         try:
             inner_dict = {}
-            inner_dict["form"] = QueryForm.from_entity(assistant_entity=kwargs["assistant_entity"], prompt=kwargs["prompt"])
+            inner_dict["form"] = Form.from_entity(assistant_entity=kwargs["assistant_entity"], prompt=kwargs["prompt"])
             inner_dict["manager"] = EnteredRoomManager.get()
             inner_dict["account"] = SignedInAccountEntity.get()
         except:

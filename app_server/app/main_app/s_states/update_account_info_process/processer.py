@@ -1,13 +1,13 @@
 from typing import Dict, Any
 
-from ...forms import UpdateAccountInfoForm
 from ....base import BaseProcesser
+from .form import Form
 from controller import AccountManager
 
 
 class Processer(BaseProcesser[None]):
     def _main_process(self, inner_dict: Dict[str, Any]) -> None:
-        form: UpdateAccountInfoForm = inner_dict["form"]
+        form: Form = inner_dict["form"]
         inner_dict["response"] = AccountManager.update_info(
             account_id=form.account_id,
             mail_address=form.mail_address,

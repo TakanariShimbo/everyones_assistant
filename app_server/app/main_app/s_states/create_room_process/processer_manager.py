@@ -1,8 +1,8 @@
 from typing import Dict, Any, Tuple, Type
 
 from ....base import BaseProcessersManager, EarlyStopProcessException
-from ...forms import CreateForm
 from ..signed_in_account_entity import SignedInAccountEntity
+from .form import Form
 from controller import ChatRoomManager
 from model import BaseResponse
 
@@ -18,7 +18,7 @@ class ProcesserManager(BaseProcessersManager[ProcesserResponse]):
 
         inner_dict = {}
         try:
-            inner_dict["form"] = CreateForm.from_entity(
+            inner_dict["form"] = Form.from_entity(
                 account_entity=SignedInAccountEntity.get(),
                 title=kwargs["title"],
                 release_entity=kwargs["release_entity"]

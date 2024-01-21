@@ -3,7 +3,7 @@ from typing import Any, Dict
 from pydantic import BaseModel, Field
 
 
-class SignInForm(BaseModel):
+class Form(BaseModel):
     account_id: str = Field(min_length=4)
     raw_password: str = Field(min_length=4)
 
