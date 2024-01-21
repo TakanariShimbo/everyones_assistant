@@ -18,7 +18,7 @@ class ProcesserManager(BaseProcesserManager[ProcesserResponse]):
 
         inner_dict = {}
         try:
-            inner_dict["form"] = Form.from_entity(
+            inner_dict["form"] = Form.init(
                 account_id=SignedInAccountEntity.get().account_id,
                 title=kwargs["title"],
                 release_entity=kwargs["release_entity"]

@@ -4,7 +4,7 @@ from pydantic import BaseModel, EmailStr, Field
 
 
 class Form(BaseModel):
-    account_id: str = Field(min_length=4)
+    account_id: str
     mail_address: EmailStr
     family_name_en: str = Field(min_length=1)
     given_name_en: str = Field(min_length=1)
@@ -13,6 +13,11 @@ class Form(BaseModel):
     raw_password: str = Field(min_length=4)
 
     @classmethod
-    def init_from_dict(cls, kwargs: Dict[str, Any]) -> "Form":
-        required_dict = {name: kwargs[name] for name in cls.model_fields.keys()}
+    def init(cls, account_id: str, kwargs: Dict[str, Any]) -> "Form":
+        required_dict = {}
+        for name in cls.model_fields.keys():
+            if name == "account_id":
+                required_dict[name] = account_id
+                continue
+            required_dict[name] = kwargs[name]
         return cls(**required_dict)

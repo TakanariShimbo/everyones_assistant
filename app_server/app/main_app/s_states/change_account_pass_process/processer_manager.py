@@ -17,7 +17,10 @@ class ProcesserManager(BaseProcesserManager[ProcesserResponse]):
 
         try:
             inner_dict = {}
-            inner_dict["form"] = Form.init_from_dict(kwargs=kwargs)
+            inner_dict["form"] = Form.init(
+                account_id=SignedInAccountEntity.get().account_id,
+                kwargs=kwargs,
+            )
         except:
             raise EarlyStopProcessException(message="Please input form corectly.")
         return outer_dict, inner_dict

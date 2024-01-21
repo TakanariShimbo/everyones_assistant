@@ -11,7 +11,7 @@ class Form(BaseModel):
     release_id: str
 
     @classmethod
-    def from_entity(cls, account_id: str, title: str, release_entity: Optional[ReleaseTypeEntity]) -> "Form":
+    def init(cls, account_id: str, title: str, release_entity: Optional[ReleaseTypeEntity]) -> "Form":
         if not release_entity:
             raise ValidationError("ReleaseTypeEntity is None.")
         return cls(account_id=account_id, title=title, release_id=release_entity.release_id)

@@ -31,7 +31,7 @@ class AccountComponent(BaseComponent):
 
     @staticmethod
     def _display_update_info_form_and_get_results() -> UpdateInfoActionResults:
-        self_account_entity = SStates.SignedInAccountEntity.get()
+        signed_in_account_entity = SStates.SignedInAccountEntity.get()
 
         st.markdown("#### 📝 Information")
         with st.form(key="UpdateInfoForm", border=True):
@@ -41,7 +41,7 @@ class AccountComponent(BaseComponent):
                     label="Account ID",
                     placeholder="Enter account id here.",
                     key="AccountIdTextInput",
-                    value=self_account_entity.account_id,
+                    value=signed_in_account_entity.account_id,
                     disabled=True,
                 )
             with right_area:
@@ -49,7 +49,7 @@ class AccountComponent(BaseComponent):
                     label="Email Address",
                     placeholder="Enter your email here.",
                     key="MailAddressTextInput",
-                    value=self_account_entity.mail_address,
+                    value=signed_in_account_entity.mail_address,
                 )
 
             left_area, right_area = st.columns([1, 1])
@@ -58,14 +58,14 @@ class AccountComponent(BaseComponent):
                     label="Family Name (English)",
                     placeholder="Enter your family name in English here.",
                     key="FamilyNameEnTextInput",
-                    value=self_account_entity.family_name_en,
+                    value=signed_in_account_entity.family_name_en,
                 )
             with right_area:
                 inputed_given_name_en = st.text_input(
                     label="Given Name (English)",
                     placeholder="Enter your given name in English here.",
                     key="GivenNameEnTextInput",
-                    value=self_account_entity.given_name_en,
+                    value=signed_in_account_entity.given_name_en,
                 )
 
             left_area, right_area = st.columns([1, 1])
@@ -74,14 +74,14 @@ class AccountComponent(BaseComponent):
                     label="Family Name (Japanese)",
                     placeholder="Enter your family name in Japanese here.",
                     key="FamilyNameJpTextInput",
-                    value=self_account_entity.family_name_jp,
+                    value=signed_in_account_entity.family_name_jp,
                 )
             with right_area:
                 inputed_given_name_jp = st.text_input(
                     label="Given Name (Japanese)",
                     placeholder="Enter your given name in Japanese here.",
                     key="GivenNameJpTextInput",
-                    value=self_account_entity.given_name_jp,
+                    value=signed_in_account_entity.given_name_jp,
                 )
 
             inputed_raw_password = st.text_input(
@@ -98,7 +98,6 @@ class AccountComponent(BaseComponent):
             _, loading_area, _ = st.columns([1, 1, 1])
 
         return UpdateInfoActionResults(
-            account_id=self_account_entity.account_id,
             mail_address=inputed_mail_address,
             family_name_en=inputed_family_name_en,
             given_name_en=inputed_given_name_en,
@@ -112,8 +111,6 @@ class AccountComponent(BaseComponent):
 
     @staticmethod
     def _display_change_pass_form_and_get_results() -> ChangePassActionResults:
-        signed_in_account_entity = SStates.SignedInAccountEntity.get()
-
         st.markdown("#### 🔑 Password")
         with st.form(key="ChangePassForm", border=True):
             inputed_current_raw_password = st.text_input(
@@ -146,7 +143,6 @@ class AccountComponent(BaseComponent):
             _, loading_area, _ = st.columns([1, 1, 1])
 
         return ChangePassActionResults(
-            account_id=signed_in_account_entity.account_id,
             current_raw_password=inputed_current_raw_password,
             new_raw_password=inputed_new_raw_password,
             new_raw_password_confirm=inputed_new_raw_password_confirm,
@@ -165,7 +161,6 @@ class AccountComponent(BaseComponent):
                 processer_manager = SStates.UpdateAccountInfoProcess.get()
                 response = processer_manager.run_all(
                     message_area=action_results.message_area,
-                    account_id=action_results.account_id,
                     mail_address=action_results.mail_address,
                     family_name_en=action_results.family_name_en,
                     given_name_en=action_results.given_name_en,
@@ -200,7 +195,6 @@ class AccountComponent(BaseComponent):
                 processer_manager = SStates.ChangeAccountPassProcess.get()
                 response = processer_manager.run_all(
                     message_area=action_results.message_area,
-                    account_id=action_results.account_id,
                     current_raw_password=action_results.current_raw_password,
                     new_raw_password=action_results.new_raw_password,
                     new_raw_password_confirm=action_results.new_raw_password_confirm,
