@@ -61,13 +61,13 @@ class SignInComponent(BaseComponent):
                     raw_password=action_results.raw_password,
                 )
 
-        if not response.is_success:
-            action_results.message_area.warning(response.message)
-            return False
+                if not response.is_success:
+                    action_results.message_area.warning(response.message)
+                    return False
 
-        action_results.message_area.empty()
-        HomePreComponent.prepare_for_sign_in(signed_in_account_entity=response.contents)
-        return True
+                action_results.message_area.empty()
+                HomePreComponent.prepare_for_sign_in(signed_in_account_entity=response.contents)
+                return True
 
     @classmethod
     def main(cls) -> None:

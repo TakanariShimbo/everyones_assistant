@@ -6,9 +6,14 @@ class HomePreComponent:
     @staticmethod
     def init() -> None:
         SStates.CurrentComponentEntity.init()
+        SStates.LoadChatRoomDtoTablesProcess.init()
 
     @staticmethod
     def prepare() -> None:
+        processer_manager = SStates.LoadChatRoomDtoTablesProcess.get()
+        chat_room_dto_tables = processer_manager.run_all()
+        SStates.LoadedYoursChatRoomDtoTable.set(value=chat_room_dto_tables.contents.yours_chat_room_table)
+        SStates.LoadedEveryoneChatRoomDtoTable.set(value=chat_room_dto_tables.contents.everyone_chat_room_table)
         SStates.CurrentComponentEntity.set_home_entity()
 
     @classmethod
@@ -18,4 +23,4 @@ class HomePreComponent:
 
     @staticmethod
     def deinit() -> None:
-        pass
+        SStates.LoadChatRoomDtoTablesProcess.deinit()

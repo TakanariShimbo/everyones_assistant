@@ -10,7 +10,7 @@ from .sign_in_pre_component import SignInPreComponent
 from .chat_room_pre_component import ChatRoomPreComponent
 from .account_pre_component import AccountPreComponent
 from .home_action_results import CreateActionResults, EnterActionResults, RoomContainerActionResults
-from model import ChatRoomDtoTable, ChatRoomDto, RELEASE_TYPE_TABLE, LoadedLottie, LoadedImage, Database
+from model import ChatRoomDto, RELEASE_TYPE_TABLE, LoadedLottie, LoadedImage
 
 
 class HomeComponent(BaseComponent):
@@ -20,6 +20,8 @@ class HomeComponent(BaseComponent):
         SStates.SignedInAccountEntity.init()
         SStates.CreateChatRoomProcess.init()
         SStates.EnterChatRoomProcess.init()
+        SStates.LoadedYoursChatRoomDtoTable.init()
+        SStates.LoadedEveryoneChatRoomDtoTable.init()
         SignInPreComponent.init()
         ChatRoomPreComponent.init()
         AccountPreComponent.init()
@@ -108,12 +110,8 @@ class HomeComponent(BaseComponent):
 
         with left_area:
             st.markdown("#### 🧍 Yours")
-            with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                your_room_table = ChatRoomDtoTable.load_not_disabled_and_specified_account_from_database(
-                    database_engine=Database.ENGINE,
-                    account_id=SStates.SignedInAccountEntity.get().account_id,
-                )
-            for container_id, chat_room_dto in enumerate(your_room_table.get_all_beans()):
+            yours_chat_room_dto_table = SStates.LoadedYoursChatRoomDtoTable.get()
+            for container_id, chat_room_dto in enumerate(yours_chat_room_dto_table.get_all_beans()):
                 action_results = cls._display_room_container_and_get_results(
                     chat_room_dto=chat_room_dto,
                     chat_room_type="Edit",
@@ -125,12 +123,8 @@ class HomeComponent(BaseComponent):
         
         with right_area:
             st.markdown("#### 🧑‍🤝‍🧑 Everyone")
-            with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
-                everyone_room_table = ChatRoomDtoTable.load_public_and_not_disabled_and_unspecified_account_from_database(
-                    database_engine=Database.ENGINE,
-                    account_id=SStates.SignedInAccountEntity.get().account_id,
-                )
-            for container_id, chat_room_dto in enumerate(everyone_room_table.get_all_beans()):
+            everyone_chat_room_dto_table = SStates.LoadedEveryoneChatRoomDtoTable.get()
+            for container_id, chat_room_dto in enumerate(everyone_chat_room_dto_table.get_all_beans()):
                 action_results = cls._display_room_container_and_get_results(
                     chat_room_dto=chat_room_dto,
                     chat_room_type="View",
@@ -224,6 +218,8 @@ class HomeComponent(BaseComponent):
     def deinit() -> None:
         SStates.CreateChatRoomProcess.deinit()
         SStates.EnterChatRoomProcess.deinit()
+        SStates.LoadedYoursChatRoomDtoTable.deinit()
+        SStates.LoadedEveryoneChatRoomDtoTable.deinit()
         SignInPreComponent.deinit()
         ChatRoomPreComponent.deinit()
         AccountPreComponent.deinit()
