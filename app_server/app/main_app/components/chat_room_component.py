@@ -13,7 +13,7 @@ class ChatRoomComponent(BaseComponent):
     @staticmethod
     def init() -> None:
         SStates.CurrentComponentEntity.init()
-        SStates.SignedInAccountEntity.init()
+        SStates.SignedInAccountEntity.validate()
         SStates.EnteredChatRoomManager.init()
         SStates.QueryProcess.init()
         HomePreComponent.init()

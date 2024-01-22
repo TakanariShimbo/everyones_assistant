@@ -1,9 +1,9 @@
-from ....base import BaseSState
+from ....base import BaseSStateHasDefault
 from .processer import Processer
 from .processer_manager import ProcesserManager
 
 
-class SignUpProcess(BaseSState[ProcesserManager]):
+class SignUpProcess(BaseSStateHasDefault[ProcesserManager]):
     @staticmethod
     def get_name() -> str:
         return "SIGN_UP_PROCESS"

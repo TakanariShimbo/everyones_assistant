@@ -1,9 +1,9 @@
-from ....base import BaseSState
+from ....base import BaseSStateHasDefault
 from .processer import Processer
 from .processer_manager import ProcesserManager
 
 
-class CreateChatRoomProcess(BaseSState[ProcesserManager]):
+class CreateChatRoomProcess(BaseSStateHasDefault[ProcesserManager]):
     @staticmethod
     def get_name() -> str:
         return "CREATE_CHAT_ROOM_PROCESS"

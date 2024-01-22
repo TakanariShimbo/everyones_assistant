@@ -13,7 +13,7 @@ class AccountsComponent(BaseComponent):
     def init() -> None:
         SStates.CurrentComponentEntity.init()
         SStates.SignUpProcess.init()
-        SStates.LoadedAccountTable.init()
+        SStates.LoadedAccountTable.validate()
         HomePreComponent.init()
 
     @staticmethod

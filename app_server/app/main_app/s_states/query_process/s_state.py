@@ -1,9 +1,9 @@
 from .processer import Processer
 from .processer_manager import ProcesserManager
-from ....base import BaseSState
+from ....base import BaseSStateHasDefault
 
 
-class QueryProcess(BaseSState[ProcesserManager]):
+class QueryProcess(BaseSStateHasDefault[ProcesserManager]):
     @staticmethod
     def get_name() -> str:
         return "QUERY_PROCESS"

@@ -17,7 +17,7 @@ class HomeComponent(BaseComponent):
     @staticmethod
     def init() -> None:
         SStates.CurrentComponentEntity.init()
-        SStates.SignedInAccountEntity.init()
+        SStates.SignedInAccountEntity.validate()
         SStates.CreateChatRoomProcess.init()
         SStates.EnterChatRoomProcess.init()
         SStates.LoadedYoursChatRoomDtoTable.init()

@@ -26,6 +26,15 @@ class BaseSState(Generic[T], ABC):
     def get_name() -> str:
         raise NotImplementedError("Subclasses must implement this method")
 
+
+class BaseSStateNoDefault(BaseSState[T], ABC):
+    @classmethod
+    def validate(cls) -> None:
+        if not cls.get_name() in st.session_state:
+            raise ValueError("SState has not set yet.")
+
+
+class BaseSStateHasDefault(BaseSState[T], ABC):
     @classmethod
     def reset(cls) -> None:
         cls.set(value=cls.get_default())
@@ -36,5 +45,6 @@ class BaseSState(Generic[T], ABC):
             cls.reset()
 
     @staticmethod
+    @abstractmethod
     def get_default() -> T:
-        raise NotImplementedError()
+        raise NotImplementedError("Subclasses must implement this method")
