@@ -14,7 +14,7 @@ class ChatRoomComponent(BaseComponent):
     def init() -> None:
         SStates.CurrentComponentEntity.init()
         SStates.SignedInAccountEntity.validate()
-        SStates.EnteredChatRoomManager.init()
+        SStates.EnteredChatRoomManager.validate()
         SStates.QueryProcess.init()
         HomePreComponent.init()
 
