@@ -5,7 +5,6 @@ class ChatRoomPreComponent:
     @staticmethod
     def init() -> None:
         SStates.CurrentComponentEntity.init()
-        SStates.EnteredChatRoomManager.validate()
 
     @staticmethod
     def prepare() -> None:
