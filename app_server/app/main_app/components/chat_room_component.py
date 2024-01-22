@@ -16,6 +16,7 @@ class ChatRoomComponent(BaseComponent):
         SStates.SignedInAccountEntity.validate()
         SStates.EnteredChatRoomManager.validate()
         SStates.QueryProcess.init()
+        SStates.DeleteChatRoomProcess.init()
         HomePreComponent.init()
 
     @staticmethod
@@ -88,7 +89,7 @@ class ChatRoomComponent(BaseComponent):
         return history_area
 
     @staticmethod
-    def _execute_menus_process(action_results: MenusActionResults) -> bool:
+    def _execute_return_home_process(action_results: ReturnHomeActionResults) -> bool:
         if not action_results.is_pushed:
             return False
 
@@ -98,12 +99,14 @@ class ChatRoomComponent(BaseComponent):
         return True
 
     @staticmethod
-    def _execute_return_home_process(action_results: ReturnHomeActionResults) -> bool:
+    def _execute_menus_process(action_results: MenusActionResults) -> bool:
         if not action_results.is_pushed:
             return False
 
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
+                processer_manager = SStates.DeleteChatRoomProcess.get()
+                processer_manager.run_all()
                 HomePreComponent.prepare()
         return True
 
@@ -138,6 +141,10 @@ class ChatRoomComponent(BaseComponent):
             if is_success:
                 cls.deinit()
                 st.rerun()
+            is_success = cls._execute_menus_process(action_results=menus_action_results)
+            if is_success:
+                cls.deinit()
+                st.rerun()
             cls._execute_query_process(action_results=query_action_results, history_area=history_area)
 
         else:
@@ -153,4 +160,5 @@ class ChatRoomComponent(BaseComponent):
     def deinit() -> None:
         SStates.EnteredChatRoomManager.deinit()
         SStates.QueryProcess.deinit()
+        SStates.DeleteChatRoomProcess.deinit()
         HomePreComponent.deinit()

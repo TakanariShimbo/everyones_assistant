@@ -14,8 +14,6 @@ class ProcesserManager(BaseProcesserManager[ProcesserResponse]):
         outer_dict = {}
         inner_dict = {}
         inner_dict["room_id"] = kwargs["room_id"]
-        inner_dict["account_id"] = kwargs["account_id"]
-        inner_dict["release_id"] = kwargs["release_id"]
         return outer_dict, inner_dict
 
     def _pre_process_for_running(self, **kwargs) -> Dict[str, Any]:

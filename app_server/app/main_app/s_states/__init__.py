@@ -6,6 +6,7 @@ from .signed_in_account_entity import SignedInAccountEntity
 
 from .change_account_pass_process import ChangeAccountPassProcess
 from .create_chat_room_process import CreateChatRoomProcess
+from .delete_chat_room_process import DeleteChatRoomProcess
 from .enter_chat_room_process import EnterChatRoomProcess
 from .load_chat_room_dto_tables_process import LoadChatRoomDtoTablesProcess
 from .query_process import QueryProcess

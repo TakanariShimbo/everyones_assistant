@@ -176,8 +176,6 @@ class HomeComponent(BaseComponent):
                 processer_manager = SStates.EnterChatRoomProcess.get()
                 response = processer_manager.run_all(
                     room_id=enter_action_results.chat_room_dto.room_id,
-                    account_id=enter_action_results.chat_room_dto.account_id,
-                    release_id=enter_action_results.chat_room_dto.release_id,
                 )
         if not response.is_success:
             return False
