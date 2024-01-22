@@ -11,8 +11,6 @@ class AccountsPreComponent:
     def prepare() -> None:
         processer_manager = SStates.LoadAccountTableProcess.get()
         response = processer_manager.run_all()
-        loaded_account_table = response.contents
-        SStates.LoadedAccountTable.set(value=loaded_account_table)
         SStates.CurrentComponentEntity.set_accounts_entity()
 
     @staticmethod

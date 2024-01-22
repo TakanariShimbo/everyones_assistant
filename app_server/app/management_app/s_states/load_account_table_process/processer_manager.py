@@ -1,10 +1,11 @@
 from typing import Dict, Any, Tuple, Type
 
 from ....base import BaseProcesserManager
-from model import BaseResponse, AccountTable
+from ..loaded_account_table import LoadedAccountTable
+from model import BaseResponse
 
 
-class ProcesserResponse(BaseResponse[AccountTable]):
+class ProcesserResponse(BaseResponse[None]):
     pass
 
 
@@ -19,8 +20,8 @@ class ProcesserManager(BaseProcesserManager[ProcesserResponse]):
         return outer_dict
 
     def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> ProcesserResponse:
-        table = inner_dict["table"]
-        return ProcesserResponse(is_success=True, contents=table)
+        LoadedAccountTable.set(value=inner_dict["table"])
+        return ProcesserResponse(is_success=True)
 
     @staticmethod
     def _get_response_class() -> Type[ProcesserResponse]:

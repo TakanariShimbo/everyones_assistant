@@ -109,9 +109,9 @@ class AccountsComponent(BaseComponent):
         )
 
     @staticmethod
-    def _execute_sign_up_process(action_results: ActionResults) -> None:
+    def _execute_sign_up_process(action_results: ActionResults) -> bool:
         if not action_results.is_pushed:
-            return
+            return False
 
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
@@ -128,10 +128,14 @@ class AccountsComponent(BaseComponent):
                     raw_password_confirm=action_results.raw_password_confirm,
                 )
 
-        if not response.is_success:
-            action_results.message_area.warning(response.message)
-            return
-        action_results.message_area.success(response.message)
+                if not response.is_success:
+                    action_results.message_area.warning(response.message)
+                    return False
+
+                action_results.message_area.success(response.message)
+                processer_manager = SStates.LoadAccountTableProcess.get()
+                processer_manager.run_all()
+                return True
 
     @staticmethod
     def _display_account_table() -> None:
@@ -149,8 +153,12 @@ class AccountsComponent(BaseComponent):
         cls._display_titles()
         cls._display_sidebar_titles()
         action_results = cls._display_sign_up_form_and_get_results()
-        cls._execute_sign_up_process(action_results=action_results)
         cls._display_account_table()
+        
+        is_success = cls._execute_sign_up_process(action_results=action_results)
+        if is_success:
+            cls.deinit()
+            st.rerun()
 
     @staticmethod
     def deinit() -> None:
