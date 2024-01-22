@@ -56,8 +56,8 @@ class AccountManager:
         except ValueError:
             return SignInResponse(is_success=False, message=f"Account ID '{account_id}' hasn't signed up yet.")
 
-        if not to_management and target_account_entity.is_disabled:
-            return SignInResponse(is_success=False, message=f"Account ID '{account_id}' is disabled.")
+        if not to_management and not target_account_entity.is_user:
+            return SignInResponse(is_success=False, message=f"Account ID '{account_id}' is not user.")
 
         if to_management and not target_account_entity.is_administrator:
             return SignInResponse(is_success=False, message=f"Account ID '{account_id}' is not administrator.")

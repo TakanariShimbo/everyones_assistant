@@ -15,8 +15,8 @@ class AccountColumnConfigs(BaseColumnConfigEnum):
     GIVEN_NAME_JP = ColumnConfig(name="given_name_jp", dtype=pd.StringDtype(), auto_assigned=False)
     HASHED_PASSWORD = ColumnConfig(name="hashed_password", dtype=pd.StringDtype(), auto_assigned=False)
     REGISTERED_AT = ColumnConfig(name="registered_at", dtype=pd.StringDtype(), auto_assigned=True)
+    IS_USER = ColumnConfig(name="is_user", dtype=pd.BooleanDtype(), auto_assigned=True)
     IS_ADMINISTRATOR = ColumnConfig(name="is_administrator", dtype=pd.BooleanDtype(), auto_assigned=True)
-    IS_DISABLED = ColumnConfig(name="is_disabled", dtype=pd.BooleanDtype(), auto_assigned=True)
 
 
 class AccountConfig(BaseDatabaseConfig):
@@ -41,8 +41,8 @@ class AccountConfig(BaseDatabaseConfig):
                 given_name_jp VARCHAR(255) NOT NULL,
                 hashed_password VARCHAR(255) NOT NULL,
                 registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-                is_administrator BOOLEAN DEFAULT FALSE NOT NULL,
-                is_disabled BOOLEAN DEFAULT FALSE NOT NULL
+                is_user BOOLEAN DEFAULT TRUE NOT NULL,
+                is_administrator BOOLEAN DEFAULT FALSE NOT NULL
             );
             """
         )

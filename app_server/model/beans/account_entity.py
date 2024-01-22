@@ -19,8 +19,8 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
         given_name_jp: str,
         hashed_password: str,
         registered_at: Optional[Union[str, datetime]] = None,
+        is_user: Optional[bool] = None,
         is_administrator: Optional[bool] = None,
-        is_disabled: Optional[bool] = None,
     ) -> None:
         self._account_id = account_id
         self._mail_address = mail_address
@@ -30,8 +30,8 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
         self._given_name_jp = given_name_jp
         self._hashed_password = hashed_password
         self._registered_at = DateHandler.to_str_or_none(date=registered_at)
+        self._is_user = is_user
         self._is_administrator = is_administrator
-        self._is_disabled = is_disabled
 
     @classmethod
     def init_with_hashing_password(
@@ -110,6 +110,17 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
         return registered_at
 
     @property
+    def is_user(self) -> bool:
+        is_user = self._is_user
+        if is_user == None:
+            raise ValueError("Not accessible due to have not constracted.")
+        return is_user
+
+    @is_user.setter
+    def is_user(self, is_user: bool) -> None:
+        self._is_user = is_user
+
+    @property
     def is_administrator(self) -> bool:
         is_administrator = self._is_administrator
         if is_administrator == None:
@@ -119,17 +130,6 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
     @is_administrator.setter
     def is_administrator(self, is_administrator: bool) -> None:
         self._is_administrator = is_administrator
-
-    @property
-    def is_disabled(self) -> bool:
-        is_disabled = self._is_disabled
-        if is_disabled == None:
-            raise ValueError("Not accessible due to have not constracted.")
-        return is_disabled
-
-    @is_disabled.setter
-    def is_disabled(self, is_disabled: bool) -> None:
-        self._is_disabled = is_disabled
 
     @property
     def registered_at_short(self) -> str:
