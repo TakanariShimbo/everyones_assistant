@@ -4,7 +4,7 @@ from streamlit_lottie import st_lottie_spinner
 from ...base import BaseComponent
 from .. import s_states as SStates
 from .home_pre_component import HomePreComponent
-from .accounts_action_results import ActionResults
+from .accounts_action_results import SignUpActionResults, AccountTableIOActionResults
 from model import LoadedLottie, LoadedImage
 
 
@@ -27,7 +27,7 @@ class AccountsComponent(BaseComponent):
         st.sidebar.button(label="🏠 Home", key="ReturnHomeButton", on_click=cls._on_click_return_home, use_container_width=True)
 
     @staticmethod
-    def _display_sign_up_form_and_get_results() -> ActionResults:
+    def _display_sign_up_form_and_get_results() -> SignUpActionResults:
         st.markdown("#### ➕ Sign up")
         with st.form(key="SignUpForm", border=True):
             left_area, right_area = st.columns([1, 1])
@@ -94,7 +94,7 @@ class AccountsComponent(BaseComponent):
                 is_pushed = st.form_submit_button(label="Register", type="primary", use_container_width=True)
             _, loading_area, _ = st.columns([1, 1, 1])
 
-        return ActionResults(
+        return SignUpActionResults(
             account_id=inputed_account_id,
             mail_address=inputed_mail_address,
             family_name_en=inputed_family_name_en,
@@ -109,7 +109,24 @@ class AccountsComponent(BaseComponent):
         )
 
     @staticmethod
-    def _execute_sign_up_process(action_results: ActionResults) -> bool:
+    def _display_account_table_and_get_results() -> AccountTableIOActionResults:
+        st.markdown("#### 👀 View")
+        with st.container(border=True):
+            account_table = SStates.LoadedAccountTable.get()
+            st.dataframe(account_table.df, use_container_width=True)
+
+            _, button_area, _ = st.columns([5, 3, 5])
+            with button_area:
+                is_pushed = st.button(label="Load", type="primary", key="LoadAccountTableButton", use_container_width=True)
+            _, loading_area, _ = st.columns([1, 1, 1])
+
+        return AccountTableIOActionResults(
+            loading_area=loading_area,
+            is_pushed=is_pushed,
+        )
+
+    @staticmethod
+    def _execute_sign_up_process(action_results: SignUpActionResults) -> bool:
         if not action_results.is_pushed:
             return False
 
@@ -128,20 +145,23 @@ class AccountsComponent(BaseComponent):
                     raw_password_confirm=action_results.raw_password_confirm,
                 )
 
-                if not response.is_success:
-                    action_results.message_area.warning(response.message)
-                    return False
+        if not response.is_success:
+            action_results.message_area.warning(response.message)
+            return False
 
-                action_results.message_area.success(response.message)
-                processer_manager = SStates.LoadAccountTableProcess.get()
-                processer_manager.run_all()
-                return True
+        action_results.message_area.success(response.message)
+        return True
 
     @staticmethod
-    def _display_account_table() -> None:
-        st.markdown("#### 👀 View")
-        account_table = SStates.LoadedAccountTable.get()
-        st.dataframe(account_table.df, use_container_width=True)
+    def _execute_account_table_io_process(action_results: AccountTableIOActionResults) -> bool:
+        if not action_results.is_pushed:
+            return False
+
+        with action_results.loading_area:
+            with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
+                processer_manager = SStates.LoadAccountTableProcess.get()
+                processer_manager.run_all()
+        return True
 
     @classmethod
     def _on_click_return_home(cls):
@@ -152,10 +172,11 @@ class AccountsComponent(BaseComponent):
     def main(cls) -> None:
         cls._display_titles()
         cls._display_sidebar_titles()
-        action_results = cls._display_sign_up_form_and_get_results()
-        cls._display_account_table()
+        sign_up_action_results = cls._display_sign_up_form_and_get_results()
+        account_table_io_action_results = cls._display_account_table_and_get_results()
         
-        is_success = cls._execute_sign_up_process(action_results=action_results)
+        cls._execute_sign_up_process(action_results=sign_up_action_results)
+        is_success = cls._execute_account_table_io_process(action_results=account_table_io_action_results)
         if is_success:
             cls.deinit()
             st.rerun()
