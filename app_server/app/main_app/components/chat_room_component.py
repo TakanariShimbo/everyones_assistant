@@ -5,7 +5,7 @@ from streamlit.delta_generator import DeltaGenerator
 from ...base import BaseComponent
 from .. import s_states as SStates
 from .home_pre_component import HomePreComponent
-from .chat_room_action_results import QueryActionResults, ReturnHomeActionResults
+from .chat_room_action_results import QueryActionResults, ReturnHomeActionResults, MenusActionResults
 from model import ASSISTANT_TYPE_TABLE, LoadedLottie, LoadedImage
 
 
@@ -29,6 +29,13 @@ class ChatRoomComponent(BaseComponent):
         is_pushed = st.sidebar.button(label="🏠 Home", key="ReturnHomeButton", use_container_width=True)
         _, loading_area, _ = st.sidebar.columns([1, 2, 1])
         return ReturnHomeActionResults(loading_area=loading_area, is_pushed=is_pushed)
+
+    @classmethod
+    def _display_sidebar_menus_and_get_results(cls) -> MenusActionResults:
+        st.sidebar.markdown("## Menus")
+        is_pushed = st.sidebar.button(label="🗑️ Delete", key="DeleteChatRoomButton", use_container_width=True)
+        _, loading_area, _ = st.sidebar.columns([1, 2, 1])
+        return MenusActionResults(loading_area=loading_area, is_pushed=is_pushed)
 
     @staticmethod
     def _display_query_form_and_get_results() -> QueryActionResults:
@@ -81,6 +88,16 @@ class ChatRoomComponent(BaseComponent):
         return history_area
 
     @staticmethod
+    def _execute_menus_process(action_results: MenusActionResults) -> bool:
+        if not action_results.is_pushed:
+            return False
+
+        with action_results.loading_area:
+            with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
+                HomePreComponent.prepare()
+        return True
+
+    @staticmethod
     def _execute_return_home_process(action_results: ReturnHomeActionResults) -> bool:
         if not action_results.is_pushed:
             return False
@@ -113,14 +130,15 @@ class ChatRoomComponent(BaseComponent):
         is_created_user = SStates.EnteredChatRoomManager.get().account_id == SStates.SignedInAccountEntity.get().account_id
         if is_created_user:
             return_home_action_results = cls._display_sidebar_titles_and_get_results()
-            action_results = cls._display_query_form_and_get_results()
+            menus_action_results = cls._display_sidebar_menus_and_get_results()
+            query_action_results = cls._display_query_form_and_get_results()
             history_area = cls._display_history()
 
             is_success = cls._execute_return_home_process(action_results=return_home_action_results)
             if is_success:
                 cls.deinit()
                 st.rerun()
-            cls._execute_query_process(action_results=action_results, history_area=history_area)
+            cls._execute_query_process(action_results=query_action_results, history_area=history_area)
 
         else:
             return_home_action_results = cls._display_sidebar_titles_and_get_results()

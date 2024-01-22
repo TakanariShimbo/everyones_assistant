@@ -44,3 +44,5 @@ class ChatRoomManager:
 
     def get_all_message_entities(self) -> List[ChatMessageEntity]:
         return self._table.get_all_beans()
+
+    # def disable
