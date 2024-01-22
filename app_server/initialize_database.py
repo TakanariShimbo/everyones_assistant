@@ -21,8 +21,5 @@ admin_account_entity = AccountEntity.init_with_hashing_password(
     given_name_jp="アカウント",
     raw_password=LoadedEnv.ADMIN_PASSWORD,
 )
-admin_account_entity.insert_record_to_database(database_engine=Database.ENGINE)
-
-admin_account_entity = AccountEntity.load_specified_id_from_database(database_engine=Database.ENGINE, account_id=LoadedEnv.ADMIN_ID)
 admin_account_entity.is_administrator = True
-admin_account_entity.update_record_of_database(database_engine=Database.ENGINE)
+admin_account_entity = admin_account_entity.insert_record_to_database(database_engine=Database.ENGINE)

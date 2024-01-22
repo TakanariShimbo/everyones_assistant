@@ -41,11 +41,12 @@ class BaseBean(Generic[C], ABC):
         kwargs = {name: None if pd.isna(bean_dict[name]) else bean_dict[name] for name in cls._get_column_names(ignore_auto_assigned=False)}
         return cls(**kwargs)
 
-    def to_dict(self, ignore_auto_assigned: bool) -> Dict[str, Any]:
+    def to_dict(self, ignore_auto_assigned: bool, fill_none: bool=True) -> Dict[str, Any]:
         bean_dict = {}
         for name in self._get_column_names(ignore_auto_assigned=ignore_auto_assigned):
             try:
                 bean_dict[name] = getattr(self, name)
             except ValueError:
-                bean_dict[name] = None
+                if fill_none:
+                    bean_dict[name] = None
         return bean_dict

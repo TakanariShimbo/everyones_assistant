@@ -66,7 +66,7 @@ class BaseTable(Generic[C, B], ABC):
 
     @classmethod
     def load_from_beans(cls: Type[T], beans: List[B]) -> T:
-        bean_dicts = [bean.to_dict(ignore_auto_assigned=False) for bean in beans]
+        bean_dicts = [bean.to_dict(ignore_auto_assigned=False, fill_none=True) for bean in beans]
         df = pd.DataFrame(data=bean_dicts).astype(dtype=cls._get_dtype_dict())
         return cls(df)
 

@@ -45,15 +45,17 @@ class DatabaseHandler:
         return statement, parameters
 
     @staticmethod
-    def get_insert_sql(table_name: str, column_names: List[str]) -> Tuple[str, None]:
-        values = [f":{name}" for name in column_names]
-        column_names_str = ", ".join(column_names)
-        values_str = ", ".join(values)
+    def get_insert_sql(table_name: str, insert_column_names: List[str], return_column_names: List[str]) -> Tuple[str, None]:
+        insert_values = [f":{name}" for name in insert_column_names]
+        insert_names_str = ", ".join(insert_column_names)
+        return_names_str = ", ".join(return_column_names)
+        insert_values_str = ", ".join(insert_values)
 
         statement = dedent(
             f"""
-            INSERT INTO {table_name} ({column_names_str})
-            VALUES ({values_str});
+            INSERT INTO {table_name} ({insert_names_str})
+            VALUES ({insert_values_str})
+            RETURNING {return_names_str};
             """
         )
         return statement, None

@@ -37,13 +37,16 @@ class BaseDatabaseEntity(BaseBean[C], ABC):
 
     def _get_insert_sql(self) -> Tuple[str, Dict[str, Any]]:
         table_name=self._get_database_table_name()
-        column_names = self._get_column_names(ignore_auto_assigned=True)
+        parameters = self.to_dict(ignore_auto_assigned=False, fill_none=False)
+        insert_column_names = list(parameters.keys())
+        all_column_names = self._get_column_names(ignore_auto_assigned=False)
+        return_column_names = [name for name in all_column_names if name not in insert_column_names]
 
         statement, _ = DatabaseHandler.get_insert_sql(
             table_name=table_name,
-            column_names=column_names,
+            insert_column_names=insert_column_names,
+            return_column_names=return_column_names,
         )
-        parameters = self.to_dict(ignore_auto_assigned=True)
         return statement, parameters
 
     def _get_update_sql(self) -> Tuple[str, Dict[str, Any]]:
@@ -56,7 +59,7 @@ class BaseDatabaseEntity(BaseBean[C], ABC):
             key_column_name=key_column_name,
             non_key_column_names=[column_name for column_name in column_names if column_name != key_column_name],
         )
-        parameters = self.to_dict(ignore_auto_assigned=False)
+        parameters = self.to_dict(ignore_auto_assigned=False, fill_none=False)
         return statement, parameters
 
     def _get_delete_sql(self) -> Tuple[str, Dict[str, Any]]:
@@ -71,9 +74,15 @@ class BaseDatabaseEntity(BaseBean[C], ABC):
         )
         return statement, parameters
 
-    def insert_record_to_database(self, database_engine: Engine) -> None:
+    def insert_record_to_database(self: B, database_engine: Engine) -> B:
         statement, parameters = self._get_insert_sql()
-        DatabaseHandler.execute_sql(database_engine=database_engine, statement=statement, parameters=parameters)
+        results = DatabaseHandler.execute_sql(database_engine=database_engine, statement=statement, parameters=parameters)
+
+        result_dict = {}
+        first_result = results.fetchone()
+        if first_result != None:
+            result_dict = first_result._asdict()
+        return self.init_from_dict(bean_dict={**parameters, **result_dict})
 
     def update_record_of_database(self, database_engine: Engine) -> None:
         statement, parameters = self._get_update_sql()
