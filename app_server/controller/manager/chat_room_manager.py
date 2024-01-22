@@ -25,11 +25,10 @@ class ChatRoomManager:
     def init_as_new(cls, title: str, account_id: str, release_id: str) -> "ChatRoomManager":
         room_id = str(uuid4())
         new_chat_room_entity = ChatRoomEntity(room_id=room_id, account_id=account_id, title=title, release_id=release_id)
-        new_chat_room_entity.insert_record_to_database(database_engine=Database.ENGINE)
-        loaded_chat_room_entity = ChatRoomEntity.load_specified_id_from_database(database_engine=Database.ENGINE, room_id=room_id)
+        new_chat_room_entity = new_chat_room_entity.insert_record_to_database(database_engine=Database.ENGINE)
 
         empty_chat_message_table = ChatMessageTable.create_empty_table()
-        return cls(chat_room_entity=loaded_chat_room_entity, chat_message_table=empty_chat_message_table)
+        return cls(chat_room_entity=new_chat_room_entity, chat_message_table=empty_chat_message_table)
 
     @classmethod
     def init_as_continue(cls, room_id: str) -> "ChatRoomManager":
