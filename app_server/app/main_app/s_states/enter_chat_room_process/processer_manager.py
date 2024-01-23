@@ -1,6 +1,7 @@
 from typing import Dict, Any, Tuple, Type
 
 from ....base import BaseProcesserManager
+from ..signed_in_account_entity import SignedInAccountEntity
 from ..entered_chat_room_manager import EnteredChatRoomManager
 from model import BaseResponse
 
@@ -14,6 +15,7 @@ class ProcesserManager(BaseProcesserManager[ProcesserResponse]):
         outer_dict = {}
         inner_dict = {}
         inner_dict["room_id"] = kwargs["room_id"]
+        inner_dict["signed_in_account_id"] = SignedInAccountEntity.get().account_id
         return outer_dict, inner_dict
 
     def _pre_process_for_running(self, **kwargs) -> Dict[str, Any]:

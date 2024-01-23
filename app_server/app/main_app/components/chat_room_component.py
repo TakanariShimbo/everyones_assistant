@@ -1,3 +1,5 @@
+from typing import Optional
+
 import streamlit as st
 from streamlit_lottie import st_lottie_spinner
 from streamlit.delta_generator import DeltaGenerator
@@ -6,7 +8,7 @@ from ...base import BaseComponent
 from .. import s_states as SStates
 from .home_pre_component import HomePreComponent
 from .chat_room_action_results import QueryActionResults, ReturnHomeActionResults, MenusActionResults
-from model import ASSISTANT_TYPE_TABLE, LoadedLottie, LoadedImage
+from model import ASSISTANT_TYPE_TABLE, LoadedLottie, LoadedImage, ChatRoomEntity
 
 
 class ChatRoomComponent(BaseComponent):
@@ -37,6 +39,16 @@ class ChatRoomComponent(BaseComponent):
         is_pushed = st.sidebar.button(label="🗑️ Delete", key="DeleteChatRoomButton", use_container_width=True)
         _, loading_area, _ = st.sidebar.columns([1, 2, 1])
         return MenusActionResults(loading_area=loading_area, is_pushed=is_pushed)
+
+    @classmethod
+    def _display_room_buttons_and_get_results(cls) -> Optional[ChatRoomEntity]:
+        selected_chat_room_entity = None
+        chat_room_manager = SStates.EnteredChatRoomManager.get()
+        for button_id, chat_room_entity in enumerate(chat_room_manager.get_all_chat_room_entities()):
+            is_pushed = st.sidebar.button(label=chat_room_entity.title, key=f"RoomButton{button_id}", use_container_width=True)
+            if is_pushed:
+                selected_chat_room_entity = chat_room_entity
+        return selected_chat_room_entity
 
     @staticmethod
     def _display_query_form_and_get_results() -> QueryActionResults:
@@ -134,6 +146,7 @@ class ChatRoomComponent(BaseComponent):
         if is_created_user:
             return_home_action_results = cls._display_sidebar_titles_and_get_results()
             menus_action_results = cls._display_sidebar_menus_and_get_results()
+            cls._display_room_buttons_and_get_results()
             query_action_results = cls._display_query_form_and_get_results()
             history_area = cls._display_history()
 

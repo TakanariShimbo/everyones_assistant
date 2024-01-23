@@ -103,7 +103,7 @@ class HomeComponent(BaseComponent):
         )
 
     @classmethod
-    def _display_rooms_and_get_results(cls) -> Optional[EnterActionResults]:
+    def _display_room_containers_and_get_results(cls) -> Optional[EnterActionResults]:
         selected_chat_room_dto = None
         selected_loading_area = None
         left_area, right_area = st.columns([1, 1])
@@ -200,7 +200,7 @@ class HomeComponent(BaseComponent):
         cls._display_overview()
 
         create_action_results = cls._display_create_form_and_get_results()
-        enter_action_results = cls._display_rooms_and_get_results()
+        enter_action_results = cls._display_room_containers_and_get_results()
 
         is_success = cls._execute_create_process(create_action_results=create_action_results)
         if is_success:
