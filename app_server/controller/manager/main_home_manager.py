@@ -15,7 +15,7 @@ class MainHomeManager:
         )
 
     def get_yours_chat_room_dtos(self) -> List[ChatRoomDto]:
-        return self._everyone_chat_room_dto_table.get_all_beans()
+        return self._yours_chat_room_dto_table.get_all_beans()
 
     def get_everyone_chat_room_dtos(self) -> List[ChatRoomDto]:
         return self._everyone_chat_room_dto_table.get_all_beans()
