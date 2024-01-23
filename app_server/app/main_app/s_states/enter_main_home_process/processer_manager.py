@@ -2,8 +2,7 @@ from typing import Dict, Any, Tuple, Type
 
 from ....base import BaseProcesserManager
 from ..signed_in_account_entity import SignedInAccountEntity
-from ..loaded_yours_chat_room_dto_table import LoadedYoursChatRoomDtoTable
-from ..loaded_everyone_chat_room_dto_table import LoadedEveryoneChatRoomDtoTable
+from ..loaded_main_home_manager import LoadedMainHomeManager
 from model import BaseResponse
 
 
@@ -23,8 +22,7 @@ class ProcesserManager(BaseProcesserManager[ProcesserResponse]):
         return outer_dict
 
     def _post_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> ProcesserResponse:
-        LoadedYoursChatRoomDtoTable.set(value=inner_dict["yours_table"])
-        LoadedEveryoneChatRoomDtoTable.set(value=inner_dict["everyone_table"])
+        LoadedMainHomeManager.set(value=inner_dict["manager"])
         return ProcesserResponse(is_success=True)
 
     @staticmethod

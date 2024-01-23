@@ -20,8 +20,7 @@ class HomeComponent(BaseComponent):
         SStates.SignedInAccountEntity.validate()
         SStates.CreateChatRoomProcess.init()
         SStates.EnterChatRoomProcess.init()
-        SStates.LoadedYoursChatRoomDtoTable.validate()
-        SStates.LoadedEveryoneChatRoomDtoTable.validate()
+        SStates.LoadedMainHomeManager.validate()
         SignInPreComponent.init()
         ChatRoomPreComponent.init()
         AccountPreComponent.init()
@@ -104,14 +103,14 @@ class HomeComponent(BaseComponent):
 
     @classmethod
     def _display_room_containers_and_get_results(cls) -> Optional[EnterActionResults]:
+        main_home_manager = SStates.LoadedMainHomeManager.get()
         selected_chat_room_dto = None
         selected_loading_area = None
         left_area, right_area = st.columns([1, 1])
 
         with left_area:
             st.markdown("#### 🧍 Yours")
-            yours_chat_room_dto_table = SStates.LoadedYoursChatRoomDtoTable.get()
-            for container_id, chat_room_dto in enumerate(yours_chat_room_dto_table.get_all_beans()):
+            for container_id, chat_room_dto in enumerate(main_home_manager.get_yours_chat_room_dtos()):
                 action_results = cls._display_room_container_and_get_results(
                     chat_room_dto=chat_room_dto,
                     chat_room_type="Edit",
@@ -123,8 +122,7 @@ class HomeComponent(BaseComponent):
         
         with right_area:
             st.markdown("#### 🧑‍🤝‍🧑 Everyone")
-            everyone_chat_room_dto_table = SStates.LoadedEveryoneChatRoomDtoTable.get()
-            for container_id, chat_room_dto in enumerate(everyone_chat_room_dto_table.get_all_beans()):
+            for container_id, chat_room_dto in enumerate(main_home_manager.get_everyone_chat_room_dtos()):
                 action_results = cls._display_room_container_and_get_results(
                     chat_room_dto=chat_room_dto,
                     chat_room_type="View",
@@ -216,8 +214,7 @@ class HomeComponent(BaseComponent):
     def deinit() -> None:
         SStates.CreateChatRoomProcess.deinit()
         SStates.EnterChatRoomProcess.deinit()
-        SStates.LoadedYoursChatRoomDtoTable.deinit()
-        SStates.LoadedEveryoneChatRoomDtoTable.deinit()
+        SStates.LoadedMainHomeManager.deinit()
         SignInPreComponent.deinit()
         ChatRoomPreComponent.deinit()
         AccountPreComponent.deinit()

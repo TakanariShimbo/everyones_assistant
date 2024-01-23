@@ -5,14 +5,14 @@ class HomePreComponent:
     @staticmethod
     def init() -> None:
         SStates.CurrentComponentEntity.init()
-        SStates.LoadChatRoomDtoTablesProcess.init()
+        SStates.EnterMainHomeProcess.init()
 
     @staticmethod
     def prepare() -> None:
-        processer_manager = SStates.LoadChatRoomDtoTablesProcess.get()
+        processer_manager = SStates.EnterMainHomeProcess.get()
         processer_manager.run_all()
         SStates.CurrentComponentEntity.set_home_entity()
 
     @staticmethod
     def deinit() -> None:
-        SStates.LoadChatRoomDtoTablesProcess.deinit()
+        SStates.EnterMainHomeProcess.deinit()

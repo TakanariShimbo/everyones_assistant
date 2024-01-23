@@ -1,1 +1,1 @@
-from .manager import AccountManager, AssistantManager, ChatRoomManager
+from .manager import AccountManager, AssistantManager, ChatRoomManager, MainHomeManager
