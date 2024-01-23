@@ -2,7 +2,7 @@ from typing import Optional
 
 from streamlit.delta_generator import DeltaGenerator
 
-from model import AssistantTypeEntity
+from model import AssistantTypeEntity, ChatRoomEntity
 
 
 class ReturnHomeActionResults:
@@ -39,6 +39,24 @@ class MenusActionResults:
     @property
     def is_pushed(self) -> bool:
         return self._is_pushed
+
+
+class EnterActionResults:
+    def __init__(
+        self,
+        chat_room_entity: ChatRoomEntity,
+        loading_area: DeltaGenerator,
+    ) -> None:
+        self._chat_room_entity = chat_room_entity
+        self._loading_area = loading_area
+
+    @property
+    def chat_room_entity(self) -> ChatRoomEntity:
+        return self._chat_room_entity
+
+    @property
+    def loading_area(self) -> DeltaGenerator:
+        return self._loading_area
 
 
 class QueryActionResults:

@@ -5,6 +5,7 @@ import streamlit as st
 from streamlit_lottie import st_lottie_spinner
 
 from ...base import BaseComponent
+from ...handler import TextHandler
 from .. import s_states as SStates
 from .sign_in_pre_component import SignInPreComponent
 from .chat_room_pre_component import ChatRoomPreComponent
@@ -84,7 +85,7 @@ class HomeComponent(BaseComponent):
         with st.container(border=True):
             contents = dedent(
                 f"""
-                ##### 📝 {chat_room_dto.room_title}  
+                ##### 📝 {TextHandler.truncate(text=chat_room_dto.room_title, max_length=22)}  
                 👤 {chat_room_dto.account_family_name_en} {chat_room_dto.account_given_name_en}  
                 🕛 {chat_room_dto.room_created_at_short}  
                 👀 {chat_room_dto.release_label_en}

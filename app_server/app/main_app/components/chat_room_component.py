@@ -5,10 +5,11 @@ from streamlit_lottie import st_lottie_spinner
 from streamlit.delta_generator import DeltaGenerator
 
 from ...base import BaseComponent
+from ...handler import TextHandler
 from .. import s_states as SStates
 from .home_pre_component import HomePreComponent
-from .chat_room_action_results import QueryActionResults, ReturnHomeActionResults, MenusActionResults
-from model import ASSISTANT_TYPE_TABLE, LoadedLottie, LoadedImage, ChatRoomEntity
+from .chat_room_action_results import QueryActionResults, ReturnHomeActionResults, MenusActionResults, EnterActionResults
+from model import ASSISTANT_TYPE_TABLE, LoadedLottie, LoadedImage
 
 
 class ChatRoomComponent(BaseComponent):
@@ -23,8 +24,8 @@ class ChatRoomComponent(BaseComponent):
 
     @staticmethod
     def _display_titles() -> None:
-        current_component_entity = SStates.CurrentComponentEntity.get()
-        st.markdown(f"### {current_component_entity.label_en}")
+        chat_room_manager = SStates.EnteredChatRoomManager.get()
+        st.markdown(f"### 💬 {TextHandler.truncate(text=chat_room_manager.title, max_length=22)}")
 
     @classmethod
     def _display_sidebar_titles_and_get_results(cls) -> ReturnHomeActionResults:
@@ -41,14 +42,22 @@ class ChatRoomComponent(BaseComponent):
         return MenusActionResults(loading_area=loading_area, is_pushed=is_pushed)
 
     @classmethod
-    def _display_room_buttons_and_get_results(cls) -> Optional[ChatRoomEntity]:
+    def _display_room_buttons_and_get_results(cls) -> Optional[EnterActionResults]:
+        st.sidebar.markdown("## Rooms")
         selected_chat_room_entity = None
         chat_room_manager = SStates.EnteredChatRoomManager.get()
         for button_id, chat_room_entity in enumerate(chat_room_manager.get_all_chat_room_entities()):
-            is_pushed = st.sidebar.button(label=chat_room_entity.title, key=f"RoomButton{button_id}", use_container_width=True)
+            is_pushed = st.sidebar.button(
+                label=TextHandler.truncate(text=chat_room_entity.title, max_length=22), 
+                key=f"RoomButton{button_id}", 
+                use_container_width=True,
+            )
             if is_pushed:
                 selected_chat_room_entity = chat_room_entity
-        return selected_chat_room_entity
+        _, loading_area, _ = st.sidebar.columns([1, 2, 1])
+        if selected_chat_room_entity == None:
+            return None
+        return EnterActionResults(chat_room_entity=selected_chat_room_entity, loading_area=loading_area)
 
     @staticmethod
     def _display_query_form_and_get_results() -> QueryActionResults:
@@ -123,6 +132,21 @@ class ChatRoomComponent(BaseComponent):
         return True
 
     @staticmethod
+    def _execute_enter_process(enter_action_results: Optional[EnterActionResults]) -> bool:
+        if not enter_action_results:
+            return False
+
+        with enter_action_results.loading_area:
+            with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
+                processer_manager = SStates.EnterChatRoomProcess.get()
+                response = processer_manager.run_all(
+                    room_id=enter_action_results.chat_room_entity.room_id,
+                )
+        if not response.is_success:
+            return False
+        return True
+
+    @staticmethod
     def _execute_query_process(action_results: QueryActionResults, history_area: DeltaGenerator) -> None:
         processer_manager = SStates.QueryProcess.get()
         if action_results.is_rerun_pushed or action_results.is_cancel_pushed:
@@ -146,7 +170,7 @@ class ChatRoomComponent(BaseComponent):
         if is_created_user:
             return_home_action_results = cls._display_sidebar_titles_and_get_results()
             menus_action_results = cls._display_sidebar_menus_and_get_results()
-            cls._display_room_buttons_and_get_results()
+            enter_action_results = cls._display_room_buttons_and_get_results()
             query_action_results = cls._display_query_form_and_get_results()
             history_area = cls._display_history()
 
@@ -157,6 +181,9 @@ class ChatRoomComponent(BaseComponent):
             is_success = cls._execute_menus_process(action_results=menus_action_results)
             if is_success:
                 cls.deinit()
+                st.rerun()
+            is_success = cls._execute_enter_process(enter_action_results=enter_action_results)
+            if is_success:
                 st.rerun()
             cls._execute_query_process(action_results=query_action_results, history_area=history_area)
 

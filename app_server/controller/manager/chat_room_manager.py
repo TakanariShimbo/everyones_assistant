@@ -19,6 +19,10 @@ class ChatRoomManager:
         return self._chat_room_entity.account_id
 
     @property
+    def title(self) -> str:
+        return self._chat_room_entity.title
+
+    @property
     def release_id(self) -> str:
         return self._chat_room_entity.release_id
 
