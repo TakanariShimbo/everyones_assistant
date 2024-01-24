@@ -113,7 +113,13 @@ class AccountsComponent(BaseComponent):
         st.markdown("#### 👀 View")
         with st.container(border=True):
             account_table = SStates.LoadedAccountTable.get()
-            st.dataframe(account_table.df, use_container_width=True)
+            st.data_editor(
+                data=account_table.display_df,
+                disabled=account_table.uneditable_columns,
+                hide_index=True, 
+                use_container_width=True,
+                key=f"AccountTableDataEditor",
+            )
 
             _, button_area, _ = st.columns([5, 3, 5])
             with button_area:
