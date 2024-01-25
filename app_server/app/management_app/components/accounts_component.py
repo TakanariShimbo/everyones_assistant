@@ -13,6 +13,7 @@ class AccountsComponent(BaseComponent):
     def init() -> None:
         SStates.CurrentComponentEntity.init()
         SStates.SignUpProcess.init()
+        SStates.AccountsDataEditorKey.init()
         SStates.LoadedAccountTable.validate()
         HomePreComponent.init()
 
@@ -110,7 +111,7 @@ class AccountsComponent(BaseComponent):
 
     @staticmethod
     def _display_account_table_and_get_results() -> AccountTableIOActionResults:
-        st.markdown("#### 👀 View")
+        st.markdown("#### ✍️ Edit Accounts")
         with st.container(border=True):
             account_table = SStates.LoadedAccountTable.get()
             st.data_editor(
@@ -118,7 +119,7 @@ class AccountsComponent(BaseComponent):
                 disabled=account_table.uneditable_columns,
                 hide_index=True, 
                 use_container_width=True,
-                key=f"AccountTableDataEditor",
+                key=f"AccountTableDataEditor{SStates.AccountsDataEditorKey.get()}",
             )
 
             _, button_area, _ = st.columns([5, 3, 5])
@@ -167,6 +168,7 @@ class AccountsComponent(BaseComponent):
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
                 processer_manager = SStates.LoadAccountTableProcess.get()
                 processer_manager.run_all()
+                SStates.AccountsDataEditorKey.change_key()
         return True
 
     @classmethod
@@ -191,4 +193,5 @@ class AccountsComponent(BaseComponent):
     def deinit() -> None:
         SStates.SignUpProcess.deinit()
         SStates.LoadedAccountTable.deinit()
+        SStates.AccountsDataEditorKey.deinit()
         HomePreComponent.deinit()
