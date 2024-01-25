@@ -44,13 +44,13 @@ class BaseDatabaseTable(BaseTable[C, B], ABC):
         return DatabaseHandler.get_select_sql(table_name=table_name, filter_conditions=filter_conditions, order_condition=order_condition, limit=limit)
 
     @classmethod
-    def _get_upsert_sql(cls, record_dicts: List[Dict[str, Any]]) -> Tuple[str, Dict[str, Any]]:
+    def _get_upsert_sql(cls, record_dicts: List[Dict[str, Any]], ignore_auto_assigned: bool) -> Tuple[str, Dict[str, Any]]:
         """
         NOTES: KEY COLUMN MUST BE 'AUTO_ASSIGNED'=FALSE.
         """
         table_name = cls._get_database_table_name()
         key_column_name = cls._get_key_column_name()
-        column_names = cls._get_column_names(ignore_auto_assigned=True)
+        column_names = cls._get_column_names(ignore_auto_assigned=ignore_auto_assigned)
 
         return DatabaseHandler.get_upsert_sql(
             table_name=table_name,
@@ -63,10 +63,17 @@ class BaseDatabaseTable(BaseTable[C, B], ABC):
         column_names = self._get_column_names(ignore_auto_assigned=True)
         self._df.loc[:, column_names].to_sql(name=self._get_database_table_name(), con=database_engine, if_exists="append", index=False)
 
+    def update_records_to_database(self, database_engine: Engine) -> None:
+        column_names = self._get_column_names(ignore_auto_assigned=True)
+        record_dicts = self._df.loc[:, column_names].to_dict(orient='records')
+
+        statement, parameters = self._get_upsert_sql(record_dicts=record_dicts, ignore_auto_assigned=False)   # type: ignore
+        DatabaseHandler.execute_sql(database_engine=database_engine, statement=statement, parameters=parameters)
+
     def upsert_records_to_database(self, database_engine: Engine) -> None:
         column_names = self._get_column_names(ignore_auto_assigned=True)
         record_dicts = self._df.loc[:, column_names].to_dict(orient='records')
 
-        statement, parameters = self._get_upsert_sql(record_dicts=record_dicts)   # type: ignore
+        statement, parameters = self._get_upsert_sql(record_dicts=record_dicts, ignore_auto_assigned=True)   # type: ignore
         DatabaseHandler.execute_sql(database_engine=database_engine, statement=statement, parameters=parameters)
 
