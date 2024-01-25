@@ -43,6 +43,8 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
         family_name_jp: str,
         given_name_jp: str,
         raw_password: str,
+        is_user: bool,
+        is_administrator: bool,
     ) -> "AccountEntity":
         return cls(
             account_id=account_id,
@@ -52,6 +54,8 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
             family_name_jp=family_name_jp,
             given_name_jp=given_name_jp,
             hashed_password=HashHandler.hash(raw_contents=raw_password),
+            is_user=is_user,
+            is_administrator=is_administrator,
         )
 
     @property

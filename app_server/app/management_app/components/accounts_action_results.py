@@ -13,6 +13,8 @@ class SignUpActionResults:
         given_name_jp: str,
         raw_password: str,
         raw_password_confirm: str,
+        is_user: bool,
+        is_administrator: bool,
         message_area: DeltaGenerator,
         loading_area: DeltaGenerator,
         is_pushed: bool,
@@ -25,6 +27,8 @@ class SignUpActionResults:
         self._given_name_jp = given_name_jp
         self._raw_password = raw_password
         self._raw_password_confirm = raw_password_confirm
+        self._is_user = is_user
+        self._is_administrator = is_administrator
         self._message_area = message_area
         self._loading_area = loading_area
         self._is_pushed = is_pushed
@@ -60,6 +64,14 @@ class SignUpActionResults:
     @property
     def raw_password_confirm(self) -> str:
         return self._raw_password_confirm
+
+    @property
+    def is_user(self) -> bool:
+        return self._is_user
+
+    @property
+    def is_administrator(self) -> bool:
+        return self._is_administrator
 
     @property
     def message_area(self) -> DeltaGenerator:

@@ -27,6 +27,8 @@ class AccountManager:
         family_name_jp: str,
         given_name_jp: str,
         raw_password: str,
+        is_user: bool,
+        is_administrator: bool,
     ) -> SignUpResponse:
         new_account_entity = AccountEntity.init_with_hashing_password(
             account_id=account_id,
@@ -36,6 +38,8 @@ class AccountManager:
             family_name_jp=family_name_jp,
             given_name_jp=given_name_jp,
             raw_password=raw_password,
+            is_user=is_user,
+            is_administrator=is_administrator,
         )
 
         try:

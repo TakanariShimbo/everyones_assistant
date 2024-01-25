@@ -91,6 +91,20 @@ class AccountsComponent(BaseComponent):
                     type="password",
                 )
 
+            left_area, right_area = st.columns([1, 1])
+            with left_area:
+                is_user = st.toggle(
+                    label="User Authority",
+                    value=True,
+                    key="UserAuthorityToggle",
+                )
+            with right_area:
+                is_administrator = st.toggle(
+                    label="Administrator Authority",
+                    value=False,
+                    key="AdministratorAuthorityToggle",
+                )
+
             message_area = st.empty()
             _, button_area, _ = st.columns([5, 3, 5])
             with button_area:
@@ -106,6 +120,8 @@ class AccountsComponent(BaseComponent):
             given_name_jp=inputed_given_name_jp,
             raw_password=inputed_raw_password,
             raw_password_confirm=inputed_raw_password_confirm,
+            is_user=is_user,
+            is_administrator=is_administrator,
             message_area=message_area,
             loading_area=loading_area,
             is_pushed=is_pushed,
@@ -157,6 +173,8 @@ class AccountsComponent(BaseComponent):
                     given_name_jp=action_results.given_name_jp,
                     raw_password=action_results.raw_password,
                     raw_password_confirm=action_results.raw_password_confirm,
+                    is_user=action_results.is_user,
+                    is_administrator=action_results.is_administrator,
                 )
 
         if not response.is_success:

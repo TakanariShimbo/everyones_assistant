@@ -11,6 +11,8 @@ class Form(BaseModel):
     family_name_jp: str = Field(min_length=1)
     given_name_jp: str = Field(min_length=1)
     raw_password: str = Field(min_length=4)
+    is_user: bool
+    is_administrator: bool
 
     @classmethod
     def init_from_dict_after_compare_passwords(cls, kwargs: Dict[str, Any]) -> "Form":

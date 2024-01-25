@@ -16,6 +16,8 @@ class Processer(BaseProcesser[None]):
             family_name_jp=form.family_name_jp,
             given_name_jp=form.given_name_jp,
             raw_password=form.raw_password,
+            is_user=form.is_user,
+            is_administrator=form.is_administrator,
         )
 
     def _pre_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
