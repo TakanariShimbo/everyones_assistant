@@ -60,10 +60,16 @@ class BaseDatabaseTable(BaseTable[C, B], ABC):
         )
 
     def insert_records_to_database(self, database_engine: Engine) -> None:
+        if self._df.empty:
+            return
+
         column_names = self._get_column_names(ignore_auto_assigned=True)
         self._df.loc[:, column_names].to_sql(name=self._get_database_table_name(), con=database_engine, if_exists="append", index=False)
 
     def update_records_of_database(self, database_engine: Engine) -> None:
+        if self._df.empty:
+            return
+
         column_names = self._get_column_names(ignore_auto_assigned=False)
         record_dicts = self._df.loc[:, column_names].to_dict(orient='records')
 
@@ -71,6 +77,9 @@ class BaseDatabaseTable(BaseTable[C, B], ABC):
         DatabaseHandler.execute_sql(database_engine=database_engine, statement=statement, parameters=parameters)
 
     def upsert_records_to_database(self, database_engine: Engine) -> None:
+        if self._df.empty:
+            return
+
         column_names = self._get_column_names(ignore_auto_assigned=True)
         record_dicts = self._df.loc[:, column_names].to_dict(orient='records')
 
