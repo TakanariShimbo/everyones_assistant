@@ -64,7 +64,7 @@ class BaseDatabaseTable(BaseTable[C, B], ABC):
         self._df.loc[:, column_names].to_sql(name=self._get_database_table_name(), con=database_engine, if_exists="append", index=False)
 
     def update_records_of_database(self, database_engine: Engine) -> None:
-        column_names = self._get_column_names(ignore_auto_assigned=True)
+        column_names = self._get_column_names(ignore_auto_assigned=False)
         record_dicts = self._df.loc[:, column_names].to_dict(orient='records')
 
         statement, parameters = self._get_upsert_sql(record_dicts=record_dicts, ignore_auto_assigned=False)   # type: ignore
