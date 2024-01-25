@@ -1,3 +1,3 @@
-from .sign_in_component import SignInComponent
-from .home_component import HomeComponent
-from .accounts_component import AccountsComponent
+from .sign_in import SignInComponent
+from .home import HomeComponent
+from .accounts import AccountsComponent

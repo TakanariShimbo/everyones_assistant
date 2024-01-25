@@ -5,9 +5,9 @@ from streamlit_lottie import st_lottie_spinner
 
 from ...base import BaseComponent
 from .. import s_states as SStates
-from .sign_in_pre_component import SignInPreComponent
-from .accounts_pre_component import AccountsPreComponent
-from .home_action_results import ActionResults
+from ..pre_components.sign_in import SignInPreComponent
+from ..pre_components.accounts import AccountsPreComponent
+from ..action_results.home import ActionResults
 from model import LoadedImage, LoadedLottie
 
 

@@ -3,8 +3,8 @@ from streamlit_lottie import st_lottie_spinner
 
 from ...base import BaseComponent
 from .. import s_states as SStates
-from .home_pre_component import HomePreComponent
-from .account_action_results import UpdateInfoActionResults, ChangePassActionResults, ReturnHomeActionResults
+from ..pre_components.home import HomePreComponent
+from ..action_results.account import UpdateInfoActionResults, ChangePassActionResults, ReturnHomeActionResults
 from model import LoadedLottie, LoadedImage
 
 

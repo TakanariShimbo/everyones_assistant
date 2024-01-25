@@ -7,8 +7,8 @@ from streamlit.delta_generator import DeltaGenerator
 from ...base import BaseComponent
 from ...handler import TextHandler
 from .. import s_states as SStates
-from .home_pre_component import HomePreComponent
-from .chat_room_action_results import QueryActionResults, ReturnHomeActionResults, MenusActionResults, EnterActionResults
+from ..pre_components.home import HomePreComponent
+from ..action_results.chat_room import QueryActionResults, ReturnHomeActionResults, MenusActionResults, EnterActionResults
 from model import ASSISTANT_TYPE_TABLE, LoadedLottie, LoadedImage
 
 

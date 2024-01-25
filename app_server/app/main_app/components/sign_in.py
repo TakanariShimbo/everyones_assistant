@@ -3,15 +3,14 @@ from streamlit_lottie import st_lottie_spinner
 
 from ...base import BaseComponent
 from .. import s_states as SStates
-from .home_pre_component import HomePreComponent
-from .sign_in_action_results import ActionResults
+from ..pre_components.home import HomePreComponent
+from ..action_results.sign_in import ActionResults
 from model import LoadedLottie
 
 
 class SignInComponent(BaseComponent):
     @staticmethod
     def init() -> None:
-        SStates.CurrentComponentEntity.init()
         SStates.SignInProcess.init()
         HomePreComponent.init()
 
@@ -62,13 +61,13 @@ class SignInComponent(BaseComponent):
                     raw_password=action_results.raw_password,
                 )
 
-        if not response.is_success:
-            action_results.message_area.warning(response.message)
-            return False
+                if not response.is_success:
+                    action_results.message_area.warning(response.message)
+                    return False
 
-        action_results.message_area.empty()
-        HomePreComponent.prepare()
-        return True
+                action_results.message_area.empty()
+                HomePreComponent.prepare()
+                return True
 
     @classmethod
     def main(cls) -> None:
@@ -82,4 +81,4 @@ class SignInComponent(BaseComponent):
     @staticmethod
     def deinit() -> None:
         SStates.SignInProcess.deinit()
-        HomePreComponent.init()
+        HomePreComponent.deinit()

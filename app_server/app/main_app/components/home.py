@@ -7,10 +7,10 @@ from streamlit_lottie import st_lottie_spinner
 from ...base import BaseComponent
 from ...handler import TextHandler
 from .. import s_states as SStates
-from .sign_in_pre_component import SignInPreComponent
-from .chat_room_pre_component import ChatRoomPreComponent
-from .account_pre_component import AccountPreComponent
-from .home_action_results import CreateActionResults, EnterActionResults, RoomContainerActionResults
+from ..pre_components.sign_in import SignInPreComponent
+from ..pre_components.chat_room import ChatRoomPreComponent
+from ..pre_components.account import AccountPreComponent
+from ..action_results.home import CreateActionResults, EnterActionResults, RoomContainerActionResults
 from model import ChatRoomDto, RELEASE_TYPE_TABLE, LoadedLottie, LoadedImage
 
 
