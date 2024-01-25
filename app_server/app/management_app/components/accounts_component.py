@@ -4,8 +4,8 @@ from streamlit_lottie import st_lottie_spinner
 from ...base import BaseComponent
 from .. import s_states as SStates
 from .home_pre_component import HomePreComponent
-from .accounts_action_results import SignUpActionResults, AccountTableIOActionResults
-from model import LoadedLottie, LoadedImage
+from .accounts_action_results import SignUpActionResults, EditAccountsActionResults
+from model import LoadedLottie, LoadedImage, Database
 
 
 class AccountsComponent(BaseComponent):
@@ -13,6 +13,8 @@ class AccountsComponent(BaseComponent):
     def init() -> None:
         SStates.CurrentComponentEntity.init()
         SStates.SignUpProcess.init()
+        SStates.EditAccountTableProcess.init()
+        SStates.LoadAccountTableProcess.init()
         SStates.AccountsDataEditorKey.init()
         SStates.LoadedAccountTable.validate()
         HomePreComponent.init()
@@ -110,11 +112,11 @@ class AccountsComponent(BaseComponent):
         )
 
     @staticmethod
-    def _display_account_table_and_get_results() -> AccountTableIOActionResults:
-        st.markdown("#### ✍️ Edit Accounts")
-        with st.container(border=True):
+    def _display_account_table_and_get_results() -> EditAccountsActionResults:
+        st.markdown("#### 📝 Edit Accounts")
+        with st.form(key="EditAccountsForm", border=True):
             account_table = SStates.LoadedAccountTable.get()
-            st.data_editor(
+            edited_display_df = st.data_editor(
                 data=account_table.display_df,
                 disabled=account_table.uneditable_columns,
                 hide_index=True, 
@@ -122,14 +124,19 @@ class AccountsComponent(BaseComponent):
                 key=f"AccountTableDataEditor{SStates.AccountsDataEditorKey.get()}",
             )
 
-            _, button_area, _ = st.columns([5, 3, 5])
-            with button_area:
-                is_pushed = st.button(label="Load", type="primary", key="LoadAccountTableButton", use_container_width=True)
+            _, update_button_area, _, load_button_area, _ = st.columns([2, 3, 2, 3, 2])
+            with update_button_area:
+                is_update_pushed = st.form_submit_button(label="Update", type="primary", use_container_width=True)
+            with load_button_area:
+                is_load_pushed = st.form_submit_button(label="Load", type="secondary", use_container_width=True)
+
             _, loading_area, _ = st.columns([1, 1, 1])
 
-        return AccountTableIOActionResults(
+        return EditAccountsActionResults(
             loading_area=loading_area,
-            is_pushed=is_pushed,
+            is_update_pushed=is_update_pushed,
+            is_load_pushed=is_load_pushed,
+            edited_display_df=edited_display_df,
         )
 
     @staticmethod
@@ -160,12 +167,15 @@ class AccountsComponent(BaseComponent):
         return True
 
     @staticmethod
-    def _execute_account_table_io_process(action_results: AccountTableIOActionResults) -> bool:
-        if not action_results.is_pushed:
+    def _execute_account_table_io_process(action_results: EditAccountsActionResults) -> bool:
+        if not action_results.is_update_pushed and not action_results.is_load_pushed:
             return False
 
         with action_results.loading_area:
             with st_lottie_spinner(animation_source=LoadedLottie.LOADING):
+                if action_results.is_update_pushed:
+                    processer_manager = SStates.EditAccountTableProcess.get()
+                    processer_manager.run_all(edited_display_df=action_results.edited_display_df)                
                 processer_manager = SStates.LoadAccountTableProcess.get()
                 processer_manager.run_all()
                 SStates.AccountsDataEditorKey.change_key()
@@ -192,6 +202,8 @@ class AccountsComponent(BaseComponent):
     @staticmethod
     def deinit() -> None:
         SStates.SignUpProcess.deinit()
+        SStates.EditAccountTableProcess.deinit()
+        SStates.LoadAccountTableProcess.deinit()
         SStates.LoadedAccountTable.deinit()
         SStates.AccountsDataEditorKey.deinit()
         HomePreComponent.deinit()

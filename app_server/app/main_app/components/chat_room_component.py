@@ -79,12 +79,12 @@ class ChatRoomComponent(BaseComponent):
 
             message_area = st.empty()
 
-            _, left_area, _, center_area, _, right_area, _ = st.columns([1, 3, 1, 3, 1, 3, 1])
-            with left_area:
+            _, run_button_area, _, rerun_button_area, _, cancel_button_area, _ = st.columns([1, 3, 1, 3, 1, 3, 1])
+            with run_button_area:
                 is_run_pushed = st.form_submit_button(label="Run", type="primary", use_container_width=True)
-            with center_area:
+            with rerun_button_area:
                 is_rerun_pushed = st.form_submit_button(label="Rerun", type="primary", use_container_width=True)
-            with right_area:
+            with cancel_button_area:
                 is_cancel_pushed = st.form_submit_button(label="Cancel", type="secondary", use_container_width=True)
 
         return QueryActionResults(

@@ -38,3 +38,13 @@ class AccountTable(BaseDatabaseTable[AccountConfig, AccountEntity]):
         is_user_name = AccountColumnConfigs.IS_USER.value.name
         is_admin_name = AccountColumnConfigs.IS_ADMINISTRATOR.value.name
         return [name for name in all_column_names if name not in [hashed_password_name, is_user_name, is_admin_name]]
+
+    def get_only_edited_table(self, edited_display_df: pd.DataFrame) -> "AccountTable":
+        original_df = self._df.copy()
+        edited_df = original_df.copy()
+        edited_df.update(edited_display_df)
+
+        diff_index = original_df != edited_df
+        mask_rows = diff_index.any(axis=1)
+        only_edited_df = edited_df[mask_rows]
+        return AccountTable(df=only_edited_df)

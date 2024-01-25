@@ -1,3 +1,4 @@
+import pandas as pd
 from streamlit.delta_generator import DeltaGenerator
 
 
@@ -73,19 +74,31 @@ class SignUpActionResults:
         return self._is_pushed
 
 
-class AccountTableIOActionResults:
+class EditAccountsActionResults:
     def __init__(
         self,
         loading_area: DeltaGenerator,
-        is_pushed: bool,
+        is_update_pushed: bool,
+        is_load_pushed: bool,
+        edited_display_df: pd.DataFrame,
     ) -> None:
         self._loading_area = loading_area
-        self._is_pushed = is_pushed
+        self._is_update_pushed = is_update_pushed
+        self._is_load_pushed = is_load_pushed
+        self._edited_display_df = edited_display_df
 
     @property
     def loading_area(self) -> DeltaGenerator:
         return self._loading_area
 
     @property
-    def is_pushed(self) -> bool:
-        return self._is_pushed
+    def is_update_pushed(self) -> bool:
+        return self._is_update_pushed
+
+    @property
+    def is_load_pushed(self) -> bool:
+        return self._is_load_pushed
+
+    @property
+    def edited_display_df(self) -> pd.DataFrame:
+        return self._edited_display_df

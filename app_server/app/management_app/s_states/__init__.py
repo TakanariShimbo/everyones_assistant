@@ -1,6 +1,7 @@
 from .current_component_entity import CurrentComponentEntity
 from .loaded_account_table import LoadedAccountTable
 
+from .edit_account_table_process import EditAccountTableProcess
 from .load_account_table_process import LoadAccountTableProcess
 from .sign_in_process import SignInProcess
 from .sign_up_process import SignUpProcess
