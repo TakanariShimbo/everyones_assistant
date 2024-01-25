@@ -20,7 +20,7 @@ admin_account_entity = AccountEntity.init_with_hashing_password(
     family_name_jp="管理者",
     given_name_jp="アカウント",
     raw_password=LoadedEnv.ADMIN_PASSWORD,
+    is_user=False,
+    is_administrator=True,
 )
-admin_account_entity.is_user = False
-admin_account_entity.is_administrator = True
 admin_account_entity = admin_account_entity.insert_record_to_database(database_engine=Database.ENGINE)

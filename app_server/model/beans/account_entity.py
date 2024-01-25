@@ -43,8 +43,8 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
         family_name_jp: str,
         given_name_jp: str,
         raw_password: str,
-        is_user: bool,
-        is_administrator: bool,
+        is_user: Optional[bool] = None,
+        is_administrator: Optional[bool] = None,
     ) -> "AccountEntity":
         return cls(
             account_id=account_id,
