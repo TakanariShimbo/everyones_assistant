@@ -4,8 +4,8 @@ from streamlit_lottie import st_lottie_spinner
 from ...base import BaseComponent
 from .. import s_states as SStates
 from .home_pre_component import HomePreComponent
-from .accounts_action_results import SignUpActionResults, EditAccountsActionResults
-from model import LoadedLottie, LoadedImage, Database
+from .accounts_action_results import SignUpActionResults, UpdateInformationActionResults
+from model import LoadedLottie, LoadedImage
 
 
 class AccountsComponent(BaseComponent):
@@ -112,9 +112,9 @@ class AccountsComponent(BaseComponent):
         )
 
     @staticmethod
-    def _display_account_table_and_get_results() -> EditAccountsActionResults:
-        st.markdown("#### 📝 Edit Accounts")
-        with st.form(key="EditAccountsForm", border=True):
+    def _display_account_table_and_get_results() -> UpdateInformationActionResults:
+        st.markdown("#### 📝 Update Informatin")
+        with st.form(key="UpdateInformatinAccountsForm", border=True):
             account_table = SStates.LoadedAccountTable.get()
             edited_display_df = st.data_editor(
                 data=account_table.display_df,
@@ -132,7 +132,7 @@ class AccountsComponent(BaseComponent):
 
             _, loading_area, _ = st.columns([1, 1, 1])
 
-        return EditAccountsActionResults(
+        return UpdateInformationActionResults(
             loading_area=loading_area,
             is_update_pushed=is_update_pushed,
             is_load_pushed=is_load_pushed,
@@ -167,7 +167,7 @@ class AccountsComponent(BaseComponent):
         return True
 
     @staticmethod
-    def _execute_account_table_io_process(action_results: EditAccountsActionResults) -> bool:
+    def _execute_update_information_process(action_results: UpdateInformationActionResults) -> bool:
         if not action_results.is_update_pushed and not action_results.is_load_pushed:
             return False
 
@@ -191,10 +191,10 @@ class AccountsComponent(BaseComponent):
         cls._display_titles()
         cls._display_sidebar_titles()
         sign_up_action_results = cls._display_sign_up_form_and_get_results()
-        account_table_io_action_results = cls._display_account_table_and_get_results()
+        update_information_action_results = cls._display_account_table_and_get_results()
         
         cls._execute_sign_up_process(action_results=sign_up_action_results)
-        is_success = cls._execute_account_table_io_process(action_results=account_table_io_action_results)
+        is_success = cls._execute_update_information_process(action_results=update_information_action_results)
         if is_success:
             cls.deinit()
             st.rerun()

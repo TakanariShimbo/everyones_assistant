@@ -74,7 +74,7 @@ class SignUpActionResults:
         return self._is_pushed
 
 
-class EditAccountsActionResults:
+class UpdateInformationActionResults:
     def __init__(
         self,
         loading_area: DeltaGenerator,
