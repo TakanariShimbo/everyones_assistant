@@ -11,8 +11,8 @@ from model import LoadedLottie, LoadedImage
 class AccountComponent(BaseComponent):
     @staticmethod
     def init() -> None:
-        SStates.CurrentComponentEntity.init()
         SStates.SignedInAccountEntity.validate()
+        SStates.CurrentComponentEntity.init()
         SStates.UpdateAccountInfoProcess.init()
         SStates.ChangeAccountPassProcess.init()
         HomePreComponent.init()

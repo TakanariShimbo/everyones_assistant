@@ -17,11 +17,11 @@ from model import ChatRoomDto, RELEASE_TYPE_TABLE, LoadedLottie, LoadedImage
 class HomeComponent(BaseComponent):
     @staticmethod
     def init() -> None:
-        SStates.CurrentComponentEntity.init()
         SStates.SignedInAccountEntity.validate()
+        SStates.LoadedMainHomeManager.validate()
+        SStates.CurrentComponentEntity.init()
         SStates.CreateChatRoomProcess.init()
         SStates.EnterChatRoomProcess.init()
-        SStates.LoadedMainHomeManager.validate()
         SignInPreComponent.init()
         ChatRoomPreComponent.init()
         AccountPreComponent.init()

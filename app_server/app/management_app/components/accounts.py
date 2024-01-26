@@ -11,12 +11,12 @@ from model import LoadedLottie, LoadedImage
 class AccountsComponent(BaseComponent):
     @staticmethod
     def init() -> None:
+        SStates.LoadedAccountTable.validate()
         SStates.CurrentComponentEntity.init()
         SStates.SignUpProcess.init()
         SStates.EditAccountTableProcess.init()
         SStates.LoadAccountTableProcess.init()
         SStates.AccountsDataEditorKey.init()
-        SStates.LoadedAccountTable.validate()
         HomePreComponent.init()
 
     @staticmethod

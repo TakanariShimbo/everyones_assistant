@@ -15,9 +15,9 @@ from model import ASSISTANT_TYPE_TABLE, LoadedLottie, LoadedImage
 class ChatRoomComponent(BaseComponent):
     @staticmethod
     def init() -> None:
-        SStates.CurrentComponentEntity.init()
         SStates.SignedInAccountEntity.validate()
         SStates.EnteredChatRoomManager.validate()
+        SStates.CurrentComponentEntity.init()
         SStates.QueryProcess.init()
         SStates.DeleteChatRoomProcess.init()
         HomePreComponent.init()
