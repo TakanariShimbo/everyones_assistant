@@ -157,3 +157,37 @@ class DatabaseHandler:
                 parameters[f"{column_name}_{i}"] = record_dicts[i][column_name]
 
         return statement, parameters
+
+    # @staticmethod
+    # def get_upsert_sql(
+    #     table_name: str,
+    #     key_column_name: str,
+    #     non_key_column_names: List[str],
+    #     record_dicts: List[Dict[str, Any]],
+    # ) -> Tuple[str, Dict[str, Any]]:
+    #     column_names = [key_column_name] + non_key_column_names
+    #     column_names_str = ", ".join(column_names)
+
+    #     n_record = len(record_dicts)
+    #     record_str_list = []
+    #     for i in range(n_record):
+    #         record_str = ", ".join([f":{column}_{i}" for column in column_names])
+    #         record_str_list.append(f"({record_str})")
+    #     records_str = ", ".join(record_str_list)
+
+    #     update_column_names_str = ", ".join([f"{col} = EXCLUDED.{col}" for col in non_key_column_names])
+
+    #     statement = f"""
+    #         INSERT INTO {table_name} ({column_names_str}) 
+    #         VALUES {records_str}
+    #         ON CONFLICT ({key_column_name})
+    #         DO UPDATE SET 
+    #             {update_column_names_str};
+    #     """
+
+    #     parameters = {}
+    #     for i in range(n_record):
+    #         for column_name in column_names:
+    #             parameters[f"{column_name}_{i}"] = record_dicts[i][column_name]
+
+    #     return statement, parameters
