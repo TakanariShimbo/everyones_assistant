@@ -10,7 +10,7 @@ class Processer(BaseProcesser[None]):
         edited_display_df = inner_dict["edited_display_df"]
 
         only_edited_table = account_table.get_only_edited_table(edited_display_df=edited_display_df)
-        only_edited_table.update_records_of_database(database_engine=Database.ENGINE)
+        only_edited_table.upsert_records_to_database(database_engine=Database.ENGINE)
 
     def _pre_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
         pass
