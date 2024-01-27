@@ -135,9 +135,19 @@ class DatabaseHandler:
         column_names_str = ", ".join(column_names)
 
         n_record = len(record_dicts)
+
         record_str_list = []
+        parameters = {}
         for i in range(n_record):
-            record_str = ", ".join([f":{column}_{i}" for column in column_names])
+            value_list = []
+            for column_name in column_names:
+                value = record_dicts[i][column_name]
+                if pd.isna(value):
+                    value_list.append(f"DEFAULT")
+                    continue
+                value_list.append(f":{column_name}_{i}")
+                parameters[f"{column_name}_{i}"] = value
+            record_str = ", ".join(value_list)
             record_str_list.append(f"({record_str})")
         records_str = ", ".join(record_str_list)
 
@@ -150,11 +160,6 @@ class DatabaseHandler:
             DO UPDATE SET 
                 {update_column_names_str};
         """
-
-        parameters = {}
-        for i in range(n_record):
-            for column_name in column_names:
-                parameters[f"{column_name}_{i}"] = record_dicts[i][column_name]
 
         return statement, parameters
 
