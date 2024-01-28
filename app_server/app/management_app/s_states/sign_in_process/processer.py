@@ -11,7 +11,7 @@ class Processer(BaseProcesser[None]):
         inner_dict["response"] = AccountManager.sign_in(
             account_id=form.account_id,
             raw_password=form.raw_password,
-            to_management=True,
+            to_management_page=True,
         )
 
     def _pre_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:

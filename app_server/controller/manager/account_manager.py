@@ -53,17 +53,17 @@ class AccountManager:
     def sign_in(
         account_id: str,
         raw_password: str,
-        to_management: bool = False,
+        to_management_page: bool = False,
     ) -> SignInResponse:
         try:
             target_account_entity = AccountEntity.load_specified_id_from_database(database_engine=Database.ENGINE, account_id=account_id)
         except ValueError:
             return SignInResponse(is_success=False, message=f"Account ID '{account_id}' hasn't signed up yet.")
 
-        if not to_management and not target_account_entity.is_user:
+        if not to_management_page and not target_account_entity.is_user:
             return SignInResponse(is_success=False, message=f"Account ID '{account_id}' is not user.")
 
-        if to_management and not target_account_entity.is_administrator:
+        if to_management_page and not target_account_entity.is_administrator:
             return SignInResponse(is_success=False, message=f"Account ID '{account_id}' is not administrator.")
 
         if not target_account_entity.verify_password(raw_password=raw_password):
@@ -89,11 +89,13 @@ class AccountManager:
         if not target_account_entity.verify_password(raw_password=raw_password):
             return UpdateInfoResponse(is_success=False, message=f"Please input password correctly.")
 
-        target_account_entity.mail_address = mail_address
-        target_account_entity.family_name_en = family_name_en
-        target_account_entity.given_name_en = given_name_en
-        target_account_entity.family_name_jp = family_name_jp
-        target_account_entity.given_name_jp = given_name_jp
+        target_account_entity.update_info(
+            mail_address=mail_address,
+            family_name_en=family_name_en,
+            given_name_en=given_name_en,
+            family_name_jp=family_name_jp,
+            given_name_jp=given_name_jp,
+        )
 
         try:
             target_account_entity.update_record_of_database(database_engine=Database.ENGINE)
@@ -113,8 +115,10 @@ class AccountManager:
         except:
             return ChangePassResponse(is_success=False, message=f"Account ID '{account_id}' hasn't signed up yet.")
 
-        if not target_account_entity.set_new_password(raw_password=current_raw_password, new_raw_password=new_raw_password):
+        if not target_account_entity.verify_password(raw_password=current_raw_password):
             return ChangePassResponse(is_success=False, message=f"Please input current password correctly.")
+
+        target_account_entity.change_password(new_raw_password=new_raw_password)
 
         try:
             target_account_entity.update_record_of_database(database_engine=Database.ENGINE)

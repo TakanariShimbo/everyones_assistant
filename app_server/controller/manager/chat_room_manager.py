@@ -67,6 +67,6 @@ class ChatRoomManager:
     def get_all_chat_room_entities(self) -> List[ChatRoomEntity]:
         return self._yours_chat_room_table.get_all_beans()
 
-    def delete_chat_room(self) -> None:
-        self._chat_room_entity.is_disabled = True
+    def delete(self) -> None:
+        self._chat_room_entity.delete()
         self._chat_room_entity.update_record_of_database(database_engine=Database.ENGINE)

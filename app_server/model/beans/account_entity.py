@@ -66,41 +66,21 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
     def mail_address(self) -> str:
         return self._mail_address
 
-    @mail_address.setter
-    def mail_address(self, mail_address: str) -> None:
-        self._mail_address = mail_address
-
     @property
     def family_name_en(self) -> str:
         return self._family_name_en
-
-    @family_name_en.setter
-    def family_name_en(self, family_name_en: str) -> None:
-        self._family_name_en = family_name_en
 
     @property
     def given_name_en(self) -> str:
         return self._given_name_en
 
-    @given_name_en.setter
-    def given_name_en(self, given_name_en: str) -> None:
-        self._given_name_en = given_name_en
-
     @property
     def family_name_jp(self) -> str:
         return self._family_name_jp
 
-    @family_name_jp.setter
-    def family_name_jp(self, family_name_jp: str) -> None:
-        self._family_name_jp = family_name_jp
-
     @property
     def given_name_jp(self) -> str:
         return self._given_name_jp
-
-    @given_name_jp.setter
-    def given_name_jp(self, given_name_jp: str) -> None:
-        self._given_name_jp = given_name_jp
 
     @property
     def hashed_password(self) -> str:
@@ -120,20 +100,12 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
             raise ValueError("Not accessible due to have not constracted.")
         return is_user
 
-    @is_user.setter
-    def is_user(self, is_user: bool) -> None:
-        self._is_user = is_user
-
     @property
     def is_administrator(self) -> bool:
         is_administrator = self._is_administrator
         if is_administrator == None:
             raise ValueError("Not accessible due to have not constracted.")
         return is_administrator
-
-    @is_administrator.setter
-    def is_administrator(self, is_administrator: bool) -> None:
-        self._is_administrator = is_administrator
 
     @property
     def registered_at_short(self) -> str:
@@ -153,9 +125,19 @@ class AccountEntity(BaseDatabaseEntity[AccountConfig]):
     def verify_password(self, raw_password: str) -> bool:
         return HashHandler.verify(raw_contents=raw_password, hashed_contents=self.hashed_password)
 
-    def set_new_password(self, raw_password: str, new_raw_password: str) -> bool:
-        if not self.verify_password(raw_password=raw_password):
-            return False
-
+    def change_password(self, new_raw_password: str) -> None:
         self._hashed_password = HashHandler.hash(raw_contents=new_raw_password)
-        return True
+
+    def update_info(
+        self,
+        mail_address: str,
+        family_name_en: str,
+        given_name_en: str,
+        family_name_jp: str,
+        given_name_jp: str,
+    ) -> None:
+        self._mail_address = mail_address
+        self._family_name_en = family_name_en
+        self._given_name_en = given_name_en
+        self._family_name_jp = family_name_jp
+        self._given_name_jp = given_name_jp

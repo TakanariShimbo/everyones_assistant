@@ -7,7 +7,7 @@ from controller import ChatRoomManager
 class Processer(BaseProcesser[None]):
     def _main_process(self, inner_dict: Dict[str, Any]) -> None:
         manager: ChatRoomManager = inner_dict["manager"]
-        manager.delete_chat_room()
+        manager.delete()
 
     def _pre_process(self, outer_dict: Dict[str, Any], inner_dict: Dict[str, Any]) -> None:
         pass

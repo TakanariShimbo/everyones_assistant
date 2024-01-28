@@ -55,10 +55,6 @@ class ChatRoomEntity(BaseDatabaseEntity[ChatRoomConfig]):
             raise ValueError("Not accessible due to have not constracted.")
         return disabled
 
-    @is_disabled.setter
-    def is_disabled(self, is_disabled: bool) -> None:
-        self._is_disabled = is_disabled
-
     @property
     def created_at_short(self) -> str:
         return self.created_at.split(sep=" ")[0]
@@ -73,3 +69,6 @@ class ChatRoomEntity(BaseDatabaseEntity[ChatRoomConfig]):
     @classmethod
     def load_specified_id_from_database(cls, database_engine: Engine, room_id: str) -> "ChatRoomEntity":
         return cls.load_from_database(database_engine=database_engine, column_name=ChatRoomConfig.get_key_column_name(), value=room_id)
+
+    def delete(self) -> None:
+        self._is_disabled = True
