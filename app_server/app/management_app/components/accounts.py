@@ -3,6 +3,7 @@ from streamlit_lottie import st_lottie_spinner
 
 from ...base import BaseComponent
 from .. import s_states as SStates
+from .. import q_params as QParams
 from ..pre_components.home import HomePreComponent
 from ..action_results.accounts import SignUpActionResults, UpdateInformationActionResults
 from model import LoadedLottie, LoadedImage
@@ -13,6 +14,7 @@ class AccountsComponent(BaseComponent):
     def init() -> None:
         SStates.LoadedAccountTable.validate()
         SStates.CurrentComponentEntity.init()
+        QParams.ComponentId.set(value=SStates.CurrentComponentEntity.get().component_id)
         SStates.SignUpProcess.init()
         SStates.EditAccountTableProcess.init()
         SStates.LoadAccountTableProcess.init()

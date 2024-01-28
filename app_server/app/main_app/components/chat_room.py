@@ -7,6 +7,7 @@ from streamlit.delta_generator import DeltaGenerator
 from ...base import BaseComponent
 from ...handler import TextHandler
 from .. import s_states as SStates
+from .. import q_params as QParams
 from ..pre_components.home import HomePreComponent
 from ..action_results.chat_room import QueryActionResults, ReturnHomeActionResults, MenusActionResults, EnterActionResults
 from model import ASSISTANT_TYPE_TABLE, LoadedLottie, LoadedImage
@@ -18,6 +19,7 @@ class ChatRoomComponent(BaseComponent):
         SStates.SignedInAccountEntity.validate()
         SStates.EnteredChatRoomManager.validate()
         SStates.CurrentComponentEntity.init()
+        QParams.ComponentId.set(value=SStates.CurrentComponentEntity.get().component_id)
         SStates.QueryProcess.init()
         SStates.DeleteChatRoomProcess.init()
         HomePreComponent.init()
