@@ -16,7 +16,7 @@ class ManagementComponentTypeTable(BaseCsvTable[ManagementComponentTypeConfig, M
 
     @property
     def SIGN_IN_ENTITY(self) -> ManagementComponentTypeEntity:
-        return self.get_bean(column_name=ManagementComponentTypeConfig.get_key_column_name(), value="sign_in")
+        return self.get_bean(column_name=ManagementComponentTypeConfig.get_key_column_name(), value="sign-in")
 
     @property
     def HOME_ENTITY(self) -> ManagementComponentTypeEntity:
