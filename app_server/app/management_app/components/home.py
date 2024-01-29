@@ -5,7 +5,6 @@ from streamlit_lottie import st_lottie_spinner
 
 from ...base import BaseComponent
 from .. import s_states as SStates
-from .. import q_params as QParams
 from ..pre_components.sign_in import SignInPreComponent
 from ..pre_components.accounts import AccountsPreComponent
 from ..action_results.home import ActionResults
@@ -16,7 +15,6 @@ class HomeComponent(BaseComponent):
     @staticmethod
     def init() -> None:
         SStates.CurrentComponentEntity.init()
-        QParams.ComponentId.set(value=SStates.CurrentComponentEntity.get().component_id)
         SignInPreComponent.init()
         AccountsPreComponent.init()
 

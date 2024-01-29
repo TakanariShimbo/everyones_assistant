@@ -7,7 +7,6 @@ from streamlit_lottie import st_lottie_spinner
 from ...base import BaseComponent
 from ...handler import TextHandler
 from .. import s_states as SStates
-from .. import q_params as QParams
 from ..pre_components.sign_in import SignInPreComponent
 from ..pre_components.chat_room import ChatRoomPreComponent
 from ..pre_components.account import AccountPreComponent
@@ -21,7 +20,6 @@ class HomeComponent(BaseComponent):
         SStates.SignedInAccountEntity.validate()
         SStates.LoadedMainHomeManager.validate()
         SStates.CurrentComponentEntity.init()
-        QParams.ComponentId.set(value=SStates.CurrentComponentEntity.get().component_id)
         SStates.CreateChatRoomProcess.init()
         SStates.EnterChatRoomProcess.init()
         SignInPreComponent.init()

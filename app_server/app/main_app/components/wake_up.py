@@ -5,7 +5,6 @@ from streamlit_lottie import st_lottie
 
 from ...base import BaseComponent
 from .. import s_states as SStates
-from .. import q_params as QParams
 from model import LoadedLottie
 
 
@@ -13,7 +12,6 @@ class WakeupComponent(BaseComponent):
     @staticmethod
     def init() -> None:
         SStates.CurrentComponentEntity.init()
-        QParams.ComponentId.set(value=SStates.CurrentComponentEntity.get().component_id)
 
     @classmethod
     def main(cls) -> None:
